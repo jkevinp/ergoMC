@@ -157,7 +157,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         }
         public static bool Check2DArray(int x, int y  , int [,] chart)
         {
-            return (x < chart.GetLength(0) && y < chart.GetLength(1));
+            return ( x < chart.GetLength(0) && x >= 0 && y >=0 && y < chart.GetLength(1));
         }
     }
 }

@@ -2,20 +2,19 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
-        Title="Rula Employee Information" Height="650" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Rula Employee Information" Height="900" Width="900" WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="0.4*"/>
-                <ColumnDefinition  Width="0.6*"/>
-
+                <ColumnDefinition  Width="0.5*"/>
+                <ColumnDefinition  Width="0.5*"/>
             </Grid.ColumnDefinitions>
-
             <Label  
                 Grid.Row="0"
                 Grid.Column="0"
@@ -55,7 +54,7 @@
                 <TextBox Text="{Binding Path=Company, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
 
             </StackPanel>
-            <StackPanel Grid.Column="2" Grid.Row="1">
+            <StackPanel Grid.Column="1" Grid.Row="1">
                 <Label Content="Employee Score Summary" FontSize="20" />
                 <Label Content="Information calculated based on input." Margin="20,0" FontStyle="Italic" Foreground="#FF979797" />
                 <Separator />
@@ -72,15 +71,39 @@
                 <Label Content="Final Neck,Trunk and Leg Score"  Margin="20,0" />
                 <TextBox Text="{Binding Path=Rula_score.final_neck_trunk_leg_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
 
-                <Label Content="Final Score"  Margin="20,0" />
-                <TextBox Text="{Binding Path=Rula_score.final_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
-
-                <Separator Padding="0,20" Margin="0,50,0,20" />
-
-                <Button x:Name="btn_evaluate" Content="Evaluate" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Click="btn_evaluate_Click" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold"/>
-                <Button Content="Reset" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold"/>
-                <Button Content="Cancel" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold"/>
+               
             </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+              
+                <TextBlock>
+                    <Label Content="Result" FontSize="20" Background="#FFFFF29D" Width="255" HorizontalContentAlignment="Center" />
+                    <Label Content="Result based on calculated information." Margin="20,0" FontStyle="Italic" Foreground="#FF979797" />
+                </TextBlock>
+                <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <Label Content="Score"  Margin="20,0"  />
+                        <TextBox Grid.Column="0"  Text="{Binding Path=Rula_score.final_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <Label Content="Level of MSD Risk"  Margin="20,0"  />
+                        <TextBox Text="{Binding Path=Rula_score.description, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                    </StackPanel>
+
+
+                </Grid>
+              
+                <Separator Padding="0,20" Margin="0,50,0,20" />
+                <Button x:Name="btn_evaluate" Content="Save" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Click="btn_evaluate_Click" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold"/>
+                <Button x:Name="btn_reset" Content="Reset" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold" Click="btn_reset_Click"/>
+                <Button x:Name="btn_cancel" Content="Cancel" FontSize="16" Padding="1,10" Panel.ZIndex="-3" Margin="0,5" Background="CornflowerBlue" Foreground="White" FontWeight="SemiBold" Click="btn_cancel_Click"/>
+            </StackPanel>
+
         </Grid>
+        
     </Grid>
 </Window>

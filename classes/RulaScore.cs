@@ -18,22 +18,17 @@ namespace ProjectK.ErgoMC.Assessment.classes
         }
         public RulaScore CreateFromRulaObject(RulaObject rula)
         {
-
+           
             int[,] chart = Helpers.getChart(Helpers.chart_type.arm_wrist);
             int y = Helpers.getY(rula.score_upper_arm.getTotal(), rula.score_lower_arm.getTotal());
             int x = Helpers.getX(rula.score_wrist_position.getTotal(), rula.score_wrist_twist.getTotal());
-
-
 
             if (Helpers.Check2DArray(y, x, chart))
             {
                 this.posture_score_a = chart[y, x];
             }
             else return null;
-
             this.final_wrist_arm_score = this.posture_score_a + rula.score_arm_wrist_muscle.getTotal() + rula.score_arm_wrist_load.getTotal();
-           
-
             chart = Helpers.getChart(Helpers.chart_type.trunk);
             y = Helpers.getYTrunk(rula.score_neck.getTotal());
             x = Helpers.getXTrunk(rula.score_trunk.getTotal(), rula.score_legs.getTotal());
@@ -42,9 +37,47 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 this.posture_score_b = chart[y, x];
             }
             else return null;
+
             this.final_neck_trunk_leg_score = posture_score_b + rula.score_neck_trunk_legs_muscle.getTotal() + rula.score_neck_trunk_legs_load.getTotal();
-            this.final_score = Helpers.getChart(Helpers.chart_type.rula_final)[final_wrist_arm_score - 1, final_neck_trunk_leg_score - 1];
-         
+            int tempy = final_neck_trunk_leg_score;
+            int tempx = final_wrist_arm_score;
+            chart = Helpers.getChart(Helpers.chart_type.rula_final);
+
+            if ((final_wrist_arm_score - 1) >= chart.GetLength(0))
+            {
+                tempx = chart.GetLength(0) -1;
+
+            }
+            int xx = chart.GetLength(0);
+
+            if ((final_neck_trunk_leg_score - 1) >= chart.GetLength(1))
+            {
+                tempy = chart.GetLength(1) -1;
+
+            }
+           
+            this.final_score = chart[tempx, tempy];
+
+            switch (final_score)
+            {
+                case 1:
+                case 2:
+                    this.description = "Acceptable";
+                    break;
+                case 3:
+                case 4:
+                    this.description = "Investigate further.";
+                    break;
+                case 5:
+                case 6:
+                    this.description = "Investigate further and change soon.";
+                    break;
+                default:
+                    this.description = "Investigate and change immediately";
+                    break;
+            }
+
+
             return this.rulaScore;
         }
         private RulaScore rulaScore = null;
@@ -84,5 +117,19 @@ namespace ProjectK.ErgoMC.Assessment.classes
             get;
             set;
         }
+        public string description
+        {
+            get;
+            set;
+        }
+
+        public int Save(bool is_unique)
+        {
+            // var result = this.insert("INSERT INTO `" + table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id +"' ,'0' ,'" + score +"','" + +"','" + +"','" + +"')");
+
+            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_wrist_arm_score,posture_score_b,final_neck_trunk_leg_score,final_score,description) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_wrist_arm_score + "','" + posture_score_b + "','" + final_neck_trunk_leg_score + "','" + final_score + "','" + description + "')");
+            return result;
+        }
+    
     }
 }

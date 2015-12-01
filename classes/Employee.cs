@@ -35,6 +35,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         /// Rula Score Object
         /// </summary>
         public RulaObject rulaScore = null;
+       
         /// <summary>
         /// Rula Model
         /// </summary>
@@ -104,7 +105,17 @@ namespace ProjectK.ErgoMC.Assessment.classes
 
         private Employee _employee = null;
         //private Model _model = new Model(CONFIG.DB_NAME);
+        public void Reset()
+        {
         
+            _employee.Firstname = "";
+            _employee.Middlename = "";
+            _employee.Lastname = "";
+            _employee.Job = "";
+            _employee.Company = "";
+            _employee.id = 0;
+        }
+
         /// <summary>
         /// Find an Employee
         /// </summary>
@@ -113,6 +124,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public Employee Find(int _id)
         {
             DataTable result = this.selectQuery("SELECT * FROM " +table  + " where `id`='" + _id + "' LIMIT 1");
+            if (result.Rows.Count == 0) return null;
             _employee.Firstname = result.Rows[0]["firstname"].ToString();
             _employee.Middlename = result.Rows[0]["middlename"].ToString();
             _employee.Lastname = result.Rows[0]["lastname"].ToString();
@@ -172,6 +184,24 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int Save()
         {
             Employee _data = this._employee;
+            var result = this.insert("INSERT INTO `" + table + "`(`firstname`,`middlename`,`lastname`,`job`,`company`) values('" + _data.Firstname + "' , '" + _data.Middlename + "', '" + _data.Lastname + "' , '" + _data.Job + "' , '" + _data.Company + "')");
+            return result;
+        }
+        /// <summary>
+        /// Check all fields if has match
+        /// </summary>
+        /// <param name="is_unique">true if use match search</param>
+        /// <returns></returns>
+        public int Save(bool is_unique)
+        {
+            Employee _data = this._employee;
+            if (is_unique)
+            {
+
+                var check = this.selectQuery("SELECT count(1) as count FROM `" + table + "` where firstname= '" + _data.Firstname + "' AND lastname='" + _data.Lastname + "' AND middlename='" + _data.Middlename + "' AND company='" + _data.Company + "' AND job='" + _data.Job + "'");
+                if (Helpers.Convert(check.Rows[0]["count"].ToString()) > 0)
+                    return 0;
+            }
             var result = this.insert("INSERT INTO `" + table + "`(`firstname`,`middlename`,`lastname`,`job`,`company`) values('" + _data.Firstname + "' , '" + _data.Middlename + "', '" + _data.Lastname + "' , '" + _data.Job + "' , '" + _data.Company + "')");
             return result;
         }

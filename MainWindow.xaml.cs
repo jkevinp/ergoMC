@@ -736,7 +736,6 @@
             int value = Helpers.Convert(rdb.Tag.ToString());
             this.rula.score_arm_wrist_load.SetAscore(value);
         }
-
         //Neck
         private void rdb_additionalNeckPosition_Checked(object sender, RoutedEventArgs e)
         {
@@ -766,55 +765,51 @@
         {
             lb_orientations.Items.Clear();
             int ctr = 0;
+            
             foreach (IndexScore _score in this.rula.getScoreList())
             {
                 lb_orientations.Items.Add(_score.getTotal().ToString());
-                if (_score.getTotal() <= 0)
+                if (!_score.validate())
                 {
-                    MessageBox.Show("Please Fill all fields.");
+                   
+                    MessageBox.Show(_score.error_message);
                     return;
                 }
                 ctr++;
             }
 
-            int[,] chart = Helpers.getChart(Helpers.chart_type.arm_wrist);
+            //int[,] chart = Helpers.getChart(Helpers.chart_type.arm_wrist);
 
-            int y = Helpers.getY(this.rula.score_upper_arm.getTotal(), this.rula.score_lower_arm.getTotal());
-            int x = Helpers.getX(this.rula.score_wrist_position.getTotal(), this.rula.score_wrist_twist.getTotal());
+            //int y = Helpers.getY(this.rula.score_upper_arm.getTotal(), this.rula.score_lower_arm.getTotal());
+            //int x = Helpers.getX(this.rula.score_wrist_position.getTotal(), this.rula.score_wrist_twist.getTotal());
 
-            int score = chart[y, x];
+            //int score = chart[y, x];
 
-            int posture_score_a = score;
-            int final_wrist_arm_score = score + rula.score_arm_wrist_muscle.getTotal() + rula.score_arm_wrist_load.getTotal();
+            //int posture_score_a = score;
+            //int final_wrist_arm_score = score + rula.score_arm_wrist_muscle.getTotal() + rula.score_arm_wrist_load.getTotal();
 
 
-            chart = Helpers.getChart(Helpers.chart_type.trunk);
-            y = Helpers.getYTrunk(rula.score_neck.getTotal());
-            x = Helpers.getXTrunk(rula.score_trunk.getTotal(), rula.score_legs.getTotal());
-            int posture_score_b = chart[y, x];
+            //chart = Helpers.getChart(Helpers.chart_type.trunk);
+            //y = Helpers.getYTrunk(rula.score_neck.getTotal());
+            //x = Helpers.getXTrunk(rula.score_trunk.getTotal(), rula.score_legs.getTotal());
+            //int posture_score_b = chart[y, x];
 
-            int final_neck_trunk_leg_score = posture_score_b + rula.score_neck_trunk_legs_muscle.getTotal() + rula.score_neck_trunk_legs_load.getTotal();
+            //int final_neck_trunk_leg_score = posture_score_b + rula.score_neck_trunk_legs_muscle.getTotal() + rula.score_neck_trunk_legs_load.getTotal();
             
-            lbl_body.Text = "PAS:" + score + "{" + y + "," + x +"}";
-            lbl_body.Text += "\nPBS:" + posture_score_b;
+            //lbl_body.Text = "PAS:" + score + "{" + y + "," + x +"}";
+            //lbl_body.Text += "\nPBS:" + posture_score_b;
 
-            int final_score = Helpers.getChart(Helpers.chart_type.rula_final)[final_wrist_arm_score -1, final_neck_trunk_leg_score -1];
-            MessageBox.Show(final_score + " is your score");
+            //int final_score = Helpers.getChart(Helpers.chart_type.rula_final)[final_wrist_arm_score -1, final_neck_trunk_leg_score -1];
+            //MessageBox.Show(final_score + " is your score");
 
             EmployeeView _view = new EmployeeView(this.rula);
             _view.Show();
-
-
-
         }
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
 
-            
-
             var textbox = sender as System.Windows.Controls.TextBox;
-
-            if (!Helpers.IsTextAllowed(textbox.Text))
+            if(!Helpers.IsTextAllowed(textbox.Text))
             {
                 textbox.Text = "0";
                 textbox.MaxLength = 1;
