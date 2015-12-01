@@ -130,6 +130,12 @@
     </Compile>
     <Compile Include="Library\CONFIG.cs" />
     <Compile Include="Library\Model.cs" />
+    <Compile Include="List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RebaWindow.xaml.cs">
+      <DependentUpon>RebaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="splash.xaml.cs">
       <DependentUpon>splash.xaml</DependentUpon>
     </Compile>
@@ -137,6 +143,10 @@
       <DependentUpon>RulaReport.xaml</DependentUpon>
     </Compile>
     <Page Include="datagrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,6 +162,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RebaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="splash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -226,6 +240,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Ico\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="SQLite.Interop.091.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -17,11 +17,7 @@ namespace ProjectK.ErgoMC.Assessment.Library
         {
             this.connect(CONFIG.DB_NAME);
         }
-        public int last_inserted()
-        {
-            DataTable t = this.selectQuery("SELECT last_insert_rowid() as `id`");
-            return Helpers.Convert(t.Rows[0]["id"].ToString());
-        }
+       
         public string table = "";
         private Dictionary<string, Model> relations = new Dictionary<string, Model>();
         private SQLiteConnection _conn;

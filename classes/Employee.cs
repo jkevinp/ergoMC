@@ -95,16 +95,8 @@ namespace ProjectK.ErgoMC.Assessment.classes
             set { id = value; OnPropertyChanged("Id"); }
         }
         #endregion
-        private void OnPropertyChanged(String property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
+        
         private Employee _employee = null;
-        //private Model _model = new Model(CONFIG.DB_NAME);
         public void Reset()
         {
         
@@ -125,6 +117,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             DataTable result = this.selectQuery("SELECT * FROM " +table  + " where `id`='" + _id + "' LIMIT 1");
             if (result.Rows.Count == 0) return null;
+            _employee.Id = Helpers.Convert(result.Rows[0]["id"].ToString());
             _employee.Firstname = result.Rows[0]["firstname"].ToString();
             _employee.Middlename = result.Rows[0]["middlename"].ToString();
             _employee.Lastname = result.Rows[0]["lastname"].ToString();
@@ -167,11 +160,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
             DataTable result = this.selectQuery("SELECT * FROM `" + table +  "`");
             foreach(DataRow row in result.Rows){
                 Employee employee = new Employee();
+                employee.Id = Helpers.Convert(result.Rows[0]["id"].ToString());
                 employee.Firstname = row["firstname"].ToString();
                 employee.Middlename = row["middlename"].ToString();
                 employee.Lastname = row["lastname"].ToString();
                 employee.Job =  row["job"].ToString();
                 employee.company = row["company"].ToString();
+                employee.Rula_score = new RulaScore();
+                employee.Rula_score.employee_id = employee.Id;
+                employee.Rula_score.Get(employee);
                 _result.Add(employee);
             }
             return _result;
@@ -215,5 +212,13 @@ namespace ProjectK.ErgoMC.Assessment.classes
             var result = this.insert("INSERT INTO `" + table + "` SET firstname= '" + _data.Firstname + "', lastname='" + _data.Lastname + "' , middlename='" + _data.Middlename + "' ,company='" + _data.Company + "' ,job='" + _data.Job + "'");
             return result;
         }
+        private void OnPropertyChanged(String property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
     }
 }

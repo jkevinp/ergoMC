@@ -771,8 +771,8 @@
                 lb_orientations.Items.Add(_score.getTotal().ToString());
                 if (!_score.validate())
                 {
-                   
-                    MessageBox.Show(_score.error_message);
+
+                    Helpers.ToastError(this, "Input error", _score.error_message , MessageBoxButton.OK);
                     return;
                 }
                 ctr++;
@@ -861,6 +861,12 @@
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            List l = new List();
+            l.Show();
         }
     }
 }

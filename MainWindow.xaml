@@ -6,12 +6,17 @@
         Loaded="MainWindow_Loaded"
         Closing="MainWindow_Closing" 
         WindowState="Maximized" 
-        WindowStartupLocation="CenterScreen">
+        
+        WindowStartupLocation="CenterScreen" Icon="Images/Ico/favicon.ico" Grid.IsSharedSizeScope="True" Background="{DynamicResource KinectBluishBG}">
 
     <Window.Resources>
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <SolidColorBrush x:Key="KinectBluish" Color="#FF0095D4" />
+        <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
+        <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
+
         <!--<DataTemplate x:Key="IndexScoreTemplate">
             <StackPanel Grid.Row="1">
                 <TextBlock Text="{Binding score}" />
@@ -20,6 +25,7 @@
         </DataTemplate>-->
     </Window.Resources>
 
+
     <Grid Margin="0 0 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -27,28 +33,27 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Menu IsMainMenu="True" Grid.Row="0">
-            <MenuItem Header="_File" >
-                <MenuItem Header="_New..." />
+        <Menu IsMainMenu="True" Grid.Row="0" Background="{DynamicResource KinectBlack}" Foreground="White" BorderBrush="{DynamicResource KinectPurpleBrush}" BorderThickness="0,2">
+            <MenuItem Header="_File" Background="{DynamicResource KinectBlack}" Foreground="White" >
+                <MenuItem Header="_New" Background="{DynamicResource KinectBlack}"   />
+                <MenuItem Header="_Open"  Background="{DynamicResource KinectBlack}" />
+                <MenuItem Header="_Save"  Background="{DynamicResource KinectBlack}"/>
+                <MenuItem Header="_Save As"  Background="{DynamicResource KinectBlack}"/>
                 <Separator />
-                <MenuItem Header="_Open..." />
-                <Separator />
-                <MenuItem Header="_Save" />
-                <MenuItem Header="_Save As..." />
-                <Separator />
-                <MenuItem Header="_Exit" Click="MenuItem_Click" />
+                <MenuItem Header="_Exit" Click="MenuItem_Click"  Background="{DynamicResource KinectBlack}" />
             </MenuItem>
             <MenuItem Header="_Edit" />
-            <MenuItem Header="_View" />
+            <MenuItem Header="_View" Click="MenuItem_Click_1" >
+                <MenuItem Header="List Evaluated Employee" Background="{DynamicResource KinectBlack}"   />
+            </MenuItem>
             <MenuItem Header="_Help" />
         </Menu>
 
         <Label  
-                Grid.Row="1"
-                HorizontalContentAlignment="Center"  
+                Grid.Row="1"  
                 VerticalContentAlignment="Center" 
                 Content="Rapid Upper Limb Assessment"  
-                Background="Gray" 
+                Background="#FF0095D4" 
                 FontSize="32" 
                 Foreground="White" UseLayoutRounding="False" Height="83" 
                 FontFamily="Arial"  />
@@ -62,14 +67,19 @@
                 <ColumnDefinition Width="0.2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="0" Source="Images\Logo.png" HorizontalAlignment="Left" Stretch="Fill" Height="32" Width="81" Margin="4,14,0,9" />
-            <CheckBox Grid.Row="0" Content="Draw names" FontSize="32" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="CheckBox_Checked_1"/>
-            <TextBlock x:Name="lbl_body" Grid.Row="0" Margin="0,0,4,18" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18" Grid.ColumnSpan="2">Body Basics</TextBlock>
-            <Image x:Name="img_status" Grid.Row="0" Source="Images\Status.png" Stretch="None" HorizontalAlignment="Center" Margin="0 0 0 5" />
+
+            <Grid Grid.Column="0" Height="Auto" Grid.Row="0">
+                <DockPanel>
+                    <Image x:Name="img_status" Source="Images\Status.png" Stretch="None" Margin="10,0,0,0" />
+                    <Label Content="{Binding StatusText}" VerticalContentAlignment="Center" FontSize="16" FontWeight="Light" FontStyle="Italic" Foreground="#FF767676" />
+                    <CheckBox Content="Draw names" FontSize="12" Checked="CheckBox_Checked_1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" HorizontalAlignment="Right"/>
+                </DockPanel>
+            </Grid>
+
 
             <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
             <Viewbox Grid.Row="1">
@@ -83,19 +93,21 @@
                       Height="auto" Width="auto"  
                       VerticalAlignment="Top" 
                       Grid.Column="2" 
-                      Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="0,0,20,0">
+                      Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="0,0,20,0" Background="{DynamicResource KinectBluishBG}">
+
                 <StackPanel>
+
                     <Label  
                             Grid.Row="0"
                             HorizontalContentAlignment="Center"  
                             VerticalContentAlignment="Center" 
                             Content="A. Arm and Wrist Analysis"  
-                            Background="White" 
+                            Background="{x:Null}" 
                             FontSize="32" 
-                            Foreground="Red" 
+                            Foreground="{DynamicResource MediumGreyBrush}" 
                             UseLayoutRounding="False" 
                             Height="83" 
-                            FontFamily="Arial" HorizontalAlignment="Left"  />
+                            FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" FontWeight="Bold"  />
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -104,15 +116,15 @@
                         </Grid.ColumnDefinitions>
                         <Button  
                         Click="Button_Click"
+                            Margin="50,0,0,0"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Upper Arm"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Upper Arm"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                              
                             x:Name="upper_arm_score"
@@ -126,7 +138,7 @@
                     		HorizontalContentAlignment="Center"  
                     		VerticalContentAlignment="Center" 
                     		Content="Additional"  
-                    		Background="White" 
+                    		Background="{x:Null}" 
                     		FontSize="16" 
                     		Foreground="Black" 
                     		UseLayoutRounding="False" 
@@ -166,13 +178,12 @@
                         Click="Button_Click"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Lower Arm"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Lower Arm"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="lower_arm"
                                   TextChanged="TextBox_TextChanged" 
@@ -184,7 +195,7 @@
                     		HorizontalContentAlignment="Center"  
                     		VerticalContentAlignment="Center" 
                     		Content="Additional"  
-                    		Background="White" 
+                    		Background="{x:Null}" 
                     		FontSize="16" 
                     		Foreground="Black" 
                     		UseLayoutRounding="False" 
@@ -205,13 +216,12 @@
                         Click="Button_Click"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Wrist Position"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Wrist Position"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                              x:Name="txt_wrist_position"
                             Grid.Column="2" 
@@ -231,7 +241,7 @@
                     		HorizontalContentAlignment="Center"  
                     		VerticalContentAlignment="Center" 
                     		Content="Additional"  
-                    		Background="White" 
+                    		Background="{x:Null}" 
                     		FontSize="16" 
                     		Foreground="Black" 
                     		UseLayoutRounding="False" 
@@ -259,12 +269,11 @@
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
                             Content="Wrist Twist"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="wrist_twist"
                                   TextChanged="TextBox_TextChanged" 
@@ -278,7 +287,7 @@
                     		HorizontalContentAlignment="Center"  
                     		VerticalContentAlignment="Center" 
                     		Content="Additional"  
-                    		Background="White" 
+                    		Background="{x:Null}" 
                     		FontSize="16" 
                     		Foreground="Black" 
                     		UseLayoutRounding="False" 
@@ -314,12 +323,11 @@
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
                             Content="Muscle Use for Arm and Wrist"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="arm_wrist_muscle"
                                   TextChanged="TextBox_TextChanged" 
@@ -347,12 +355,11 @@
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
                             Content="Force/Load for Arm and Wrist"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="arm_wrist_load"
                                   TextChanged="TextBox_TextChanged" 
@@ -369,12 +376,12 @@
                             HorizontalContentAlignment="Center"  
                             VerticalContentAlignment="Center" 
                             Content="B. Neck,Trunk and Legs Analysis"  
-                            Background="White" 
+                            Background="{x:Null}" 
                             FontSize="32" 
-                            Foreground="Red" 
+                            Foreground="{DynamicResource MediumGreyBrush}" 
                             UseLayoutRounding="False" 
                             Height="83" 
-                            FontFamily="Arial" HorizontalAlignment="Left"  />
+                            FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" FontWeight="Bold"  />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -384,13 +391,13 @@
                         Click="Button_Click"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Neck Position"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Neck Position"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                             
                                Tag="neck_position"
@@ -417,13 +424,13 @@
                         Click="Button_Click"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Trunk Position"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Trunk Position"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="trunk_position"
                                   TextChanged="TextBox_TextChanged" 
@@ -455,13 +462,13 @@
                         Click="Button_Click"
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
-                            Content="       Legs Position"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Content="Legs Position"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1"  
                                Tag="legs_position"
                                   TextChanged="TextBox_TextChanged" 
@@ -494,12 +501,12 @@
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
                             Content="Muscle Use for Neck, Trunk and Legs"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="neck_trunk_legs_muscle"
                                   TextChanged="TextBox_TextChanged" 
@@ -522,12 +529,12 @@
                             Grid.Row="0"  
                             VerticalContentAlignment="Center" 
                             Content="Force/Load for Neck,Trunk and Legs"  
-                            Background="#FFECECEC" 
-                            FontSize="25" 
-                            Foreground="Black" 
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
                             UseLayoutRounding="False" 
-                            Height="60" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                            Height="40" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                         <TextBox  MaxLength="1" 
                                Tag="neck_trunk_legs_load"
                                   TextChanged="TextBox_TextChanged" 
@@ -538,7 +545,7 @@
                     <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
                     <RadioButton Tag="2" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
                     <RadioButton Tag="3" GroupName="rdb_neckForceLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
-                    <Button Content="Evaluate" Background="#FF03C9A9" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
+                    <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
 
 
                 </StackPanel>

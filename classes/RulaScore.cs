@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectK.ErgoMC.Assessment.Library;
+using System.Data;
 namespace ProjectK.ErgoMC.Assessment.classes
 {
     public class RulaScore : Model
@@ -22,7 +23,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             int[,] chart = Helpers.getChart(Helpers.chart_type.arm_wrist);
             int y = Helpers.getY(rula.score_upper_arm.getTotal(), rula.score_lower_arm.getTotal());
             int x = Helpers.getX(rula.score_wrist_position.getTotal(), rula.score_wrist_twist.getTotal());
-
             if (Helpers.Check2DArray(y, x, chart))
             {
                 this.posture_score_a = chart[y, x];
@@ -121,6 +121,19 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             get;
             set;
+        }
+
+        public void Get(Employee emp)
+        {
+            DataTable t = this.selectQuery("SELECT * FROM `" + table + "` where `employee_id`='" + this.employee_id + "' LIMIT 1");
+            emp.Rula_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
+            emp.Rula_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
+            emp.Rula_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
+            emp.Rula_score.final_wrist_arm_score = Helpers.Convert(t.Rows[0]["final_wrist_arm_score"].ToString());
+            emp.Rula_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
+            emp.Rula_score.final_neck_trunk_leg_score = Helpers.Convert(t.Rows[0]["final_neck_trunk_leg_score"].ToString());
+            emp.Rula_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
+            emp.Rula_score.description = t.Rows[0]["description"].ToString();
         }
 
         public int Save(bool is_unique)

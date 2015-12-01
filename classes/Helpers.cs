@@ -6,10 +6,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Text.RegularExpressions;
+using System.Windows;
 namespace ProjectK.ErgoMC.Assessment.classes
 {
     class Helpers
     {
+
+        public static void ToastSuccess(Window _owner, string _title, string _text, MessageBoxButton btn)
+        {
+            MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Information);
+        }
+        public static void ToastWarning(Window _owner, string _title, string _text, MessageBoxButton btn)
+        {
+            MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Warning);
+        }
+        public static void ToastError(Window _owner, string _title, string _text, MessageBoxButton btn)
+        {
+            MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Error);
+        }
+        public static void ToastRequired(Window _owner, string _title, string _text , MessageBoxButton btn)
+        {
+            MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Asterisk);
+        }
 
         public enum chart_type
         {

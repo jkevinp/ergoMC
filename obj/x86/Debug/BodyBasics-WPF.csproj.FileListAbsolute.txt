@@ -22,3 +22,7 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\BodyBasics-WPF
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RulaReport.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RulaReport.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaWindow.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaWindow.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\List.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\List.g.cs
