@@ -1,0 +1,558 @@
+﻿<Window x:Class="ProjectK.ErgoMC.Assessment.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ErgoMC - Rapid Upper Limb Assessment" 
+        Height="3356.034" Width="2007.612" 
+        Loaded="MainWindow_Loaded"
+        Closing="MainWindow_Closing" 
+        WindowState="Maximized" 
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <!--<DataTemplate x:Key="IndexScoreTemplate">
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="{Binding score}" />
+                <TextBlock Text="{Binding additionalScore}" />
+            </StackPanel>
+        </DataTemplate>-->
+    </Window.Resources>
+
+    <Grid Margin="0 0 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" Grid.Row="0">
+            <MenuItem Header="_File" >
+                <MenuItem Header="_New..." />
+                <Separator />
+                <MenuItem Header="_Open..." />
+                <Separator />
+                <MenuItem Header="_Save" />
+                <MenuItem Header="_Save As..." />
+                <Separator />
+                <MenuItem Header="_Exit" Click="MenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="_Edit" />
+            <MenuItem Header="_View" />
+            <MenuItem Header="_Help" />
+        </Menu>
+
+        <Label  
+                Grid.Row="1"
+                HorizontalContentAlignment="Center"  
+                VerticalContentAlignment="Center" 
+                Content="Rapid Upper Limb Assessment"  
+                Background="Gray" 
+                FontSize="32" 
+                Foreground="White" UseLayoutRounding="False" Height="83" 
+                FontFamily="Arial"  />
+
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="0.9*"/>
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0" Source="Images\Logo.png" HorizontalAlignment="Left" Stretch="Fill" Height="32" Width="81" Margin="4,14,0,9" />
+            <CheckBox Grid.Row="0" Content="Draw names" FontSize="32" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" VerticalAlignment="Center" Checked="CheckBox_Checked_1"/>
+            <TextBlock x:Name="lbl_body" Grid.Row="0" Margin="0,0,4,18" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18" Grid.ColumnSpan="2">Body Basics</TextBlock>
+            <Image x:Name="img_status" Grid.Row="0" Source="Images\Status.png" Stretch="None" HorizontalAlignment="Center" Margin="0 0 0 5" />
+
+            <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
+            <Viewbox Grid.Row="1">
+                <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+            </Viewbox>
+            <!--<ContentControl Content="{Binding score_upper_arm}" ContentTemplate="{StaticResource IndexScoreTemplate}" />-->
+
+
+            <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />
+            <ScrollViewer 
+                      Height="auto" Width="auto"  
+                      VerticalAlignment="Top" 
+                      Grid.Column="2" 
+                      Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="0,0,20,0">
+                <StackPanel>
+                    <Label  
+                            Grid.Row="0"
+                            HorizontalContentAlignment="Center"  
+                            VerticalContentAlignment="Center" 
+                            Content="A. Arm and Wrist Analysis"  
+                            Background="White" 
+                            FontSize="32" 
+                            Foreground="Red" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" HorizontalAlignment="Left"  />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Upper Arm"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                             
+                            x:Name="upper_arm_score"
+                                  Tag="upper_arm"
+                                  TextChanged="TextBox_TextChanged" 
+                                  Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                    </Grid>
+
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center"  
+                    		VerticalContentAlignment="Center" 
+                    		Content="Additional"  
+                    		Background="White" 
+                    		FontSize="16" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <RadioButton GroupName="rdb_additionalUpperArm"  Content="Shoulder is Raised" 
+                                   FontSize="20" 
+                                   VerticalContentAlignment="Center" 
+                                   Margin="80,0,0,0" 
+                                     Tag="1"
+                                      Checked="rdb_additionalUpperArm_Checked"
+                                   />
+                        <RadioButton      
+                            GroupName="rdb_additionalUpperArm"
+                                   Content="Upper Arm is abducted" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0" 
+                            Tag="1"
+                             Checked="rdb_additionalUpperArm_Checked"
+                            />
+                        <RadioButton  
+                            GroupName="rdb_additionalUpperArm"
+                            Content="Arm is supported or is leaning" 
+                            Tag="-1"
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"  />
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Lower Arm"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="lower_arm"
+                                  TextChanged="TextBox_TextChanged" 
+                            x:Name="lower_arm_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                    </Grid>
+
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center"  
+                    		VerticalContentAlignment="Center" 
+                    		Content="Additional"  
+                    		Background="White" 
+                    		FontSize="30" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <CheckBox x:Name="lower_arm_add1"
+                                  Tag="1"  
+                                  Checked="CheckBoxLowerArmPosition_Checked"
+                                  Content="Either arm is working across midline or out to side of the body" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Wrist Position"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                             x:Name="txt_wrist_position"
+                            Grid.Column="2" 
+                            SpellCheck.IsEnabled="True" 
+                            Text="0" 
+                            Language="en-US" 
+                            FontSize="29" 
+                            HorizontalContentAlignment="Center" 
+                            VerticalContentAlignment="Center" 
+                            Tag="wrist_position"
+                            TextChanged="TextBox_TextChanged"
+                           
+                            />
+                    </Grid>
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center"  
+                    		VerticalContentAlignment="Center" 
+                    		Content="Additional"  
+                    		Background="White" 
+                    		FontSize="30" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <CheckBox 
+                            Tag="1"
+                            Checked="CheckBoxWristPosition_Checked"
+                            Content="Wrist is bent from midline" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0"  
+                           
+                        />
+                    </StackPanel>
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Wrist Twist"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="wrist_twist"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" 
+                            SpellCheck.IsEnabled="True" 
+                            Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center"  
+                    		VerticalContentAlignment="Center" 
+                    		Content="Additional"  
+                    		Background="White" 
+                    		FontSize="30" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <RadioButton 
+                            GroupName="rdb_additionaWristTwist"
+                            Tag="1"
+                            Checked="rdb_additionaWristTwist_Checked"
+                            Content="Wrist is twisted in mid-range" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0"  />
+                        <RadioButton 
+                            Checked="rdb_additionaWristTwist_Checked"
+                            Tag="2"
+                            GroupName="rdb_additionaWristTwist"
+                            Content="Wrist is at or near end of range" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0"  />
+
+                    </StackPanel>
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Muscle Use for Arm and Wrist"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="arm_wrist_muscle"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <CheckBox  
+                        FontSize="30" 
+                        VerticalContentAlignment="Center" 
+                        Margin="80,0,0,0" 
+                        Height="auto"  
+                        Tag="1"
+                        Checked="ArmMuscleUse_Checked"
+                        >
+                        <TextBlock>
+                        <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
+                        </TextBlock>
+                    </CheckBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Force/Load for Arm and Wrist"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="arm_wrist_load"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <RadioButton Tag="0" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="2" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="3" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+
+
+                    <Label  
+                            Grid.Row="0"
+                            HorizontalContentAlignment="Center"  
+                            VerticalContentAlignment="Center" 
+                            Content="B. Neck,Trunk and Legs Analysis"  
+                            Background="White" 
+                            FontSize="32" 
+                            Foreground="Red" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" HorizontalAlignment="Left"  />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Neck Position"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                            
+                               Tag="neck_position"
+                                  TextChanged="TextBox_TextChanged" 
+                            x:Name="neck_position_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+
+
+                    </Grid>
+                    <RadioButton 
+                        Tag="1"
+                        Checked="rdb_additionalNeckPosition_Checked"
+                        GroupName="rdb_additionalNeckPosition" Content="Neck is Twisted" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton 
+                        Tag="1" GroupName="rdb_additionalNeckPosition" 
+                        Checked="rdb_additionalNeckPosition_Checked"
+                        Content="Neck is side bending" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Trunk Position"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="trunk_position"
+                                  TextChanged="TextBox_TextChanged" 
+                            x:Name="trunk_poosition_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <RadioButton Tag="1" 
+                                 GroupName="rdb_additionalTrunkPosition" 
+                                 Content="Trunk is twisted" 
+                                 FontSize="20" 
+                                 VerticalContentAlignment="Center" 
+                                 Margin="80,0,0,0"  
+                                 Checked="rdb_additionalTrunkPosition_Checked"
+                                 />
+                    <RadioButton Tag="1" 
+                                 GroupName="rdb_additionalTrunkPosition" 
+                                 Content="Trunk is side bending" 
+                                 FontSize="20" 
+                                 VerticalContentAlignment="Center" 
+                                 Margin="80,0,0,0"
+                                 Checked="rdb_additionalTrunkPosition_Checked"
+                                 />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="       Legs Position"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1"  
+                               Tag="legs_position"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <RadioButton Tag="1" 
+                                 GroupName="rdb_additionalLegPosition" 
+                                 Content="Legs or feet are supported" 
+                                 FontSize="20" 
+                                  Checked="rdb_additionalLegPosition_Checked"
+                                 VerticalContentAlignment="Center" 
+                                 Margin="80,0,0,0"  
+                                 />
+                    <RadioButton Tag="2" 
+                                 GroupName="rdb_additionalLegPosition" 
+                                 Content="Legs or feet are Not supported" 
+                                 FontSize="20" 
+                                 Checked="rdb_additionalLegPosition_Checked"
+                                 VerticalContentAlignment="Center" 
+                                 Margin="80,0,0,0"  />
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Muscle Use for Neck, Trunk and Legs"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="neck_trunk_legs_muscle"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <CheckBox 
+                        Checked="NeckMuscleUse_Checked"
+                        FontSize="30" VerticalContentAlignment="Center" Margin="80,0,0,0" Height="auto" Tag="1" >
+                        <TextBlock>
+                        <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
+                        </TextBlock>
+                    </CheckBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Force/Load for Neck,Trunk and Legs"  
+                            Background="#FFECECEC" 
+                            FontSize="30" 
+                            Foreground="Black" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="1,1,0,1" Margin="50,0,0,0" Padding="1" HorizontalContentAlignment="Left"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="neck_trunk_legs_load"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+
+                    <RadioButton Tag="0" GroupName="rdb_neckForceLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
+                    <RadioButton Tag="2" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <RadioButton Tag="3" GroupName="rdb_neckForceLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <Button Content="Evaluate" Background="#FF03C9A9" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+
+
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
+            <StatusBarItem Content="{Binding StatusText}" />
+        </StatusBar>
+
+
+
+
+    </Grid>
+</Window>
