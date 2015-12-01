@@ -1,0 +1,16 @@
+﻿<Window x:Class="ProjectK.ErgoMC.Assessment.test"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         WindowStyle="None" Topmost="True" WindowState="Maximized" 
+        AllowsTransparency="True" Background="Transparent"
+        Title="test" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Rectangle Name="rect" Width="100" VerticalAlignment="Stretch" Fill="#99000000" Visibility="Collapsed" />
+        <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="32" Height="32" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White">&gt;</Button>
+    </Grid>
+</Window>
+

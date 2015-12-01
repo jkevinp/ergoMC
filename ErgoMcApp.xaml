@@ -1,0 +1,54 @@
+﻿<Window x:Class="ProjectK.ErgoMC.Assessment.ErgoMcApp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ErgoMcApp" Height="768" Width="1368" WindowState="Maximized" WindowStartupLocation="CenterScreen" Background="{DynamicResource KinectBluishBG}">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <SolidColorBrush x:Key="KinectBluish" Color="#FF0095D4" />
+        <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
+        <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
+        <SolidColorBrush x:Key="KinectGray" Color="#FF383838" />
+    </Window.Resources>
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.15*" />
+            <ColumnDefinition Width="0.85*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource KinectBlack}" Foreground="White" BorderBrush="{DynamicResource KinectPurpleBrush}" BorderThickness="0,2">
+            <MenuItem Header="_File" Background="{DynamicResource KinectBlack}" Foreground="White" >
+                <MenuItem Header="_New" Background="{DynamicResource KinectBlack}"   />
+                <MenuItem Header="_Open"  Background="{DynamicResource KinectBlack}" />
+                <MenuItem Header="_Save"  Background="{DynamicResource KinectBlack}"/>
+                <MenuItem Header="_Save As"  Background="{DynamicResource KinectBlack}"/>
+                <Separator />
+                <MenuItem Header="_Exit" Background="{DynamicResource KinectBlack}" />
+            </MenuItem>
+            <MenuItem Header="_Edit" />
+            <MenuItem Header="_View" >
+                <MenuItem Header="List Evaluated Employee" Background="{DynamicResource KinectBlack}"   />
+            </MenuItem>
+            <MenuItem Header="_Help" />
+        </Menu>
+        <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto">
+            <Button Click="Button_Click" Tag="MainWindow" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">RULA</Button>
+            <Button Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Reba">REBA</Button>
+            <Button Click="Button_Click" Tag="List" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">LIST</Button>
+            
+            <Button Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">Teest</Button>
+        </StackPanel>
+        <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+          
+        </TabControl>
+        <Button Content="Close" Click="ButtonClose_Click" Grid.Column="1" Grid.Row="3"/>
+    </Grid>
+</Window>

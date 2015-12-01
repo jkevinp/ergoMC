@@ -26,3 +26,11 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaWindow.bam
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaWindow.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\List.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\List.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\test.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\test.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMcApp.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMcApp.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Page1.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Page1.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Reba.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Reba.g.cs

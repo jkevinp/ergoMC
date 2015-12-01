@@ -12,22 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ProjectK.ErgoMC.Assessment.classes
+namespace ProjectK.ErgoMC.Assessment
 {
     /// <summary>
-    /// Interaction logic for splash.xaml
+    /// Interaction logic for test.xaml
     /// </summary>
-    public partial class splash : Window
+    public partial class test : Window
     {
-        public splash()
+        public test()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow window = new MainWindow();
-            
         }
     }
 }

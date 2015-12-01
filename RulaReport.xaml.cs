@@ -24,7 +24,7 @@ namespace ProjectK.ErgoMC.Assessment
         public EmployeeView(RulaObject _rulaObject)
         {
             this._employee = new Employee();
-            this._employee.rulaScore = _rulaObject;
+            this._employee.RulaObject = _rulaObject;
             _employee.Rula_score = new RulaScore();
             _employee.Rula_score.CreateFromRulaObject(_rulaObject);
            
@@ -47,7 +47,8 @@ namespace ProjectK.ErgoMC.Assessment
                MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");
                return;
            }
-           foreach(IndexScore indexScore in this._employee.rulaScore.getScoreList()){
+           foreach (IndexScore indexScore in this._employee.RulaObject.getScoreList())
+           {
                 indexScore.employee_id = _employee.Id;
                 indexScore.rula_id = rula_id;
                 indexScore.Save();

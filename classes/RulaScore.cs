@@ -14,7 +14,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         /// </summary>
         public RulaScore()
         {
-            this.table = _table;
+            this.table = TABLE;
             this.rulaScore = this;
         }
         public RulaScore CreateFromRulaObject(RulaObject rula)
@@ -81,7 +81,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
             return this.rulaScore;
         }
         private RulaScore rulaScore = null;
-        public const string _table = "rula";
+        public const string TABLE = "rula";
         public int id
         {
             get;

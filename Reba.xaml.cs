@@ -17,7 +17,7 @@
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
-    public partial class MainWindow : Page, INotifyPropertyChanged
+    public partial class Reba : Page, INotifyPropertyChanged
     {
         private RulaObject rula = new RulaObject();
 
@@ -130,22 +130,22 @@
                     addJointTorso();
                     addJointArm();
                     addJointLeg();
-                break;
+                    break;
                 case ScanType.Arm:
-               // addJointTorso();
-                addJointArm();
-                break;
+                    // addJointTorso();
+                    addJointArm();
+                    break;
                 case ScanType.LowerBody:
-                addJointLeg();
-                break;
+                    addJointLeg();
+                    break;
                 case ScanType.UpperBody:
-                addJointArm();
-                break;
+                    addJointArm();
+                    break;
                 default:
                     addJointTorso();
                     addJointArm();
                     addJointLeg();
-                break;
+                    break;
             }
             this.bodyColors = new List<Pen>();
             this.bodyColors.Add(new Pen(Brushes.Red, 6));
@@ -154,13 +154,13 @@
             this.bodyColors.Add(new Pen(Brushes.Blue, 6));
             this.bodyColors.Add(new Pen(Brushes.Indigo, 6));
             this.bodyColors.Add(new Pen(Brushes.Violet, 6));
-       
+
             this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.NoSensorStatusText;
             this.drawingGroup = new DrawingGroup();
             this.imageSource = new DrawingImage(this.drawingGroup);
             this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
             this.kinectSensor.Open();
-       
+
 
             this.DataContext = this;
 
@@ -168,7 +168,7 @@
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
-        public MainWindow()
+        public Reba()
         {
             init();
             this.InitializeComponent();
@@ -181,7 +181,7 @@
             {
                 Console.WriteLine("Database exists");
             }
-            
+
         }
         private void addJointLeg()
         {
@@ -328,122 +328,122 @@
             if (dataReceived)
             {
                 this.lb_orientations.Items.Clear();
-                if(this.drawingGroup != null && this.bodyColors != null)
-                using (DrawingContext dc = this.drawingGroup.Open())
-                {
-                    // Draw a transparent background to set the render size
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
-
-                    int penIndex = 0;
-                    foreach (Body body in this.bodies)
+                if (this.drawingGroup != null && this.bodyColors != null)
+                    using (DrawingContext dc = this.drawingGroup.Open())
                     {
-                        Pen drawPen = this.bodyColors[penIndex++];
+                        // Draw a transparent background to set the render size
+                        dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
-                        if (body.IsTracked)
+                        int penIndex = 0;
+                        foreach (Body body in this.bodies)
                         {
-                            this.DrawClippedEdges(body, dc);
-                            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-                            // convert the joint points to depth (display) space
-                            Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
+                            Pen drawPen = this.bodyColors[penIndex++];
 
-                            //////this.lbl_body.Text = body.JointOrientations.Count.ToString();
-                            //////int ctr = 0;
-                            //////foreach (var x in body.JointOrientations.Keys)
-                            //////{
-                            //////    CameraSpacePoint position = joints[x].Position;
-                            //////    CameraSpacePoint position1 = new CameraSpacePoint();
-
-                            //////    JointType t = Helpers.GetParentJoint(x);
-                            //////    position1 = joints[x].Position;
-
-                            //////    DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                            //////    DepthSpacePoint depthSpacePoint1 = this.coordinateMapper.MapCameraPointToDepthSpace(position1);
-                            //////    // Rectangle to draw.
-                            //////    System.Windows.Rect rect = new System.Windows.Rect(depthSpacePoint.X, depthSpacePoint.Y, 10, 10);
-
-                            //////    // Set rotation on drawing context.
-                            //////    Vector3D j1 = new Vector3D(joints[t].Position.X, joints[t].Position.Y, joints[t].Position.Z);
-                            //////    Vector3D j2 = new Vector3D(joints[x].Position.X, joints[x].Position.Y, joints[x].Position.Z);
-                            //////    double AngleRElbow = Helpers.AngleBetweenTwoVectors(j1,j2);
-        
-                            //////    dc.PushTransform(new System.Windows.Media.RotateTransform(
-                            //////                        AngleRElbow, body.JointOrientations[x].Orientation.Y, body.JointOrientations[x].Orientation.Z)
-                            //////                    );
-
-                            //////    // Draw our rectangle.
-                            //////    dc.DrawRectangle(null, drawPen, rect);
-
-                            //////    // Remove transformation for rotation as its no longer needed.
-                            //////    dc.Pop();
-                            //////    ctr++;
-                            //////}
-
-
-                      
-                            foreach (JointType jointType in joints.Keys)
+                            if (body.IsTracked)
                             {
-                                // sometimes the depth(Z) of an inferred joint may show as negative
-                                // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
-                                CameraSpacePoint position = joints[jointType].Position;
-                                if (position.Z < 0)
+                                this.DrawClippedEdges(body, dc);
+                                IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
+                                // convert the joint points to depth (display) space
+                                Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
+
+                                //////this.lbl_body.Text = body.JointOrientations.Count.ToString();
+                                //////int ctr = 0;
+                                //////foreach (var x in body.JointOrientations.Keys)
+                                //////{
+                                //////    CameraSpacePoint position = joints[x].Position;
+                                //////    CameraSpacePoint position1 = new CameraSpacePoint();
+
+                                //////    JointType t = Helpers.GetParentJoint(x);
+                                //////    position1 = joints[x].Position;
+
+                                //////    DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                //////    DepthSpacePoint depthSpacePoint1 = this.coordinateMapper.MapCameraPointToDepthSpace(position1);
+                                //////    // Rectangle to draw.
+                                //////    System.Windows.Rect rect = new System.Windows.Rect(depthSpacePoint.X, depthSpacePoint.Y, 10, 10);
+
+                                //////    // Set rotation on drawing context.
+                                //////    Vector3D j1 = new Vector3D(joints[t].Position.X, joints[t].Position.Y, joints[t].Position.Z);
+                                //////    Vector3D j2 = new Vector3D(joints[x].Position.X, joints[x].Position.Y, joints[x].Position.Z);
+                                //////    double AngleRElbow = Helpers.AngleBetweenTwoVectors(j1,j2);
+
+                                //////    dc.PushTransform(new System.Windows.Media.RotateTransform(
+                                //////                        AngleRElbow, body.JointOrientations[x].Orientation.Y, body.JointOrientations[x].Orientation.Z)
+                                //////                    );
+
+                                //////    // Draw our rectangle.
+                                //////    dc.DrawRectangle(null, drawPen, rect);
+
+                                //////    // Remove transformation for rotation as its no longer needed.
+                                //////    dc.Pop();
+                                //////    ctr++;
+                                //////}
+
+
+
+                                foreach (JointType jointType in joints.Keys)
                                 {
-                                    //position.Z = InferredZPositionClamp;
+                                    // sometimes the depth(Z) of an inferred joint may show as negative
+                                    // clamp down to 0.1f to prevent coordinatemapper from returning (-Infinity, -Infinity)
+                                    CameraSpacePoint position = joints[jointType].Position;
+                                    if (position.Z < 0)
+                                    {
+                                        //position.Z = InferredZPositionClamp;
+                                    }
+
+                                    DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                    jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+                                    JointType parent = Helpers.GetOrigintJoint(jointType);
+
+                                    //Quaternion r = new Quaternion(body.JointOrientations[parent].Orientation.X,
+                                    //      body.JointOrientations[parent].Orientation.Y,
+                                    //      body.JointOrientations[parent].Orientation.Z,
+                                    //      body.JointOrientations[parent].Orientation.W);
+
+                                    //Quaternion t = new Quaternion(body.JointOrientations[jointType].Orientation.X,
+                                    //    body.JointOrientations[jointType].Orientation.Y,
+                                    //    body.JointOrientations[jointType].Orientation.Z,
+                                    //    body.JointOrientations[jointType].Orientation.W);
+
+
+
+                                    ////this.drawtext(dc, t.Angle.ToString(), jointPoints[jointType]);
+                                    //t.Normalize();
+                                    //r.Normalize();
+
+                                    //var angle = r.Angle - t.Angle;
+
+
+                                    if (parent != JointType.Head)
+                                    {
+                                        Vector3D parentPosition = new Vector3D(
+                                                                           joints[parent].Position.X,
+                                                                           joints[parent].Position.Y,
+                                                                        0
+                                                                           );
+                                        Vector3D currentJointPosition = new Vector3D(
+                                                                                        joints[jointType].Position.X,
+                                                                                        joints[jointType].Position.Y,
+                                                                                       0
+                                                                                    );
+                                        var angle = Helpers.AngleBetweenTwoVectors(currentJointPosition, parentPosition, 90);
+                                        angle *= -1;
+                                        this.lb_orientations.Items.Add(jointType + ":" + angle.ToString("00.0"));
+                                    }
+
+
+
+
                                 }
 
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                                jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
-                                JointType parent = Helpers.GetOrigintJoint(jointType);
-
-                                //Quaternion r = new Quaternion(body.JointOrientations[parent].Orientation.X,
-                                //      body.JointOrientations[parent].Orientation.Y,
-                                //      body.JointOrientations[parent].Orientation.Z,
-                                //      body.JointOrientations[parent].Orientation.W);
-
-                                //Quaternion t = new Quaternion(body.JointOrientations[jointType].Orientation.X,
-                                //    body.JointOrientations[jointType].Orientation.Y,
-                                //    body.JointOrientations[jointType].Orientation.Z,
-                                //    body.JointOrientations[jointType].Orientation.W);
-
-
-
-                                ////this.drawtext(dc, t.Angle.ToString(), jointPoints[jointType]);
-                                //t.Normalize();
-                                //r.Normalize();
-
-                                //var angle = r.Angle - t.Angle;
-
-
-                                if (parent != JointType.Head)
-                                {
-                                    Vector3D parentPosition = new Vector3D(
-                                                                       joints[parent].Position.X,
-                                                                       joints[parent].Position.Y,
-                                                                    0
-                                                                       );
-                                    Vector3D currentJointPosition = new Vector3D(
-                                                                                    joints[jointType].Position.X,
-                                                                                    joints[jointType].Position.Y,
-                                                                                   0
-                                                                                );
-                                    var angle = Helpers.AngleBetweenTwoVectors(currentJointPosition, parentPosition , 90);
-                                    angle *= -1;
-                                    this.lb_orientations.Items.Add(jointType + ":" + angle.ToString("00.0"));
-                                }
-                               
-
-                                
-                               
+                                this.DrawBody(joints, jointPoints, dc, drawPen);
+                                this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
+                                this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                             }
-
-                            this.DrawBody(joints, jointPoints, dc, drawPen);
-                            this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
-                            this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
-                    }
 
-                    // prevent drawing outside of our render area
-                    this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
-                }
+                        // prevent drawing outside of our render area
+                        this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                    }
             }
         }
         /// <summary>
@@ -461,7 +461,7 @@
                 this.DrawBone(joints, jointPoints, bone.Item1, bone.Item2, drawingContext, drawingPen);
             }
 
-           
+
 
             Typeface t = new Typeface("Arial");
 
@@ -476,7 +476,7 @@
                     drawBrush = this.trackedJointBrush;
                     FormattedText text = new FormattedText(jointType.ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, t, 2, drawBrush);
                     drawingContext.DrawText(text, jointPoints[jointType]);
-                   
+
                 }
                 else if (trackingState == TrackingState.Inferred)
                 {
@@ -488,7 +488,7 @@
                     drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
                     if (this.bones.Exists(x => x.Item1.Equals(jointType)) && this.drawNames)
                     {
-                        
+
                         this.drawtext(drawingContext, jointType.ToString(), jointPoints[jointType]);
                     }
                 }
@@ -519,9 +519,9 @@
             {
                 drawPen = drawingPen;
             }
- 
+
             drawingContext.DrawLine(drawPen, jointPoints[jointType0], jointPoints[jointType1]);
-           
+
         }
         /// <summary>
         /// Draws a hand symbol if the hand is tracked: red circle = closed, green circle = opened; blue circle = lasso
@@ -534,7 +534,7 @@
             switch (handState)
             {
                 case HandState.Closed:
-                 
+
                     drawingContext.DrawEllipse(this.handClosedBrush, null, handPosition, HandSize, HandSize);
                     break;
 
@@ -607,10 +607,10 @@
         {
             // on failure, set the status text
             this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.SensorNotAvailableStatusText;
-           
-         
-            img_status.Source = this.kinectSensor.IsAvailable ? new BitmapImage(new Uri(@"/Images/Status_running.png", UriKind.Relative)):
-                new BitmapImage(new Uri(@"/Images/Status_notfound.png" , UriKind.Relative))
+
+
+            img_status.Source = this.kinectSensor.IsAvailable ? new BitmapImage(new Uri(@"/Images/Status_running.png", UriKind.Relative)) :
+                new BitmapImage(new Uri(@"/Images/Status_notfound.png", UriKind.Relative))
                 ;
         }
         /// <summary>
@@ -648,16 +648,16 @@
                         }
 
                         this.colorBitmap.Unlock();
-                 //       colorBitmap.WritePixels(
-                 //new Int32Rect(0, 0, colorFrameDescription.Width, colorFrameDescription.Height),
-                 // this.colorBitmap.BackBuffer,
-                 //colorFrameDescription.Width * _bytePerPixel,
-                 //0);
+                        //       colorBitmap.WritePixels(
+                        //new Int32Rect(0, 0, colorFrameDescription.Width, colorFrameDescription.Height),
+                        // this.colorBitmap.BackBuffer,
+                        //colorFrameDescription.Width * _bytePerPixel,
+                        //0);
                     }
                 }
             }
         }
-       
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (this.bodyFrameReader != null)
@@ -685,15 +685,15 @@
             this.scanType = ScanType.Arm;
 
             init();
-           
-            
+
+
             this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
         }
         private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
         {
             this.drawNames = !this.drawNames;
         }
-       
+
         //rdb/checkbox
         private void rdb_neckForceLoad_Checked(object sender, RoutedEventArgs e)
         {
@@ -756,7 +756,7 @@
             int value = Helpers.Convert(chkbox.Tag.ToString());
             rula.score_neck_trunk_legs_muscle.SetAscore(value);
         }
-        private void rdb_additionalLegPosition_Checked (object sender, RoutedEventArgs e)
+        private void rdb_additionalLegPosition_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
@@ -766,7 +766,7 @@
         {
             lb_orientations.Items.Clear();
             int ctr = 0;
-            
+
             foreach (IndexScore _score in this.rula.getScoreList())
             {
                 lb_orientations.Items.Add(_score.getTotal().ToString());
@@ -796,7 +796,7 @@
             //int posture_score_b = chart[y, x];
 
             //int final_neck_trunk_leg_score = posture_score_b + rula.score_neck_trunk_legs_muscle.getTotal() + rula.score_neck_trunk_legs_load.getTotal();
-            
+
             //lbl_body.Text = "PAS:" + score + "{" + y + "," + x +"}";
             //lbl_body.Text += "\nPBS:" + posture_score_b;
 
@@ -810,14 +810,14 @@
         {
 
             var textbox = sender as System.Windows.Controls.TextBox;
-            if(!Helpers.IsTextAllowed(textbox.Text))
+            if (!Helpers.IsTextAllowed(textbox.Text))
             {
                 textbox.Text = "0";
                 textbox.MaxLength = 1;
                 MessageBox.Show(Window.GetWindow(this), "Please Enter a valid number.");
             }
-           
-            if(textbox.Tag == null)return;
+
+            if (textbox.Tag == null) return;
             String _tag = textbox.Tag.ToString();
 
             switch (_tag)
@@ -827,45 +827,45 @@
                     break;
                 case "lower_arm":
                     this.rula.score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    break;
                 case "wrist_position":
-                this.rula.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "wrist_twist":
-                this.rula.score_wrist_twist.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_wrist_twist.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "arm_wrist_muscle":
-                this.rula.score_arm_wrist_muscle.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_arm_wrist_muscle.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "arm_wrist_load":
-                this.rula.score_arm_wrist_load.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_arm_wrist_load.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "neck_position":
-                this.rula.score_neck.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_neck.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "trunk_position":
-                this.rula.score_trunk.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_trunk.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "legs_position":
-                this.rula.score_legs.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_legs.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "neck_trunk_legs_muscle":
-                this.rula.score_neck_trunk_legs_muscle.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_neck_trunk_legs_muscle.SetScore(Helpers.Convert(textbox.Text));
+                    break;
                 case "neck_trunk_legs_load":
-                this.rula.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
-                break;
+                    this.rula.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                    break;
 
 
             }
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-          
+
         }
     }
 }

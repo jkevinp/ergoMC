@@ -16,25 +16,25 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public Employee()
         {
             _employee = this;
-            rulaScore = new RulaObject();
-            this.table = _table;
+            RulaObject = new RulaObject();
+            this.table = TABLE;
         }
-        public const string _table = "employee";
+        public const string TABLE = "employee";
         #region private properties
-        
-        private string firstname = string.Empty;
-        private string lastname = string.Empty;
-        private string middlename = string.Empty;
-        private string company = string.Empty;
-        private string job = string.Empty;
-        private int id = 0;
-        private RulaScore rula_score = null;
+            private Employee _employee = null; 
+            private string firstname = string.Empty;
+            private string lastname = string.Empty;
+            private string middlename = string.Empty;
+            private string company = string.Empty;
+            private string job = string.Empty;
+            private int id = 0;
+            private RulaScore rula_score = null;
         #endregion
         #region public properties
         /// <summary>
         /// Rula Score Object
         /// </summary>
-        public RulaObject rulaScore = null;
+        public RulaObject RulaObject = null;
        
         /// <summary>
         /// Rula Model
@@ -48,55 +48,55 @@ namespace ProjectK.ErgoMC.Assessment.classes
             }
         }
 
-        public string Firstname
-        {
-            get { return this.firstname; }
-            set
+            public string Firstname
             {
-                firstname = value;
-                OnPropertyChanged("Firstname");
+                get { return this.firstname; }
+                set
+                {
+                    firstname = value;
+                    OnPropertyChanged("Firstname");
+                }
             }
-        }
-        public string Lastname
-        {
-            get { return this.lastname; }
-            set { lastname = value; OnPropertyChanged("Lastname"); }
-        }
-        public string Middlename
-        {
-            get { return this.middlename; }
-            set
+            public string Lastname
             {
-                middlename = value;
-                OnPropertyChanged("Middlename");
+                get { return this.lastname; }
+                set { lastname = value; OnPropertyChanged("Lastname"); }
             }
-        }
-        public string Company
-        {
-            get { return this.company; }
-            set
+            public string Middlename
             {
-                company = value;
-                OnPropertyChanged("Company");
+                get { return this.middlename; }
+                set
+                {
+                    middlename = value;
+                    OnPropertyChanged("Middlename");
+                }
             }
-        }
-        public string Job
-        {
-            get { return this.job; }
-            set
+            public string Company
             {
-                job = value;
-                OnPropertyChanged("Job");
+                get { return this.company; }
+                set
+                {
+                    company = value;
+                    OnPropertyChanged("Company");
+                }
             }
-        }
-        public int Id
-        {
-            get { return this.id; }
-            set { id = value; OnPropertyChanged("Id"); }
-        }
+            public string Job
+            {
+                get { return this.job; }
+                set
+                {
+                    job = value;
+                    OnPropertyChanged("Job");
+                }
+            }
+            public int Id
+            {
+                get { return this.id; }
+                set { id = value; OnPropertyChanged("Id"); }
+            }
         #endregion
         
-        private Employee _employee = null;
+         
         public void Reset()
         {
         
@@ -107,7 +107,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             _employee.Company = "";
             _employee.id = 0;
         }
-
         /// <summary>
         /// Find an Employee
         /// </summary>
@@ -133,18 +132,18 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 switch (dr["score_name"].ToString())
                 {
                     case "score_arm_wrist_load":
-                        _employee.rulaScore.score_arm_wrist_load.score = _value;
-                        _employee.rulaScore.score_arm_wrist_load.additionalScore = _additional;
+                        _employee.RulaObject.score_arm_wrist_load.score = _value;
+                        _employee.RulaObject.score_arm_wrist_load.additionalScore = _additional;
 
                     break;
                     case "score_arm_wrist_muscle":
-                    _employee.rulaScore.score_arm_wrist_muscle.score = _value;
-                    _employee.rulaScore.score_arm_wrist_muscle.additionalScore = _additional;
+                    _employee.RulaObject.score_arm_wrist_muscle.score = _value;
+                    _employee.RulaObject.score_arm_wrist_muscle.additionalScore = _additional;
 
                     break;
                     case "score_legs":
-                    _employee.rulaScore.score_legs.score = _value;
-                    _employee.rulaScore.score_legs.additionalScore = _additional;
+                    _employee.RulaObject.score_legs.score = _value;
+                    _employee.RulaObject.score_legs.additionalScore = _additional;
                     break;
                 }
             }
@@ -174,6 +173,37 @@ namespace ProjectK.ErgoMC.Assessment.classes
             return _result;
 
         }
+        public List<Employee> All(Dictionary<string, string> _param , string _condition)
+        {
+            List<Employee> _result = new List<Employee>();
+            string search_sql = " where ";
+            foreach (string _field in _param.Keys)
+            {
+                string _lastField = _param.Keys.Last();
+                search_sql += _field + " LIKE '%" + _param[_field] + "%'";
+                if (!_field.Equals(_lastField))
+                {
+                    search_sql += " " +_condition + " ";
+                }
+            }
+            DataTable result = this.selectQuery("SELECT * FROM `" + table + "`" + search_sql);
+            foreach (DataRow row in result.Rows)
+            {
+                Employee employee = new Employee();
+                employee.Id = Helpers.Convert(result.Rows[0]["id"].ToString());
+                employee.Firstname = row["firstname"].ToString();
+                employee.Middlename = row["middlename"].ToString();
+                employee.Lastname = row["lastname"].ToString();
+                employee.Job = row["job"].ToString();
+                employee.company = row["company"].ToString();
+                employee.Rula_score = new RulaScore();
+                employee.Rula_score.employee_id = employee.Id;
+                employee.Rula_score.Get(employee);
+                _result.Add(employee);
+            }
+            return _result;
+
+        }
         /// <summary>
         /// Save current Employee
         /// </summary>
@@ -194,7 +224,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             Employee _data = this._employee;
             if (is_unique)
             {
-
                 var check = this.selectQuery("SELECT count(1) as count FROM `" + table + "` where firstname= '" + _data.Firstname + "' AND lastname='" + _data.Lastname + "' AND middlename='" + _data.Middlename + "' AND company='" + _data.Company + "' AND job='" + _data.Job + "'");
                 if (Helpers.Convert(check.Rows[0]["count"].ToString()) > 0)
                     return 0;
@@ -212,6 +241,8 @@ namespace ProjectK.ErgoMC.Assessment.classes
             var result = this.insert("INSERT INTO `" + table + "` SET firstname= '" + _data.Firstname + "', lastname='" + _data.Lastname + "' , middlename='" + _data.Middlename + "' ,company='" + _data.Company + "' ,job='" + _data.Job + "'");
             return result;
         }
+        
+        
         private void OnPropertyChanged(String property)
         {
             if (PropertyChanged != null)
@@ -219,6 +250,5 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
-
     }
 }
