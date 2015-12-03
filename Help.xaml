@@ -1,0 +1,161 @@
+﻿<Page x:Class="ProjectK.ErgoMC.Assessment.Help"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="800"
+	Title="Help"   Grid.IsSharedSizeScope="True" Background="{DynamicResource KinectBluishBG}">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <SolidColorBrush x:Key="KinectBluish" Color="#FF0095D4" />
+        <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
+        <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
+
+        <!--<DataTemplate x:Key="IndexScoreTemplate">
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="{Binding score}" />
+                <TextBlock Text="{Binding additionalScore}" />
+            </StackPanel>
+        </DataTemplate>-->
+    </Page.Resources>
+
+    <Grid>
+        <StackPanel Margin="0,0,0,0">
+            <Label Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="20">About</Label>
+            <Label>
+                <TextBlock TextWrapping="Wrap" FontSize="16" Margin="20,0,0,0">ErgoMC is a software intended to support professionals and companies to assess workplaces easily, accurately, and fast and so as to reduce occupational risks. 
+                <LineBreak/>The software is originally developed by Liezel Martinez and Joicelene Caparros.</TextBlock>
+            </Label>
+            <Separator />
+
+            <Label FontSize="20" Foreground="{DynamicResource MediumGreyBrush}" FontWeight="Bold" Padding="5,20,5,5">Rapid Entire Body Assessment</Label>
+            <Label>
+                <TextBlock TextWrapping="Wrap" FontSize="16" Margin="20,0,0,0">Rapid Upper Limb Assessment (RULA) was designed to determine risks associated with upper body postures. It is a method used to evaluate biomechanical and postural load on the body, and focuses on the use and position of arm, wrist, neck and trunk. Lynn McAtamney and Nigel Corlett, ergonomists from University of Nottingham in England, developed RULA.
+                <LineBreak/>    Each region has posture scoring scale and additional adjustments which need to be considered.
+                </TextBlock>
+            </Label>
+
+            <Grid>
+              
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.33*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1" HorizontalContentAlignment="Center">Score </Label>
+                <Label Grid.Row="0" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1" HorizontalContentAlignment="Center">Action Level</Label>
+                <Label Grid.Row="0" Grid.Column="2" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1" HorizontalContentAlignment="Center">Intervention
+                </Label>
+
+                <Label Grid.Row="1" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">1 or 2
+                </Label>
+                <Label Grid.Row="1" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">1
+                </Label>
+                <Label Grid.Row="1" Grid.Column="2" FontSize="16" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">
+                    <TextBlock TextWrapping="Wrap">Posture is acceptable if it is not maintained or repeated for long periods.</TextBlock>
+                </Label>
+
+                <Label Grid.Row="2" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">3 or 4
+                </Label>
+                <Label Grid.Row="2" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">2
+                </Label>
+                <Label Grid.Row="2" Grid.Column="2" FontSize="16" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">
+                    <TextBlock TextWrapping="Wrap">Further investigation is needed and changes may be required.</TextBlock>
+                </Label>
+
+                <Label Grid.Row="3" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">5 or 6
+                </Label>
+                <Label Grid.Row="3" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">3
+                </Label>
+                <Label Grid.Row="3" Grid.Column="2" FontSize="16" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">
+                    <TextBlock TextWrapping="Wrap">Investigation and changes are required soon.</TextBlock>
+                </Label>
+
+                <Label Grid.Row="4" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">7
+                </Label>
+                <Label Grid.Row="4" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">4
+                </Label>
+                <Label Grid.Row="4" Grid.Column="2" FontSize="16" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">
+                    <TextBlock TextWrapping="Wrap">Investigation and changes are required immediately.</TextBlock>
+                </Label>
+            </Grid>
+            
+            <Separator/>
+            <Label FontSize="20" Foreground="{DynamicResource MediumGreyBrush}" FontWeight="Bold" Padding="5,20,5,5">Rapid Upper Limb Assessment</Label>
+            <Label>
+                <TextBlock TextWrapping="Wrap" FontSize="16" Margin="20,0,0,0">
+                    Rapid Entire Body Assessment (REBA) is an analysis tool designed to provide a quick and easy observational evaluation for whole body postural MSD and risks associated with job tasks. This tool was designed in England and developed by ergonomists Dr. Sue Hignett and Dr. Lynn McAtamney.
+                    
+                <LineBreak/>    REBA consists of the following body regions: wrist, forearms, elbows, shoulders, neck, trunk, back, legs and knees. Each region has posture scoring scale and the additional adjustments which need to be considered.
+                </TextBlock>
+            </Label>
+            <Label FontSize="16" FontWeight="Bold">
+                REBA Scores and Level of MSD Risk with the corresponding action needed.
+            </Label>
+
+            <Grid>
+
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1" HorizontalContentAlignment="Center">Score</Label>
+                <Label Grid.Row="0" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1" HorizontalContentAlignment="Center">Level of MSD Risk</Label>
+               
+
+                <Label Grid.Row="1" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">1
+                </Label>
+                <Label Grid.Row="1" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">Negligible risk, no action required.
+                </Label>
+             
+                <Label Grid.Row="2" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">2-3
+                </Label>
+                <Label Grid.Row="2" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">Low risk, change may be needed.
+                </Label>
+
+                <Label Grid.Row="3" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">4-7
+                </Label>
+                <Label Grid.Row="3" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">Medium risk, further investigation, change soon.
+                </Label>
+
+
+                <Label Grid.Row="4" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">8-10
+                </Label>
+                <Label Grid.Row="4" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">High risk, investigate and implement change
+                </Label>
+
+                <Label Grid.Row="5" Grid.Column="0" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">11+
+                </Label>
+                <Label Grid.Row="5" Grid.Column="1" FontSize="16" Background="{x:Null}" BorderBrush="{DynamicResource MediumGreyBrush}" BorderThickness="1">Very high risk, implement change
+                </Label>
+
+            </Grid>
+
+        </StackPanel>
+    </Grid>
+</Page>

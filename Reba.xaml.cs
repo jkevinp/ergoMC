@@ -19,7 +19,7 @@
     /// </summary>
     public partial class Reba : Page, INotifyPropertyChanged
     {
-        private RulaObject rula = new RulaObject();
+        private RebaObject reba = new RebaObject();
 
         /// <summary>
         /// Radius of drawn hand circles
@@ -183,6 +183,7 @@
             }
 
         }
+        
         private void addJointLeg()
         {
 
@@ -699,75 +700,73 @@
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_neck_trunk_legs_load.SetAscore(value);
+            reba.score_neck_trunk_legs_load.SetAscore(value);
         }
         private void rdb_additionalUpperArm_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_upper_arm.SetAscore(value);
+            reba.score_upper_arm.SetAscore(value);
         }
         private void CheckBoxWristPosition_Checked(object sender, RoutedEventArgs e)
         {
             var chkbox = sender as System.Windows.Controls.CheckBox;
             int value = Helpers.Convert(chkbox.Tag.ToString());
-            rula.score_wrist_position.SetAscore(value);
+            reba.score_wrist_position.SetAscore(value);
         }
-        private void rdb_additionaWristTwist_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_wrist_twist.SetAscore(value);
-        }
+        
         private void ArmMuscleUse_Checked(object sender, RoutedEventArgs e)
         {
             var chkbox = sender as System.Windows.Controls.CheckBox;
             int value = Helpers.Convert(chkbox.Tag.ToString());
-            rula.score_arm_wrist_muscle.SetAscore(value);
+            reba.score_arm_wrist_muscle.SetAscore(value);
         }
         private void CheckBoxLowerArmPosition_Checked(object sender, RoutedEventArgs e)
         {
             var chkbox = sender as System.Windows.Controls.CheckBox;
             int value = Helpers.Convert(chkbox.Tag.ToString());
-            rula.score_lower_arm.SetAscore(value);
+            reba.score_lower_arm.SetAscore(value);
         }
         private void rdb_armWristLoad_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            this.rula.score_arm_wrist_load.SetAscore(value);
+            this.reba.score_arm_wrist_load.SetAscore(value);
         }
         //Neck
         private void rdb_additionalNeckPosition_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_neck.SetAscore(value);
+            reba.score_neck.SetAscore(value);
         }
         private void rdb_additionalTrunkPosition_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_trunk.SetAscore(value);
+            reba.score_trunk.SetAscore(value);
         }
         private void NeckMuscleUse_Checked(object sender, RoutedEventArgs e)
         {
             var chkbox = sender as System.Windows.Controls.CheckBox;
             int value = Helpers.Convert(chkbox.Tag.ToString());
-            rula.score_neck_trunk_legs_muscle.SetAscore(value);
+            reba.score_neck_trunk_legs_muscle.SetAscore(value);
         }
         private void rdb_additionalLegPosition_Checked(object sender, RoutedEventArgs e)
         {
             var rdb = sender as System.Windows.Controls.RadioButton;
             int value = Helpers.Convert(rdb.Tag.ToString());
-            rula.score_legs.SetAscore(value);
+            reba.score_legs.SetAscore(value);
         }
+       
+        
+        //Evaluate
         private void btn_evaluate(object sender, RoutedEventArgs e)
         {
             lb_orientations.Items.Clear();
             int ctr = 0;
 
-            foreach (IndexScore _score in this.rula.getScoreList())
+            foreach (IndexScore _score in this.reba.getScoreList())
             {
                 lb_orientations.Items.Add(_score.getTotal().ToString());
                 if (!_score.validate())
@@ -779,33 +778,10 @@
                 ctr++;
             }
 
-            //int[,] chart = Helpers.getChart(Helpers.chart_type.arm_wrist);
-
-            //int y = Helpers.getY(this.rula.score_upper_arm.getTotal(), this.rula.score_lower_arm.getTotal());
-            //int x = Helpers.getX(this.rula.score_wrist_position.getTotal(), this.rula.score_wrist_twist.getTotal());
-
-            //int score = chart[y, x];
-
-            //int posture_score_a = score;
-            //int final_wrist_arm_score = score + rula.score_arm_wrist_muscle.getTotal() + rula.score_arm_wrist_load.getTotal();
-
-
-            //chart = Helpers.getChart(Helpers.chart_type.trunk);
-            //y = Helpers.getYTrunk(rula.score_neck.getTotal());
-            //x = Helpers.getXTrunk(rula.score_trunk.getTotal(), rula.score_legs.getTotal());
-            //int posture_score_b = chart[y, x];
-
-            //int final_neck_trunk_leg_score = posture_score_b + rula.score_neck_trunk_legs_muscle.getTotal() + rula.score_neck_trunk_legs_load.getTotal();
-
-            //lbl_body.Text = "PAS:" + score + "{" + y + "," + x +"}";
-            //lbl_body.Text += "\nPBS:" + posture_score_b;
-
-            //int final_score = Helpers.getChart(Helpers.chart_type.rula_final)[final_wrist_arm_score -1, final_neck_trunk_leg_score -1];
-            //MessageBox.Show(final_score + " is your score");
-
-            EmployeeView _view = new EmployeeView(this.rula);
-            _view.Show();
+          
         }
+        
+        //Textbox Score
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
 
@@ -823,49 +799,35 @@
             switch (_tag)
             {
                 case "upper_arm":
-                    this.rula.score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "lower_arm":
-                    this.rula.score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "wrist_position":
-                    this.rula.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "wrist_twist":
-                    this.rula.score_wrist_twist.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "arm_wrist_muscle":
-                    this.rula.score_arm_wrist_muscle.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "arm_wrist_load":
-                    this.rula.score_arm_wrist_load.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "neck_position":
-                    this.rula.score_neck.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_neck.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "trunk_position":
-                    this.rula.score_trunk.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_trunk.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "legs_position":
-                    this.rula.score_legs.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "neck_trunk_legs_muscle":
-                    this.rula.score_neck_trunk_legs_muscle.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_legs.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "neck_trunk_legs_load":
-                    this.rula.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                    this.reba.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                break;
+                case "coupling":
+                    this.reba.score_coupling.SetScore(Helpers.Convert(textbox.Text));
+                break;
+                case "activity":
+                    this.reba.score_activitiy.SetScore(Helpers.Convert(textbox.Text));
                     break;
-
 
             }
         }
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
+    
     }
 }

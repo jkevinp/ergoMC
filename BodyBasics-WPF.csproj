@@ -123,6 +123,8 @@
     <Compile Include="classes\Employee.cs" />
     <Compile Include="classes\Helpers.cs" />
     <Compile Include="classes\IndexScore.cs" />
+    <Compile Include="classes\RebaObject.cs" />
+    <Compile Include="classes\RebaScore.cs" />
     <Compile Include="classes\RulaObject.cs" />
     <Compile Include="classes\RulaScore.cs" />
     <Compile Include="datagrid.xaml.cs">
@@ -130,6 +132,9 @@
     </Compile>
     <Compile Include="ErgoMcApp.xaml.cs">
       <DependentUpon>ErgoMcApp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="Library\CONFIG.cs" />
     <Compile Include="Library\Model.cs" />
@@ -162,11 +167,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Rula.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -174,8 +183,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Rula.xaml.cs">
+      <DependentUpon>Rula.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Page1.xaml">

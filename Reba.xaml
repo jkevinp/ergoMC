@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ErgoMC - Rapid Entire Body Assessment" 
         Loaded="MainWindow_Loaded"
+      Height="2000"
+      Width="1000"
         Grid.IsSharedSizeScope="True" Background="{DynamicResource KinectBluishBG}">
 
     <Page.Resources>
@@ -13,7 +15,6 @@
         <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
         <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
     </Page.Resources>
-
 
     <Grid Margin="0 0 0 0">
         <Grid.RowDefinitions>
@@ -30,8 +31,6 @@
                 FontSize="32" 
                 Foreground="White" UseLayoutRounding="False" Height="83" 
                 FontFamily="Arial"  />
-
-
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -43,8 +42,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-
-
             <Grid Grid.Column="0" Height="Auto" Grid.Row="0">
                 <DockPanel>
                     <Image x:Name="img_status" Source="Images\Status.png" Stretch="None" Margin="10,0,0,0" />
@@ -52,300 +49,21 @@
                     <CheckBox Content="Draw names" FontSize="12" Checked="CheckBox_Checked_1" Grid.ColumnSpan="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" HorizontalAlignment="Right"/>
                 </DockPanel>
             </Grid>
-
-
             <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
             <Viewbox Grid.Row="1">
                 <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
             </Viewbox>
             <!--<ContentControl Content="{Binding score_upper_arm}" ContentTemplate="{StaticResource IndexScoreTemplate}" />-->
+
             <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />
-            <ScrollViewer 
-                      Height="Auto" Width="auto"  
-                      VerticalAlignment="Top" 
-                      Grid.Column="2" 
-                      Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="0,0,20,0" Background="{DynamicResource KinectBluishBG}">
-            <StackPanel>
+            <ScrollViewer  Height="Auto" Width="auto"  VerticalAlignment="Top" Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="443,43,34,-43" Background="{DynamicResource KinectBluishBG}" Grid.ColumnSpan="3">
+                <StackPanel>
 
                     <Label  
                             Grid.Row="0"
                             HorizontalContentAlignment="Center"  
                             VerticalContentAlignment="Center" 
-                            Content="A. Arm and Wrist Analysis"  
-                            Background="{x:Null}" 
-                            FontSize="32" 
-                            Foreground="{DynamicResource MediumGreyBrush}" 
-                            UseLayoutRounding="False" 
-                            Height="83" 
-                            FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" FontWeight="Bold"  />
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Margin="50,0,0,0"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Upper Arm"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                             
-                            x:Name="upper_arm_score"
-                                  Tag="upper_arm"
-                                  TextChanged="TextBox_TextChanged" 
-                                  Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                    </Grid>
-
-                    <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton GroupName="rdb_additionalUpperArm"  Content="Shoulder is Raised" 
-                                   FontSize="20" 
-                                   VerticalContentAlignment="Center" 
-                                   Margin="80,0,0,0" 
-                                     Tag="1"
-                                      Checked="rdb_additionalUpperArm_Checked"
-                                   />
-                        <RadioButton      
-                            GroupName="rdb_additionalUpperArm"
-                                   Content="Upper Arm is abducted" 
-                            FontSize="20" 
-                            VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0" 
-                            Tag="1"
-                             Checked="rdb_additionalUpperArm_Checked"
-                            />
-                        <RadioButton  
-                            GroupName="rdb_additionalUpperArm"
-                            Content="Arm is supported or is leaning" 
-                            Tag="-1"
-                            FontSize="20" 
-                            VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"  />
-                    </StackPanel>
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Lower Arm"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="lower_arm"
-                                  TextChanged="TextBox_TextChanged" 
-                            x:Name="lower_arm_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
-                    </Grid>
-
-                    <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <CheckBox x:Name="lower_arm_add1"
-                                  Tag="1"  
-                                  Checked="CheckBoxLowerArmPosition_Checked"
-                                  Content="Either arm is working across midline or out to side of the body" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    </StackPanel>
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Wrist Position"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                             x:Name="txt_wrist_position"
-                            Grid.Column="2" 
-                            SpellCheck.IsEnabled="True" 
-                            Text="0" 
-                            Language="en-US" 
-                            FontSize="29" 
-                            HorizontalContentAlignment="Center" 
-                            VerticalContentAlignment="Center" 
-                            Tag="wrist_position"
-                            TextChanged="TextBox_TextChanged"
-                           
-                            />
-                    </Grid>
-                    <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <CheckBox 
-                            Tag="1"
-                            Checked="CheckBoxWristPosition_Checked"
-                            Content="Wrist is bent from midline" 
-                            FontSize="20" 
-                            VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0"  
-                           
-                        />
-                    </StackPanel>
-
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Wrist Twist"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="wrist_twist"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" 
-                            SpellCheck.IsEnabled="True" 
-                            Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                    </Grid>
-
-                    <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton 
-                            GroupName="rdb_additionaWristTwist"
-                            Tag="1"
-                            Checked="rdb_additionaWristTwist_Checked"
-                            Content="Wrist is twisted in mid-range" 
-                            FontSize="20" 
-                            VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0"  />
-                        <RadioButton 
-                            Checked="rdb_additionaWristTwist_Checked"
-                            Tag="2"
-                            GroupName="rdb_additionaWristTwist"
-                            Content="Wrist is at or near end of range" 
-                            FontSize="20" 
-                            VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0"  />
-
-                    </StackPanel>
-
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Muscle Use for Arm and Wrist"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="arm_wrist_muscle"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                    </Grid>
-                    <CheckBox  
-                        FontSize="30" 
-                        VerticalContentAlignment="Center" 
-                        Margin="80,0,0,0" 
-                        Height="auto"  
-                        Tag="1"
-                        Checked="ArmMuscleUse_Checked"
-                        >
-                        <TextBlock>
-                        <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
-                        </TextBlock>
-                    </CheckBox>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Force/Load for Arm and Wrist"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="arm_wrist_load"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                    </Grid>
-                    <RadioButton Tag="0" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="2" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="3" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-
-
-                    <Label  
-                            Grid.Row="0"
-                            HorizontalContentAlignment="Center"  
-                            VerticalContentAlignment="Center" 
-                            Content="B. Neck,Trunk and Legs Analysis"  
+                            Content="A. Neck,Trunk and Legs Analysis"  
                             Background="{x:Null}" 
                             FontSize="32" 
                             Foreground="{DynamicResource MediumGreyBrush}" 
@@ -357,6 +75,8 @@
                             <ColumnDefinition Width="0.8*" />
                             <ColumnDefinition Width="0.2*"/>
                         </Grid.ColumnDefinitions>
+
+
                         <Button  
                         Click="Button_Click"
                             Grid.Row="0"  
@@ -446,49 +166,17 @@
                     </Grid>
                     <RadioButton Tag="1" 
                                  GroupName="rdb_additionalLegPosition" 
-                                 Content="Legs or feet are supported" 
+                                 Content="Bent 30°-60°" 
                                  FontSize="20" 
                                   Checked="rdb_additionalLegPosition_Checked"
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
                                  />
-                    <RadioButton Tag="2" 
-                                 GroupName="rdb_additionalLegPosition" 
-                                 Content="Legs or feet are Not supported" 
+                    <RadioButton Tag="2"  GroupName="rdb_additionalLegPosition"  Content="Bent > 60° " 
                                  FontSize="20" 
                                  Checked="rdb_additionalLegPosition_Checked"
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  />
-
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.8*" />
-                            <ColumnDefinition Width="0.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Muscle Use for Neck, Trunk and Legs"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="neck_trunk_legs_muscle"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                    </Grid>
-                    <CheckBox 
-                        Checked="NeckMuscleUse_Checked"
-                        FontSize="30" VerticalContentAlignment="Center" Margin="80,0,0,0" Height="auto" Tag="1" >
-                        <TextBlock>
-                        <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
-                        </TextBlock>
-                    </CheckBox>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -511,13 +199,213 @@
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
 
-                    <RadioButton Tag="0" GroupName="rdb_neckForceLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
-                    <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
-                    <RadioButton Tag="2" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
-                    <RadioButton Tag="3" GroupName="rdb_neckForceLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <RadioButton Tag="0" GroupName="rdb_neckForceLoad" Content="If load is less than 11 lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If load is betweem 11 lbs to 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
+                    <RadioButton Tag="2" GroupName="rdb_neckForceLoad" Content="If load is greater than 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
+                    <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If shock or rapid build up of force" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+
+                     <!-- REGION B-->
+                    <Label  
+                            Grid.Row="0"
+                            HorizontalContentAlignment="Center"  
+                            VerticalContentAlignment="Center" 
+                            Content="B. Arm and Wrist Analysis"  
+                            Background="{x:Null}" 
+                            FontSize="32" 
+                            Foreground="{DynamicResource MediumGreyBrush}" 
+                            UseLayoutRounding="False" 
+                            Height="83" 
+                            FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" FontWeight="Bold"  />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Margin="50,0,0,0"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Upper Arm"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
+                            UseLayoutRounding="False" 
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                        <TextBox  MaxLength="1" x:Name="upper_arm_score"   Tag="upper_arm" TextChanged="TextBox_TextChanged"   Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                    </Grid>
+
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Additional" Background="{x:Null}" 
+                    		FontSize="16" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <RadioButton Tag="1"  GroupName="rdb_additionalUpperArm"  Content="Shoulder is Raised"    FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"  />
+                        <RadioButton Tag="1"  GroupName="rdb_additionalUpperArm"  Content="Upper Arm is abducted" FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"
+                            />
+                        <RadioButton  
+                            GroupName="rdb_additionalUpperArm"
+                            Content="Arm is supported or person is leaning" 
+                            Tag="-1"
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"  />
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Lower Arm"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
+                            UseLayoutRounding="False" 
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                        <TextBox  MaxLength="1"  Tag="lower_arm" TextChanged="TextBox_TextChanged"  x:Name="lower_arm_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Wrist Position"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
+                            UseLayoutRounding="False" 
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                        <TextBox  MaxLength="1" 
+                             x:Name="txt_wrist_position"
+                            Grid.Column="2" 
+                            SpellCheck.IsEnabled="True" 
+                            Text="0" 
+                            Language="en-US" 
+                            FontSize="29" 
+                            HorizontalContentAlignment="Center" 
+                            VerticalContentAlignment="Center" 
+                            Tag="wrist_position"
+                            TextChanged="TextBox_TextChanged"
+                           
+                            />
+                    </Grid>
+                    <StackPanel>
+                        <Label
+                    		HorizontalContentAlignment="Center"  
+                    		VerticalContentAlignment="Center" 
+                    		Content="Additional"  
+                    		Background="{x:Null}" 
+                    		FontSize="16" 
+                    		Foreground="Black" 
+                    		UseLayoutRounding="False" 
+                    		Height="40" 
+                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <CheckBox 
+                            Tag="1"
+                            Checked="CheckBoxWristPosition_Checked"
+                            Content="Wrist is bent from midline" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0"  
+                           
+                        />
+                    </StackPanel>
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                    <StackPanel>
+                        <RadioButton 
+                            Checked="rdb_additionaWristTwist_Checked"
+                            Tag="2"
+                            GroupName="rdb_additionaWristTwist"
+                            Content="Wrist is at or near end of range" 
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0"  />
+
+                    </StackPanel>
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Coupling"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
+                            UseLayoutRounding="False" 
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                        <TextBox  MaxLength="1"  Tag="arm_wrist_muscle" TextChanged="TextBox_TextChanged" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <RadioButton  Checked="rdb_additionaWristTwist_Checked" Tag="0" GroupName="rdb_additionaWristTwist" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  >
+                        <Label>
+                            <TextBlock>Good<LineBreak/>Well fitting and mid range power grip.</TextBlock>
+                        </Label>
+                    </RadioButton>
+                    <RadioButton  Checked="rdb_additionaWristTwist_Checked" Tag="1" GroupName="rdb_additionaWristTwist" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  >
+                        <Label>
+                            <TextBlock>Fair<LineBreak/>Acceptable but not ideal hand hold our coupling acceptable with another body part.</TextBlock>
+                        </Label>
+                    </RadioButton>
+                    <RadioButton  Checked="rdb_additionaWristTwist_Checked" Tag="2" GroupName="rdb_additionaWristTwist" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  >
+                        <Label>
+                            <TextBlock>Poor<LineBreak/>Hand hold not acceptable but possible.</TextBlock>
+                        </Label>
+                    </RadioButton>
+                    <RadioButton  Checked="rdb_additionaWristTwist_Checked" Tag="3" GroupName="rdb_additionaWristTwist" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  >
+                        <Label>
+                            <TextBlock>Unacceptable<LineBreak/>No handles, awkward, unsafe with any body parts.</TextBlock>
+                        </Label>
+                    </RadioButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button  
+                        Click="Button_Click"
+                            Grid.Row="0"  
+                            VerticalContentAlignment="Center" 
+                            Content="Activity"  
+                            Background="{DynamicResource KinectBluish}" 
+                            FontSize="20" 
+                            Foreground="White" 
+                            UseLayoutRounding="False" 
+                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                        <TextBox  MaxLength="1" 
+                               Tag="arm_wrist_load"
+                                  TextChanged="TextBox_TextChanged" 
+                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Grid>
+                    <RadioButton Tag="1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="One or more body parts are held for longer than one minute.(Static)" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="Repeated small range actions(more than 4x per minute)." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="-1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="Action causes rapid large range changes in postures or unstable base." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
-
-
                 </StackPanel>
             </ScrollViewer>
 

@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectK.ErgoMC.Assessment.classes
+namespace ProjectK.ErgoMC.Assessment
 {
     /// <summary>
-    /// Interaction logic for splash.xaml
+    /// Interaction logic for Help.xaml
     /// </summary>
-    public partial class splash : Window
+    public partial class Help : Page
     {
-        public splash()
+        public Help()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Rula window = new Rula();
-            
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using ProjectK.ErgoMC.Assessment.classes;
 namespace ProjectK.ErgoMC.Assessment
 {
     /// <summary>
@@ -22,7 +22,7 @@ namespace ProjectK.ErgoMC.Assessment
         public ErgoMcApp()
         {
             InitializeComponent();
-            AddFrame(new MainWindow());
+            AddFrame(new Rula());
         }
         public void AddFrame(Page _window)
         {
@@ -37,11 +37,16 @@ namespace ProjectK.ErgoMC.Assessment
         }
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
-            TabItem _tabitem = TabControl.SelectedItem as TabItem;
-            if(_tabitem !=null)
-            TabControl.Items.Remove(_tabitem);
+            if (TabControl.Items.Count > 0) { 
+            if (!Helpers.ToastWarning(this, "Are you sure you want to close this tab?", "Press Yes to close, No to cancel.", MessageBoxButton.YesNo, MessageBoxResult.No)) return;
+                TabItem _tabitem = TabControl.SelectedItem as TabItem;
+                if (_tabitem != null) TabControl.Items.Remove(_tabitem);
+            }
+            else
+            {
+                Helpers.ToastRequired(this, "No more tabs to close.", "Cannot close an non-existing tab.", MessageBoxButton.OK);
+            }
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;

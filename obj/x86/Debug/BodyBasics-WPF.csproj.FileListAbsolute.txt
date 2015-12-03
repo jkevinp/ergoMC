@@ -6,10 +6,8 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQ
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQLite.pdb
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQLite.xml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\datagrid.baml
-C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\MainWindow.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\splash.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\datagrid.g.cs
-C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\MainWindow.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\splash.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\App.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\BodyBasics-WPF_Content.g.cs
@@ -34,3 +32,7 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Page1.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Page1.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Reba.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Reba.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Help.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Help.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Rula.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Rula.g.cs

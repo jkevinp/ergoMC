@@ -20,6 +20,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Warning);
         }
+        public static bool  ToastWarning(Window _owner, string _title, string _text, MessageBoxButton btn , MessageBoxResult messageBoxResult)
+        {
+            MessageBoxResult result = MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Warning, messageBoxResult);
+            if (result == MessageBoxResult.Yes || result == MessageBoxResult.OK)
+            {
+                return true;
+            }
+            return false;
+        }
         public static void ToastError(Window _owner, string _title, string _text, MessageBoxButton btn)
         {
             MessageBox.Show(_owner, _text, _title, btn, MessageBoxImage.Error);
@@ -35,6 +44,67 @@ namespace ProjectK.ErgoMC.Assessment.classes
             arm_wrist,
             rula_final
         }
+        public enum reba_chart_type
+        {
+            table_a,
+            table_b,
+            table_c
+        }
+
+
+        public static int[,] getRebaChart(reba_chart_type _type)
+        {
+            int[,] chart;
+            switch (_type)
+            {
+                case reba_chart_type.table_a:
+                    chart = new int[,]{{1,2,3,4,1,2,3,5,3,3,5,6}, {2,3,4,5,3,4,5,6,4,5,6,7},{2,4,5,6,4,5,6,7,5,6,7,8}, {3,5,6,7,5,6,7,8,6,7,8,9}, {4,6,7,8,6,7,8,9,7,8,9,9} };
+                return chart;
+                case reba_chart_type.table_b:
+                    chart = new int[,]{{1,2,2,1,2,3}, {1,2,3,2,3,4},{3,4,5,4,5,5}, {4,5,5,5,6,7},{6,7,8,7,8,8}, {7,8,8,8,9,9}};
+               return chart;
+                case reba_chart_type.table_c:
+               chart = new int[,]{{1,1,	1,	2,	3,	3,	4,	5,	6,	7,	7,	7},
+                                    {1, 2,	2,	3,	4,	4,	5,	6,	6,	7,	7,	8},
+                                    {2, 3,	3,	3,	4,	5,	6,	7,	7,	8,	8,	8},
+                                    {3, 4,	4,	4,	5,	6,	7,	8,	8,	9,	9,	9},
+                                    {4, 4,	4,	5,	6,	7,	8,	8,	9,9,9,	9,},
+                                    {6, 6,	6,	7,	8,	8,	9,9,	10,	10,	10,	10},
+                                    {7, 7,	7,	8,	9,  9,	9,10,	10,	11,	11,	11},
+                                    {8, 8,	8,  9,	10,	10,	10,	10,	10,	11,	11,	11},
+                                    {9, 9,	9,  10, 10,	10,	11,	11,	11,	12,	12,	12},
+                                    {10,10,	10,	11,	11,	11,	11,	12,	12,	12,	12,	12},
+                                    {11,11,	11,	11,	11,	12,	12,	12,	12,	12,	12,	12},
+                                    {12,12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12}};
+               return chart;
+            }
+            return null;
+
+        }
+
+        public static int getYTableA(int G67, int G68)
+        {
+            int x = ((G67 - 1) * 4) + (G68 - 1);
+            return x;
+        }
+        public static int getXTableA(int D67)
+        {
+            return D67 - 1;
+        }
+
+        public static int getYTableB(int lower_arm_score, int wrist_score)
+        {
+            int x = ((lower_arm_score - 1) * 3) + (wrist_score - 1);
+            return x;
+        }
+        public static int getXTableB(int upper_arm_score)
+        {
+            return upper_arm_score - 1;
+        }
+
+
+
+
         public static double AngleBetweenTwoVectors(Vector3D vectorA, Vector3D vectorB , double minus = 0)
         {
             double dotProduct = 0.0;
@@ -125,9 +195,8 @@ namespace ProjectK.ErgoMC.Assessment.classes
 	            {6,6,6,7,7,7,7,8},
 	            {7,7,7,7,7,8,8,9},
 	            {8,8,8,8,8,9,9,9},
-	            {9,9,9,9,9,9,9,9}
-
-            }; return chart;
+	            {9,9,9,9,9,9,9,9}}; 
+            return chart;
 
                 case chart_type.trunk:
                     chart = new int[,]{{1	,3	,2	,3	,3	,4	,5	,5	,6	,6	,7	,7},
@@ -149,6 +218,10 @@ namespace ProjectK.ErgoMC.Assessment.classes
                                         {5,5,6,6,7,7,7},
                                         {5,5,6,7,7,7,7}};
                     return chart;
+
+            
+
+
             }
 
             return null;

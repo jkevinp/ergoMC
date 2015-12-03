@@ -17,7 +17,7 @@
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
-    public partial class MainWindow : Page, INotifyPropertyChanged
+    public partial class Rula : Page, INotifyPropertyChanged
     {
         private RulaObject rula = new RulaObject();
 
@@ -168,7 +168,7 @@
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
-        public MainWindow()
+        public Rula()
         {
             init();
             this.InitializeComponent();

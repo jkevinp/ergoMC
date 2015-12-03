@@ -19,12 +19,12 @@
             <ColumnDefinition Width="0.85*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource KinectBlack}" Foreground="White" BorderBrush="{DynamicResource KinectPurpleBrush}" BorderThickness="0,2">
+        <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource KinectBlack}" Foreground="White" BorderBrush="{DynamicResource KinectPurpleBrush}" BorderThickness="0,2" Padding="0,5">
             <MenuItem Header="_File" Background="{DynamicResource KinectBlack}" Foreground="White" >
                 <MenuItem Header="_New" Background="{DynamicResource KinectBlack}"   />
                 <MenuItem Header="_Open"  Background="{DynamicResource KinectBlack}" />
@@ -40,15 +40,14 @@
             <MenuItem Header="_Help" />
         </Menu>
         <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto">
-            <Button Click="Button_Click" Tag="MainWindow" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">RULA</Button>
+            <Button Click="Button_Click" Tag="Rula" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">RULA</Button>
             <Button Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Reba">REBA</Button>
             <Button Click="Button_Click" Tag="List" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">LIST</Button>
-            
-            <Button Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">Teest</Button>
+            <Button  Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Help">About</Button>
         </StackPanel>
         <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
           
         </TabControl>
-        <Button Content="Close" Click="ButtonClose_Click" Grid.Column="1" Grid.Row="3"/>
+        <Button Content="Close Current Tab" Click="ButtonClose_Click" Grid.Column="1" Height="60" Grid.Row="3" Background="{DynamicResource KinectBlack}" FontSize="20" Foreground="White" BorderThickness="0,1"/>
     </Grid>
 </Window>
