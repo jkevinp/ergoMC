@@ -19,7 +19,8 @@
     /// </summary>
     public partial class Reba : Page, INotifyPropertyChanged
     {
-        private RebaObject reba = new RebaObject();
+        private RebaObject rebaObject = new RebaObject();
+        public RebaObject RebaObject { get; set; }
 
         /// <summary>
         /// Radius of drawn hand circles
@@ -117,6 +118,8 @@
         private ScanType scanType = ScanType.All;
         public void init()
         {
+            this.RebaObject = rebaObject;
+
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
             FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
@@ -161,9 +164,8 @@
             this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
             this.kinectSensor.Open();
 
-
+            rebaObject.Score_neck.Score = 10;
             this.DataContext = this;
-
         }
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -173,14 +175,7 @@
             init();
             this.InitializeComponent();
             Model m = new Model(CONFIG.DB_NAME);
-            if (m.CreateDatabase(CONFIG.DB_NAME) == 1)
-            {
-                MessageBox.Show("Database created.");
-            }
-            else
-            {
-                Console.WriteLine("Database exists");
-            }
+            m.CreateDatabase(CONFIG.DB_NAME);
 
         }
         
@@ -696,69 +691,7 @@
         }
 
         //rdb/checkbox
-        private void rdb_neckForceLoad_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            reba.score_neck_trunk_legs_load.SetAscore(value);
-        }
-        private void rdb_additionalUpperArm_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            reba.score_upper_arm.SetAscore(value);
-        }
-        private void CheckBoxWristPosition_Checked(object sender, RoutedEventArgs e)
-        {
-            var chkbox = sender as System.Windows.Controls.CheckBox;
-            int value = Helpers.Convert(chkbox.Tag.ToString());
-            reba.score_wrist_position.SetAscore(value);
-        }
-        
-        private void ArmMuscleUse_Checked(object sender, RoutedEventArgs e)
-        {
-            var chkbox = sender as System.Windows.Controls.CheckBox;
-            int value = Helpers.Convert(chkbox.Tag.ToString());
-            reba.score_arm_wrist_muscle.SetAscore(value);
-        }
-        private void CheckBoxLowerArmPosition_Checked(object sender, RoutedEventArgs e)
-        {
-            var chkbox = sender as System.Windows.Controls.CheckBox;
-            int value = Helpers.Convert(chkbox.Tag.ToString());
-            reba.score_lower_arm.SetAscore(value);
-        }
-        private void rdb_armWristLoad_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            this.reba.score_arm_wrist_load.SetAscore(value);
-        }
-        //Neck
-        private void rdb_additionalNeckPosition_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            reba.score_neck.SetAscore(value);
-        }
-        private void rdb_additionalTrunkPosition_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            reba.score_trunk.SetAscore(value);
-        }
-        private void NeckMuscleUse_Checked(object sender, RoutedEventArgs e)
-        {
-            var chkbox = sender as System.Windows.Controls.CheckBox;
-            int value = Helpers.Convert(chkbox.Tag.ToString());
-            reba.score_neck_trunk_legs_muscle.SetAscore(value);
-        }
-        private void rdb_additionalLegPosition_Checked(object sender, RoutedEventArgs e)
-        {
-            var rdb = sender as System.Windows.Controls.RadioButton;
-            int value = Helpers.Convert(rdb.Tag.ToString());
-            reba.score_legs.SetAscore(value);
-        }
-       
+      
         
         //Evaluate
         private void btn_evaluate(object sender, RoutedEventArgs e)
@@ -766,7 +699,7 @@
             lb_orientations.Items.Clear();
             int ctr = 0;
 
-            foreach (IndexScore _score in this.reba.getScoreList())
+            foreach (IndexScore _score in this.rebaObject.getScoreList())
             {
                 lb_orientations.Items.Add(_score.getTotal().ToString());
                 if (!_score.validate())
@@ -778,7 +711,9 @@
                 ctr++;
             }
 
-          
+            RebaScore scoree = new RebaScore();
+            scoree.calculateAll(RebaObject);
+            Helpers.ToastSuccess(Window.GetWindow(this), "Reba Final Score", "The calculated REBA score for the current employee is " + scoree.final_score + "\n" , MessageBoxButton.OK);
         }
         
         //Textbox Score
@@ -798,33 +733,34 @@
 
             switch (_tag)
             {
-                case "upper_arm":
-                    this.reba.score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "lower_arm":
-                    this.reba.score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "wrist_position":
-                    this.reba.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
-                    break;
                 case "neck_position":
-                    this.reba.score_neck.SetScore(Helpers.Convert(textbox.Text));
+                    this.rebaObject.Score_neck.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "trunk_position":
-                    this.reba.score_trunk.SetScore(Helpers.Convert(textbox.Text));
+                    this.rebaObject.Score_trunk.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "legs_position":
-                    this.reba.score_legs.SetScore(Helpers.Convert(textbox.Text));
+                    this.rebaObject.Score_legs.SetScore(Helpers.Convert(textbox.Text));
                     break;
                 case "neck_trunk_legs_load":
-                    this.reba.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                    this.rebaObject.Score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "upper_arm":
+                    this.rebaObject.Score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "lower_arm":
+                    this.rebaObject.Score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "wrist_position":
+                    this.rebaObject.Score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
                 break;
+              
                 case "coupling":
-                    this.reba.score_coupling.SetScore(Helpers.Convert(textbox.Text));
+                    this.rebaObject.Score_coupling.SetScore(Helpers.Convert(textbox.Text));
                 break;
                 case "activity":
-                    this.reba.score_activitiy.SetScore(Helpers.Convert(textbox.Text));
-                    break;
+                    this.rebaObject.Score_activity.SetScore(Helpers.Convert(textbox.Text));
+                break;
 
             }
         }

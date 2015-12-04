@@ -57,8 +57,14 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int rula_id = 0;
         public string name = string.Empty;
         public int employee_id = 0;
+
         public int score = 0;
         public int additionalScore = 0;
+
+        public int Score { get; set; }
+        public int AdditionalScore { get; set; }
+
+
         public int SetAscore(int x) { this.additionalScore = x; return this.additionalScore; }
         public int GetAscore() { return this.additionalScore; }
         public int getTotal() { return (this.additionalScore + score); }

@@ -22,7 +22,7 @@ namespace ProjectK.ErgoMC.Assessment
         public ErgoMcApp()
         {
             InitializeComponent();
-            AddFrame(new Rula());
+            AddFrame(new Reba());
         }
         public void AddFrame(Page _window)
         {

@@ -11,24 +11,54 @@ namespace ProjectK.ErgoMC.Assessment.classes
     {
         private List<IndexScore> _scores = new List<IndexScore>();
 
-        #region Table A
-        public IndexScore score_neck = new IndexScore(1, 3, "score_neck");
-        public IndexScore score_trunk = new IndexScore(1, 5, "score_trunk");
-        public IndexScore score_legs = new IndexScore(1, 4, "score_legs");
-        #endregion
+        private IndexScore score_neck = new IndexScore(1, 3, "score_neck");
+        private IndexScore score_trunk = new IndexScore(1, 5, "score_trunk");
+        private IndexScore score_legs = new IndexScore(1, 4, "score_legs");
+        private IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load");
+        private IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm");
+        private IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position");
+        private IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm");
+        private IndexScore score_coupling = new IndexScore(0, 3, "score_coupling");
+        private IndexScore score_activity= new IndexScore(0,1,"score_activitiy" );
 
-        public IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load");
-
-        #region Table B
-        public IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm");
-        public IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position");
-        public IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm");
-        #endregion
-
-        public IndexScore score_coupling = new IndexScore(0, 3, "score_coupling");
-        public IndexScore score_activitiy= new IndexScore(0,1,"score_activitiy" );
-       // public IndexScore score_arm_wrist_load = new IndexScore(0, 2, "score_arm_wrist_load");
-       
+        public IndexScore Score_neck {
+            get { return this.score_neck; }
+            set { this.score_neck = value;}
+        }
+        public IndexScore Score_trunk {
+            get { return this.score_trunk; }
+            set { this.score_trunk = value; }
+        }
+        public IndexScore Score_legs
+        {
+            get { return this.score_legs; }
+            set { this.score_legs = value; }
+        }
+        public IndexScore Score_neck_trunk_legs_load {
+            get { return this.score_neck_trunk_legs_load; }
+            set { this.score_neck_trunk_legs_load = value; }
+        }
+        public IndexScore Score_upper_arm {
+            get { return this.score_upper_arm; }
+            set { this.score_upper_arm = value; }
+        }
+        public IndexScore Score_wrist_position{
+            get { return this.score_wrist_position; }
+            set { this.score_wrist_position = value; }
+        }
+        public IndexScore Score_lower_arm  {
+            get { return this.score_lower_arm; }
+            set { this.score_lower_arm = value; } 
+        }
+        public IndexScore Score_coupling  {
+            get { return this.score_coupling; }
+            set { this.score_coupling = value; }
+        }
+        public IndexScore Score_activity {
+            get { return this.score_activity; }
+            set { this.score_activity = value; }
+        }
+      
 
         public RebaObject()
         {
@@ -40,15 +70,16 @@ namespace ProjectK.ErgoMC.Assessment.classes
         }
         public void init()
         {
-            _scores.Add(score_upper_arm);
-            _scores.Add(score_lower_arm);
-            _scores.Add(score_wrist_position);
             _scores.Add(score_neck);
             _scores.Add(score_trunk);
             _scores.Add(score_legs);
             _scores.Add(score_neck_trunk_legs_load);
+            _scores.Add(score_upper_arm);
+            _scores.Add(score_lower_arm);
+            _scores.Add(score_wrist_position);
+           
             _scores.Add(score_coupling);
-            _scores.Add(score_activitiy);
+            _scores.Add(score_activity);
         }
         public void Save()
         {
