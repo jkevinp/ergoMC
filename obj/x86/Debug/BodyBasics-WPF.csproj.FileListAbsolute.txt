@@ -36,3 +36,5 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Help.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Help.g.cs
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Rula.baml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\Rula.g.cs
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaReport.baml
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\RebaReport.g.cs

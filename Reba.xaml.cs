@@ -704,7 +704,6 @@
                 lb_orientations.Items.Add(_score.getTotal().ToString());
                 if (!_score.validate())
                 {
-
                     Helpers.ToastError(Window.GetWindow(this), "Input error", _score.error_message, MessageBoxButton.OK);
                     return;
                 }
@@ -713,13 +712,57 @@
 
             RebaScore scoree = new RebaScore();
             scoree.calculateAll(RebaObject);
-            Helpers.ToastSuccess(Window.GetWindow(this), "Reba Final Score", "The calculated REBA score for the current employee is " + scoree.final_score + "\n" , MessageBoxButton.OK);
-        }
-        
-        //Textbox Score
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
+            RebaReport report = new RebaReport(RebaObject);
+            report.Show();
 
+
+           // Helpers.ToastSuccess(Window.GetWindow(this), "Reba Final Score", "The calculated REBA score for the current employee is " + scoree.final_score + "\n" , MessageBoxButton.OK);
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton rdb = sender as RadioButton;
+            if (rdb.Tag == null) return;
+            String _tag = rdb.Tag.ToString();
+            String _value = rdb.IsChecked.ToString();
+            string _group = rdb.GroupName.ToString();
+            switch (_group)
+            {
+                case "neck_position":
+                    this.rebaObject.Score_neck.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "trunk_position":
+                    this.rebaObject.Score_trunk.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "legs_position":
+                    this.rebaObject.Score_legs.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "neck_trunk_legs_load":
+                    this.rebaObject.Score_neck_trunk_legs_load.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "upper_arm":
+                    this.rebaObject.Score_upper_arm.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "lower_arm":
+                    this.rebaObject.Score_lower_arm.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "wrist_position":
+                    this.rebaObject.Score_wrist_position.SetAscore(Helpers.Convert(_tag));
+                    break;
+                   
+                case "coupling":
+                    this.rebaObject.Score_coupling.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "activity":
+                    this.rebaObject.Score_activity.SetAscore(Helpers.Convert(_tag));
+                    break;
+
+            }
+            
+        }
+        private void TextBox_Clicked(object sender, RoutedEventArgs e)
+        {
+           
             var textbox = sender as System.Windows.Controls.TextBox;
             if (!Helpers.IsTextAllowed(textbox.Text))
             {
@@ -727,7 +770,54 @@
                 textbox.MaxLength = 1;
                 MessageBox.Show(Window.GetWindow(this), "Please Enter a valid number.");
             }
+            if (textbox.Tag == null) return;
+            String _tag = textbox.Tag.ToString();
+            RebaWindow window = new RebaWindow(_tag);
+            window.ShowDialog();
+            switch (_tag)
+            {
+                case "neck_position":
+                   
+                    this.rebaObject.Score_neck.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "trunk_position":
+                    this.rebaObject.Score_trunk.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "legs_position":
+                    this.rebaObject.Score_legs.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "neck_trunk_legs_load":
+                    this.rebaObject.Score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "upper_arm":
+                    this.rebaObject.Score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "lower_arm":
+                    this.rebaObject.Score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "wrist_position":
+                    this.rebaObject.Score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
+                    break;
 
+                case "coupling":
+                    this.rebaObject.Score_coupling.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+                case "activity":
+                    this.rebaObject.Score_activity.SetScore(Helpers.Convert(textbox.Text));
+                    break;
+
+            }
+        }
+        //Textbox Score
+        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            var textbox = sender as System.Windows.Controls.TextBox;
+            if (!Helpers.IsTextAllowed(textbox.Text))
+            {
+                textbox.Text = "0";
+                textbox.MaxLength = 1;
+                MessageBox.Show(Window.GetWindow(this), "Please Enter a valid number.");
+            }
             if (textbox.Tag == null) return;
             String _tag = textbox.Tag.ToString();
 
@@ -764,6 +854,9 @@
 
             }
         }
+
+       
+
     
     }
 }

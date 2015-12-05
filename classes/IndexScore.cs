@@ -34,6 +34,14 @@ namespace ProjectK.ErgoMC.Assessment.classes
             this.error_message = "Please select a number between " + this.min + " to " + this.max;
             this.table = _table;
         }
+
+        private string _table = "rulascore";
+
+        public void ChangeTable(string _table)
+        {
+            this.table = _table;
+        }
+
         /// <summary>
         /// Initialize a New Index Score
         /// </summary>
@@ -47,23 +55,27 @@ namespace ProjectK.ErgoMC.Assessment.classes
             this.max = _max;
             this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + name.Replace('_' , ' ');
             this.table = _table;
-            // 
-
         }
         public string error_message = "Please enter a valid value.";
         public int min = 0;
         public int max = 0;
-        public const string _table = "rulascore";
-        public int rula_id = 0;
+        public int id = 0;
         public string name = string.Empty;
         public int employee_id = 0;
 
         public int score = 0;
         public int additionalScore = 0;
 
-        public int Score { get; set; }
-        public int AdditionalScore { get; set; }
-
+        public int Score
+        {
+            get{ return this.score; }
+            set{ this.score= value; } 
+        }
+        public int AdditionalScore
+        {
+            get { return this.additionalScore; }
+            set { this.additionalScore = value; }
+        }
 
         public int SetAscore(int x) { this.additionalScore = x; return this.additionalScore; }
         public int GetAscore() { return this.additionalScore; }
@@ -72,9 +84,14 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int SetScore(int x) {score = x; return this.score;}
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int Save()
+        public int SaveRula()
         {
-            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id + "' ,' "  +this.rula_id +   "' ,'" + this.name + "','" + this.getScore()  +"','" + this.GetAscore() +"','" + this.getTotal() +"')");
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "')");
+            return result;
+        }
+        public int SaveReba()
+        {
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,reba_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "')");
             return result;
         }
       

@@ -127,6 +127,8 @@
     <Compile Include="classes\RebaScore.cs" />
     <Compile Include="classes\RulaObject.cs" />
     <Compile Include="classes\RulaScore.cs" />
+    <Compile Include="classes\Session.cs" />
+    <Compile Include="classes\User.cs" />
     <Compile Include="datagrid.xaml.cs">
       <DependentUpon>datagrid.xaml</DependentUpon>
     </Compile>
@@ -146,6 +148,9 @@
     </Compile>
     <Compile Include="Reba.xaml.cs">
       <DependentUpon>Reba.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RebaReport.xaml.cs">
+      <DependentUpon>RebaReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="RebaWindow.xaml.cs">
       <DependentUpon>RebaWindow.xaml</DependentUpon>
@@ -172,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RebaReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,10 +289,14 @@
     <Resource Include="Images\Ico\favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\RebaSelection\neck_position\1.png" />
+    <Resource Include="Images\RebaSelection\neck_position\2.png" />
+    <Resource Include="Images\RebaSelection\neck_position\3.png" />
     <Content Include="SQLite.Interop.091.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

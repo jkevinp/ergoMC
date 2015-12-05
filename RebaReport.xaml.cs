@@ -18,15 +18,15 @@ namespace ProjectK.ErgoMC.Assessment
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class EmployeeView : Window
+    public partial class RebaReport : Window
     {
         Employee _employee = null;
-        public EmployeeView(RulaObject _rulaObject)
+        public RebaReport(RebaObject _rebaObject)
         {
             this._employee = new Employee();
-            this._employee.RulaObject = _rulaObject;
-            _employee.Rula_score = new RulaScore();
-            _employee.Rula_score.CreateFromRulaObject(_rulaObject);
+            this._employee.RebaObject = _rebaObject;
+            this._employee.Reba_score = new RebaScore();
+            this._employee.Reba_score.calculateAll(_rebaObject);
             this.DataContext = _employee;
             InitializeComponent();
         }
@@ -38,22 +38,24 @@ namespace ProjectK.ErgoMC.Assessment
                 MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");
                 return;
             }
-           this._employee.Rula_score.employee_id = _employee.Id;
-           var rula_id = this._employee.Rula_score.Save(true);
+            this._employee.Reba_score.employee_id = _employee.Id;
+            var id = this._employee.Reba_score.Save(true);
 
-           if (rula_id == 0)
-           {
-               MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");
-               return;
-           }
-           foreach (IndexScore indexScore in this._employee.RulaObject.getScoreList())
-           {
-                indexScore.employee_id = _employee.Id;
-                indexScore.id = rula_id;
-                indexScore.SaveRula();
+            if (id == 0)
+            {
+                MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");
+                return;
             }
-           MessageBox.Show(this, "The Record has been saved", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
-           this.btn_evaluate.IsEnabled = false;
+
+            foreach (IndexScore indexScore in this._employee.RebaObject.getScoreList())
+            {
+                indexScore.ChangeTable("rebascore");
+                indexScore.employee_id = _employee.Id;
+                indexScore.id = id;
+                indexScore.SaveReba();
+            }
+            MessageBox.Show(this, "The Record has been saved", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.btn_evaluate.IsEnabled = false;
             Console.WriteLine(_employee.Id);
         }
 
@@ -67,7 +69,7 @@ namespace ProjectK.ErgoMC.Assessment
             _employee.Reset();
         }
 
-     
+
 
     }
 }

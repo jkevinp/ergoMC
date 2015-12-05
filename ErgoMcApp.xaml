@@ -40,6 +40,7 @@
             <MenuItem Header="_Help" />
         </Menu>
         <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto">
+            <Label Content="{Binding Path=user.Name}" Foreground="White" FontSize="16"/>
             <Button Click="Button_Click" Tag="Rula" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">RULA</Button>
             <Button Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Reba">REBA</Button>
             <Button Click="Button_Click" Tag="List" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">LIST</Button>

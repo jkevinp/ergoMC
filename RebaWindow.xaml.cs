@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using ProjectK.ErgoMC.Assessment.classes;
 namespace ProjectK.ErgoMC.Assessment
 {
     /// <summary>
@@ -19,9 +19,43 @@ namespace ProjectK.ErgoMC.Assessment
     /// </summary>
     public partial class RebaWindow : Window
     {
-        public RebaWindow()
+        public RebaWindow(string _tag)
         {
+
             InitializeComponent();
+            switch (_tag)
+            {
+                case "neck_position":
+                    Button btn = new Button();
+                    btn.Width = 100;
+                    btn.Content = new Image
+                        {
+                            Source = new BitmapImage(new Uri(@"Images/RebaSelection/neck_position/1.png", UriKind.Relative)),
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                    stack_panel.Children.Add(btn);
+                break;
+                case "trunk_position":
+                
+                break;
+                case "legs_position":
+                
+                break;
+                case "neck_trunk_legs_load":
+                
+                break;
+                case "upper_arm":
+                    break;
+                case "lower_arm":
+                    break;
+                case "wrist_position":
+                    break;
+                case "coupling":
+                    break;
+                case "activity":
+                    break;
+
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             _employee = this;
             RulaObject = new RulaObject();
+            RebaObject = new RebaObject();
             this.table = TABLE;
         }
         public const string TABLE = "employee";
@@ -29,13 +30,20 @@ namespace ProjectK.ErgoMC.Assessment.classes
             private string job = string.Empty;
             private int id = 0;
             private RulaScore rula_score = null;
+            private RebaScore reba_score = null;
         #endregion
         #region public properties
         /// <summary>
         /// Rula Score Object
         /// </summary>
         public RulaObject RulaObject = null;
-       
+        public RebaObject RebaObject = null;
+
+        public RebaScore Reba_score{
+            get { return this.reba_score; }
+            set { this.reba_score = value; }
+        }
+
         /// <summary>
         /// Rula Model
         /// </summary>
@@ -241,8 +249,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             var result = this.insert("INSERT INTO `" + table + "` SET firstname= '" + _data.Firstname + "', lastname='" + _data.Lastname + "' , middlename='" + _data.Middlename + "' ,company='" + _data.Company + "' ,job='" + _data.Job + "'");
             return result;
         }
-        
-        
         private void OnPropertyChanged(String property)
         {
             if (PropertyChanged != null)

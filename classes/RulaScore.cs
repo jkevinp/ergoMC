@@ -140,7 +140,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             // var result = this.insert("INSERT INTO `" + table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id +"' ,'0' ,'" + score +"','" + +"','" + +"','" + +"')");
 
-            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_wrist_arm_score,posture_score_b,final_neck_trunk_leg_score,final_score,description) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_wrist_arm_score + "','" + posture_score_b + "','" + final_neck_trunk_leg_score + "','" + final_score + "','" + description + "')");
+            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_wrist_arm_score,posture_score_b,final_neck_trunk_leg_score,final_score,description,user_id) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_wrist_arm_score + "','" + posture_score_b + "','" + final_neck_trunk_leg_score + "','" + final_score + "','" + description + "',"  + Session.user.Id  + ")");
             return result;
         }
     

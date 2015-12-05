@@ -19,10 +19,17 @@ namespace ProjectK.ErgoMC.Assessment
     /// </summary>
     public partial class ErgoMcApp : Window
     {
+        private User _user = Session.user;
+        public User user
+        {
+            get { return this._user; }
+        }
+
         public ErgoMcApp()
         {
             InitializeComponent();
             AddFrame(new Reba());
+            this.DataContext = this;
         }
         public void AddFrame(Page _window)
         {
