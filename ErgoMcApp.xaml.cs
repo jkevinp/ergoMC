@@ -19,17 +19,21 @@ namespace ProjectK.ErgoMC.Assessment
     /// </summary>
     public partial class ErgoMcApp : Window
     {
-        private User _user = Session.user;
-        public User user
+        public static ErgoMcApp _this = null;
+        private classes.User _user = Session.user;
+        public classes.User user
         {
             get { return this._user; }
+            set { this._user = value; }
         }
 
         public ErgoMcApp()
         {
             InitializeComponent();
-            AddFrame(new Reba());
+            AddFrame(new List());
             this.DataContext = this;
+
+            _this = this;
         }
         public void AddFrame(Page _window)
         {
@@ -60,6 +64,26 @@ namespace ProjectK.ErgoMC.Assessment
             var type = Type.GetType("ProjectK.ErgoMC.Assessment." + btn.Tag.ToString());
             Page p = (Page)Activator.CreateInstance(type);
             AddFrame(p);
+        }
+
+        private void Button_Click_Back(object sender, RoutedEventArgs e)
+        {
+            TabItem _tabitem = TabControl.SelectedItem as TabItem;
+            int t = TabControl.SelectedIndex;
+            if (t >= 1)
+            {
+                TabControl.SelectedIndex = t - 1;
+            }
+        }
+
+        private void Button_Click_Next(object sender, RoutedEventArgs e)
+        {
+            TabItem _tabitem = TabControl.SelectedItem as TabItem;
+            int t = TabControl.SelectedIndex;
+            if (TabControl.SelectedIndex < TabControl.Items.Count)
+            {
+                TabControl.SelectedIndex = t +1;
+            }
         }
 
     }

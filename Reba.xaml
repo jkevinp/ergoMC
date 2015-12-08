@@ -87,7 +87,8 @@
                             Foreground="White" 
                             UseLayoutRounding="False" 
                             Height="40" 
-                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
+                            FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}">
+                        </Button>
                         <TextBox  MaxLength="1" 
                             Tag="neck_position"
                             TextChanged="TextBox_TextChanged" 
@@ -95,8 +96,8 @@
 
 
                     </Grid>
-                    <RadioButton Tag="1" GroupName="neck_position" Content="Neck is Twisted" FontSize="20"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="1" GroupName="neck_position" Content="Neck is side bending" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="1" GroupName="neck_position" Content="Neck is Twisted" FontSize="20"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp" />
+                    <RadioButton Tag="1" GroupName="neck_position" Content="Neck is side bending" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp" />
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -121,6 +122,7 @@
                             x:Name="trunk_poosition_score" Grid.Column="2" SpellCheck.IsEnabled="True" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                     <RadioButton Tag="1" 
+                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp" 
                                  GroupName="trunk_position" 
                                  Content="Trunk is twisted" 
                                  FontSize="20" 
@@ -128,6 +130,7 @@
                                  Margin="80,0,0,0" Checked="RadioButton_Checked"  
                                  />
                     <RadioButton Tag="1" 
+                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp" 
                                  GroupName="trunk_position" 
                                  Content="Trunk is side bending" 
                                  FontSize="20" 
@@ -158,6 +161,7 @@
                             Grid.Column="2" SpellCheck.IsEnabled="True"  Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                     <RadioButton Tag="1" 
+                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp" 
                                  GroupName="legs_position" 
                                  Content="Bent 30°-60°" 
                                  FontSize="20" 
@@ -167,7 +171,8 @@
                     <RadioButton Tag="2"  GroupName="legs_position"  Content="Bent > 60° " 
                                  FontSize="20" 
                                  VerticalContentAlignment="Center" 
-                                 Margin="80,0,0,0" Checked="RadioButton_Checked"  />
+                                 Margin="80,0,0,0" Checked="RadioButton_Checked" 
+                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -192,10 +197,10 @@
                                   Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
 
-                    <RadioButton Tag="0" GroupName="neck_trunk_legs_load" Content="If load is less than 11 lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="1" GroupName="neck_trunk_legs_load" Content="If load is betweem 11 lbs to 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
-                    <RadioButton Tag="2" GroupName="neck_trunk_legs_load" Content="If load is greater than 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
-                    <RadioButton Tag="1" GroupName="neck_trunk_legs_load" Content="If shock or rapid build up of force" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
+                    <RadioButton MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Tag="0" GroupName="neck_trunk_legs_load" Content="If load is less than 11 lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Tag="1" GroupName="neck_trunk_legs_load" Content="If load is betweem 11 lbs to 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
+                    <RadioButton MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Tag="2" GroupName="neck_trunk_legs_load" Content="If load is greater than 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
+                    <RadioButton MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Tag="1" GroupName="neck_trunk_legs_load" Content="If shock or rapid build up of force" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
 
                      <!-- REGION B-->
                     <Label  
@@ -239,13 +244,14 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton Tag="1"  GroupName="upper_arm"  Content="Shoulder is Raised"    FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="RadioButton_Checked"  />
-                        <RadioButton Tag="1"  GroupName="upper_arm"  Content="Upper Arm is abducted" FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0"  Checked="RadioButton_Checked" />
+                        <RadioButton Tag="1"  MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="upper_arm"  Content="Shoulder is Raised"    FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="RadioButton_Checked"  />
+                        <RadioButton Tag="1" MouseRightButtonUp="RadioButton_MouseRightButtonUp"  GroupName="upper_arm"  Content="Upper Arm is abducted" FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0"  Checked="RadioButton_Checked" />
                         <RadioButton  
                             GroupName="upper_arm"
                             Content="Arm is supported or person is leaning" 
                             Tag="-1"
                             FontSize="20" 
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0" Checked="RadioButton_Checked"/>
 
@@ -312,6 +318,7 @@
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                         <RadioButton
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp" 
                             GroupName="wrist_position"
                             Checked="RadioButton_Checked"
                             Tag="1"
@@ -353,22 +360,22 @@
                                   Text="{Binding Path=RebaObject.Score_coupling.Score, Mode=TwoWay}"
                                   Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton  Tag="0" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  Checked="RadioButton_Checked">
+                    <RadioButton  Tag="0" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp" >
                         <Label>
                             <TextBlock>Good<LineBreak/>Well fitting and mid range power grip.</TextBlock>
                         </Label>
                     </RadioButton>
-                    <RadioButton Tag="1" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" >
+                    <RadioButton Tag="1" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp" >
                         <Label>
                             <TextBlock>Fair<LineBreak/>Acceptable but not ideal hand hold our coupling acceptable with another body part.</TextBlock>
                         </Label>
                     </RadioButton>
-                    <RadioButton  Tag="2" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" >
+                    <RadioButton  Tag="2" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp"  >
                         <Label>
                             <TextBlock>Poor<LineBreak/>Hand hold not acceptable but possible.</TextBlock>
                         </Label>
                     </RadioButton>
-                    <RadioButton   Tag="3" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" >
+                    <RadioButton   Tag="3" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" MouseRightButtonUp="RadioButton_MouseRightButtonUp" >
                         <Label>
                             <TextBlock>Unacceptable<LineBreak/>No handles, awkward, unsafe with any body parts.</TextBlock>
                         </Label>
@@ -395,9 +402,9 @@
                                   Text="{Binding Path=RebaObject.Score_activity.Score, Mode=TwoWay}"
                                   Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton Tag="1"  Checked="RadioButton_Checked" GroupName="activity" Content="One or more body parts are held for longer than one minute.(Static)" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="1"  Checked="RadioButton_Checked" GroupName="activity" Content="Repeated small range actions(more than 4x per minute)." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="-1" Checked="RadioButton_Checked" GroupName="activity" Content="Action causes rapid large range changes in postures or unstable base." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1" MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Checked="RadioButton_Checked" GroupName="activity" Content="One or more body parts are held for longer than one minute.(Static)" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1"  MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Checked="RadioButton_Checked" GroupName="activity" Content="Repeated small range actions(more than 4x per minute)." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="-1" MouseRightButtonUp="RadioButton_MouseRightButtonUp"  Checked="RadioButton_Checked" GroupName="activity" Content="Action causes rapid large range changes in postures or unstable base." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
                 </StackPanel>
             </ScrollViewer>

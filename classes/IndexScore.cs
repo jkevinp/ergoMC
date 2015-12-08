@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using ProjectK.ErgoMC.Assessment.Library;
+using System.Data;
 namespace ProjectK.ErgoMC.Assessment.classes
 {
 
@@ -48,13 +49,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
         /// <param name="_min">Minimum Value</param>
         /// <param name="_max">Maximum Value</param>
         /// <param name="_name">Name to be inserted at the database</param>
-        public IndexScore(int _min, int _max , string _name)
+        public IndexScore(int _min, int _max , string _name , string _displayname)
         {
             this.name = _name;
             this.min = _min;
             this.max = _max;
             this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + name.Replace('_' , ' ');
+            this.DisplayName = _displayname;
             this.table = _table;
+
         }
         public string error_message = "Please enter a valid value.";
         public int min = 0;
@@ -65,6 +68,20 @@ namespace ProjectK.ErgoMC.Assessment.classes
 
         public int score = 0;
         public int additionalScore = 0;
+        private string displayName = string.Empty;
+
+        public string DisplayName
+        {
+            get { return this.displayName; }
+            set { this.displayName = value; }
+        }
+        private string score_description = string.Empty;
+        public string ScoreDescription
+        {
+            get { return this.score_description; }
+            set { this.score_description = value; }
+        }
+
 
         public int Score
         {
@@ -86,13 +103,47 @@ namespace ProjectK.ErgoMC.Assessment.classes
 
         public int SaveRula()
         {
-            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "')");
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total,score_displayname) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "')");
             return result;
         }
         public int SaveReba()
         {
-            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,reba_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "')");
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,reba_id,score_name,score_value,score_additional,score_total,score_displayname) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "')");
             return result;
+        }
+
+        public List<IndexScore> GetReba(int _empID, int _id)
+        {
+            List<IndexScore> _scores = new List<IndexScore>();
+            this.ChangeTable("rebascore");
+            DataTable t = this.selectQuery("SELECT * from " + this.table + " where reba_id='" + _id + "'");
+            foreach (DataRow row in t.Rows)
+            {
+                IndexScore _score = new IndexScore();
+                _score.name = row["score_name"].ToString();
+                _score.Score = Helpers.Convert(row["score_value"].ToString());
+                _score.AdditionalScore = Helpers.Convert(row["score_additional"].ToString());
+                _score.DisplayName = row["score_displayname"].ToString();
+                _scores.Add(_score);
+            }
+            return _scores;
+        }
+
+        public List<IndexScore> GetRula(int _empID, int _id)
+        {
+            List<IndexScore> _scores = new List<IndexScore>();
+            this.ChangeTable("rulascore");
+            DataTable t = this.selectQuery("SELECT * from " + this.table + " where rula_id='" + _id + "'");
+            foreach (DataRow row in t.Rows)
+            {
+                IndexScore _score = new IndexScore();
+                _score.name = row["score_name"].ToString();
+                _score.Score = Helpers.Convert(row["score_value"].ToString());
+                _score.AdditionalScore = Helpers.Convert(row["score_additional"].ToString());
+                _score.DisplayName = row["score_displayname"].ToString();
+                _scores.Add(_score);
+            }
+            return _scores;
         }
       
 

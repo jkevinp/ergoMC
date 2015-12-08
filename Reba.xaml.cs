@@ -174,8 +174,12 @@
         {
             init();
             this.InitializeComponent();
-            Model m = new Model(CONFIG.DB_NAME);
-            m.CreateDatabase(CONFIG.DB_NAME);
+        }
+        public Reba(Employee _emp)
+        {
+            
+            init();
+            this.InitializeComponent();
 
         }
         
@@ -272,9 +276,10 @@
             {
                 this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
             }
-            Employee emp = new Employee().Find(1);
-            Console.Write(emp);
+            Helpers.Animate(this, 0.3f, 0, (float)this.ActualWidth, Page.WidthProperty );
+            Helpers.Animate(this, 0.3f, 0, 1f, Page.OpacityProperty);
         }
+
         /// <summary>
         /// Execute shutdown tasks
         /// </summary>
@@ -755,7 +760,7 @@
                     break;
                 case "activity":
                     this.rebaObject.Score_activity.SetAscore(Helpers.Convert(_tag));
-                    break;
+                break;
 
             }
             
@@ -854,9 +859,51 @@
 
             }
         }
+        private void RadioButton_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            RadioButton rdb = sender as RadioButton;
+            if (rdb.Tag == null) return;
+            String _tag = rdb.Tag.ToString();
+            String _value = rdb.IsChecked.ToString();
+            if (rdb.IsChecked.Value)
+            {
+                rdb.IsChecked = false;
+                _tag = "0";
+            }
+            string _group = rdb.GroupName.ToString();
+            switch (_group)
+            {
+                case "neck_position":
+                    this.rebaObject.Score_neck.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "trunk_position":
+                    this.rebaObject.Score_trunk.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "legs_position":
+                    this.rebaObject.Score_legs.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "neck_trunk_legs_load":
+                    this.rebaObject.Score_neck_trunk_legs_load.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "upper_arm":
+                    this.rebaObject.Score_upper_arm.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "lower_arm":
+                    this.rebaObject.Score_lower_arm.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "wrist_position":
+                    this.rebaObject.Score_wrist_position.SetAscore(Helpers.Convert(_tag));
+                    break;
 
-       
+                case "coupling":
+                    this.rebaObject.Score_coupling.SetAscore(Helpers.Convert(_tag));
+                    break;
+                case "activity":
+                    this.rebaObject.Score_activity.SetAscore(Helpers.Convert(_tag));
+                break;
 
-    
+            }
+        }
+
     }
 }

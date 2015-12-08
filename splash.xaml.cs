@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjectK.ErgoMC.Assessment.classes;
+using ProjectK.ErgoMC.Assessment.UserContent.view;
+using ProjectK.ErgoMC.Assessment.Library;
 namespace ProjectK.ErgoMC.Assessment.classes
 {
     /// <summary>
@@ -22,10 +24,16 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public User _user { get; set; }
         public splash()
         {
+            
             _user = new User();
             InitializeComponent();
             this.DataContext = _user;
+
+            Model m = new Model(CONFIG.DB_NAME);
+            m.CreateDatabase(CONFIG.DB_NAME);
         }
+        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
            bool result = _user.login(txt_username.Text, txt_password.Password);
@@ -49,6 +57,24 @@ namespace ProjectK.ErgoMC.Assessment.classes
            {
                MessageBox.Show("Invalid username or password.");
            } 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Register r = new Register();
+            r.Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Recovery r = new Recovery();
+            r.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Helpers.Animate(this, 0.3f, 0, (float)this.Height, Window.HeightProperty);
+            Helpers.Animate(this, 0.5f, 0, 1f, Window.OpacityProperty);
         }
     }
 }

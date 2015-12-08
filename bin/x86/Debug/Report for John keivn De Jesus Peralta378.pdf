@@ -1,0 +1,147 @@
+%PDF-1.4
+%”ÙÃ·
+% PDFsharp Version 1.31.1731.0 (verbose mode)
+% Creation date: 12/7/2015 8:16:20 PM            
+% Creation time: 0.124 seconds                   
+% File size: 4442 bytes                          
+% Pages: 1                                       
+% Objects: 8                                     
+%--------------------------------------------------------------------------------------------------
+1 0 obj   % PdfSharp.Pdf.PdfDocumentInformation
+<<
+  /CreationDate (D:20151207201620+08'00')
+  /Creator (PDFsharp 1.31.1731-w \(www.pdfsharp.com\))
+  /Producer (PDFsharp 1.31.1731-w \(www.pdfsharp.com\))
+  /Title (Report for John keivn De Jesus Peralta)
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+2 0 obj   % PdfSharp.Pdf.Advanced.PdfCatalog
+<<
+  /PageLayout /SinglePage
+  /Pages 3 0 R
+  /Type /Catalog
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+3 0 obj   % PdfSharp.Pdf.PdfPages
+<<
+  /Count 1
+  /Kids [4 0 R]
+  /Type /Pages
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+4 0 obj   % PdfSharp.Pdf.PdfPage
+<<
+  /Contents 5 0 R
+  /Group
+  <<
+    /CS /DeviceRGB
+    /I false
+    /K false
+    /S /Transparency
+  >>
+  /MediaBox [0 0 612 792]
+  /Parent 3 0 R
+  /Resources
+  <<
+    /ExtGState
+    <<
+      /GS0 6 0 R
+    >>
+    /Font
+    <<
+      /F0 8 0 R
+    >>
+    /ProcSet [/PDF/Text/ImageB/ImageC/ImageI]
+  >>
+  /Type /Page
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+5 0 obj   % PdfSharp.Pdf.Advanced.PdfContent
+<<
+  /Length 340
+>>
+stream
+q
+1 0 0 -1 0 792 cm -100 Tz
+q
+BT
+/GS0 gs
+/F0 -12 Tf
+20 89.0645 Td (Name) Tj
+42.9433 0 Td (of) Tj
+17.4067 0 Td (Employee:) Tj
+74.2967 0 Td (John) Tj
+36.1 0 Td (keivn) Tj
+40.57 0 Td (De) Tj
+22.03 0 Td (Jesus) Tj
+41.5233 0 Td (Peralta) Tj
+-274.87 16 Td (Job:) Tj
+32.2167 0 Td (test) Tj
+-32.2167 16 Td (Company:) Tj
+71.31 0 Td (test) Tj
+ET
+Q
+Q
+endstream
+endobj
+%--------------------------------------------------------------------------------------------------
+6 0 obj   % PdfSharp.Pdf.Advanced.PdfExtGState
+<<
+  /ca 1
+  /Type /ExtGState
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+7 0 obj   % PdfSharp.Pdf.Advanced.PdfFontDescriptor
+<<
+  /Ascent 1005
+  /CapHeight 727
+  /Descent -210
+  /Flags 32
+  /FontBBox [-550 -303 1707 1072]
+  /FontName /Verdana,Bold
+  /ItalicAngle 0
+  /StemV 0
+  /Type /FontDescriptor
+  /XHeight 548
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+8 0 obj   % PdfSharp.Pdf.Advanced.PdfTrueTypeFont
+<<
+  /BaseFont /Verdana,Bold
+  /Encoding /WinAnsiEncoding
+  /FirstChar 0
+  /FontDescriptor 7 0 R
+  /LastChar 255
+  /Subtype /TrueType
+  /Type /Font
+  /Widths [1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 1000 341 402 587 867 710 1271 862 332 543 543 710 867 361 479 361 689 710 710 710 710 710 710 710 710 710 710 402 402 867 867 867 616 963 776 761 723 830 683 650 811 837 545 555 770 637 947 846 850 732 850 782 710 681 812 763 1128 763 736 691 543 689 543 867 710 710 667 699 588 699 664 422 699 712 341 402 670 341 1058 712 686 699 699 497 593 455 712 649 979 668 650 596 710 543 710 867 1000 710 1000 332 710 587 1048 710 710 710 1777 710 543 1135 1000 691 1000 1000 332 332 587 587 710 710 1000 710 963 593 543 1067 1000 596 736 341 402 710 710 710 710 543 710 710 963 597 849 867 479 963 710 587 867 597 597 710 721 710 361 710 597 597 849 1181 1181 1181 616 776 776 776 776 776 776 1093 723 683 683 683 683 545 545 545 545 830 846 850 850 850 850 850 867 850 812 812 812 812 736 734 712 667 667 667 667 667 667 1018 588 664 664 664 664 341 341 341 341 679 712 686 686 686 686 686 867 686 712 712 712 712 650 699 650]
+>>
+endobj
+%--------------------------------------------------------------------------------------------------
+xref
+0 9
+0000000000 65535 f 
+0000000411 00000 n 
+0000000775 00000 n 
+0000000991 00000 n 
+0000001180 00000 n 
+0000001640 00000 n 
+0000002169 00000 n 
+0000002356 00000 n 
+0000002708 00000 n 
+trailer
+<<
+  /ID [<0A71CDC8936EEE499837C60EF2588154><0A71CDC8936EEE499837C60EF2588154>]
+  /Info 1 0 R
+  /Root 2 0 R
+  /Size 9
+>>
+startxref
+4103
+%%EOF

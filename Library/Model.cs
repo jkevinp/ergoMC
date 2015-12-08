@@ -69,10 +69,18 @@ namespace ProjectK.ErgoMC.Assessment.Library
             SQLiteCommand _cmd = new SQLiteCommand(_sql, _conn);
             _conn.Open();
             _cmd.ExecuteNonQuery();
-           
+
             string sql = @"select last_insert_rowid()";
             _cmd.CommandText = sql;
             var result = Helpers.Convert(_cmd.ExecuteScalar().ToString());
+            _conn.Close();
+            return result;
+        }
+        public int update(string _sql)
+        {
+            SQLiteCommand _cmd = new SQLiteCommand(_sql, _conn);
+            _conn.Open();
+            var result = _cmd.ExecuteNonQuery();
             _conn.Close();
             return result;
         }

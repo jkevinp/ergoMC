@@ -124,29 +124,36 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton GroupName="rdb_additionalUpperArm"  Content="Shoulder is Raised" 
-                                   FontSize="20" 
-                                   VerticalContentAlignment="Center" 
-                                   Margin="80,0,0,0" 
-                                     Tag="1"
-                                      Checked="rdb_additionalUpperArm_Checked"
+                        <RadioButton 
+                            GroupName="upper_arm"  
+                            Content="Shoulder is Raised"  
+                            FontSize="20" 
+                            VerticalContentAlignment="Center" 
+                            Margin="80,0,0,0" 
+                            Tag="1"
+                            Checked="RadioButton_Checked"
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
                                    />
                         <RadioButton      
-                            GroupName="rdb_additionalUpperArm"
+                            GroupName="upper_arm"
                                    Content="Upper Arm is abducted" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0" 
                             Tag="1"
-                             Checked="rdb_additionalUpperArm_Checked"
+                             Checked="RadioButton_Checked"
+                                MouseRightButtonUp="RadioButton_MouseRightButtonUp"
                             />
                         <RadioButton  
-                            GroupName="rdb_additionalUpperArm"
+                            GroupName="upper_arm"
                             Content="Arm is supported or is leaning" 
                             Tag="-1"
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
-                            Margin="80,0,0,0" Checked="rdb_additionalUpperArm_Checked"  />
+                            Margin="80,0,0,0" 
+                            Checked="RadioButton_Checked" 
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            />
                     </StackPanel>
 
                     <Grid>
@@ -181,9 +188,11 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <CheckBox x:Name="lower_arm_add1"
+                        <RadioButton x:Name="lower_arm_add1"
+                                   GroupName="lower_arm"
                                   Tag="1"  
-                                  Checked="CheckBoxLowerArmPosition_Checked"
+                                  Checked="RadioButton_Checked"
+                                  MouseRightButtonUp="RadioButton_MouseRightButtonUp"
                                   Content="Either arm is working across midline or out to side of the body" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     </StackPanel>
 
@@ -227,9 +236,11 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <CheckBox 
+                        <RadioButton 
                             Tag="1"
-                            Checked="CheckBoxWristPosition_Checked"
+                            GroupName="wrist_position"
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Checked="RadioButton_Checked"
                             Content="Wrist is bent from midline" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
@@ -274,17 +285,19 @@
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                         <RadioButton 
-                            GroupName="rdb_additionaWristTwist"
+                            GroupName="wrist_twist"
                             Tag="1"
-                            Checked="rdb_additionaWristTwist_Checked"
+                                MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Checked="RadioButton_Checked"
                             Content="Wrist is twisted in mid-range" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0"  />
                         <RadioButton 
-                            Checked="rdb_additionaWristTwist_Checked"
+                            Checked="RadioButton_Checked"
                             Tag="2"
-                            GroupName="rdb_additionaWristTwist"
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            GroupName="wrist_twist"
                             Content="Wrist is at or near end of range" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
@@ -313,18 +326,20 @@
                                   TextChanged="TextBox_TextChanged" 
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <CheckBox  
+                    <RadioButton  
                         FontSize="30" 
                         VerticalContentAlignment="Center" 
                         Margin="80,0,0,0" 
                         Height="auto"  
                         Tag="1"
-                        Checked="ArmMuscleUse_Checked"
+                        Checked="RadioButton_Checked"
+                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                        GroupName="arm_wrist_muscle"
                         >
                         <TextBlock>
                         <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
                         </TextBlock>
-                    </CheckBox>
+                    </RadioButton>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -345,10 +360,10 @@
                                   TextChanged="TextBox_TextChanged" 
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton Tag="0" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="1" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="2" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="3" Checked="rdb_armWristLoad_Checked" GroupName="rdb_armWristLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="0"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="2"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="3"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
 
 
                     <Label  
@@ -387,12 +402,15 @@
 
                     </Grid>
                     <RadioButton 
+                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
                         Tag="1"
-                        Checked="rdb_additionalNeckPosition_Checked"
-                        GroupName="rdb_additionalNeckPosition" Content="Neck is Twisted" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                        Checked="RadioButton_Checked"
+                        GroupName="neck_position" Content="Neck is Twisted" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     <RadioButton 
-                        Tag="1" GroupName="rdb_additionalNeckPosition" 
-                        Checked="rdb_additionalNeckPosition_Checked"
+                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                        Tag="1" 
+                        GroupName="neck_position" 
+                        Checked="RadioButton_Checked"
                         Content="Neck is side bending" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
 
                     <Grid>
@@ -417,20 +435,22 @@
                             x:Name="trunk_poosition_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                     <RadioButton Tag="1" 
-                                 GroupName="rdb_additionalTrunkPosition" 
+                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                 GroupName="trunk_position" 
                                  Content="Trunk is twisted" 
                                  FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
-                                 Checked="rdb_additionalTrunkPosition_Checked"
+                                 Checked="RadioButton_Checked"
                                  />
                     <RadioButton Tag="1" 
-                                 GroupName="rdb_additionalTrunkPosition" 
+                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                 GroupName="trunk_position" 
                                  Content="Trunk is side bending" 
                                  FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"
-                                 Checked="rdb_additionalTrunkPosition_Checked"
+                                 Checked="RadioButton_Checked"
                                  />
 
                     <Grid>
@@ -441,6 +461,7 @@
                         <Button  
                         Click="Button_Click"
                             Grid.Row="0"  
+                            
                             VerticalContentAlignment="Center" 
                             Content="Legs Position"  
                             Background="{DynamicResource KinectBluish}" 
@@ -455,18 +476,20 @@
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                     <RadioButton Tag="1" 
-                                 GroupName="rdb_additionalLegPosition" 
+                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                 GroupName="legs_position" 
                                  Content="Legs or feet are supported" 
                                  FontSize="20" 
-                                  Checked="rdb_additionalLegPosition_Checked"
+                                  Checked="RadioButton_Checked"
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
                                  />
                     <RadioButton Tag="2" 
-                                 GroupName="rdb_additionalLegPosition" 
+                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                 GroupName="legs_position" 
                                  Content="Legs or feet are Not supported" 
                                  FontSize="20" 
-                                 Checked="rdb_additionalLegPosition_Checked"
+                                 Checked="RadioButton_Checked"
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  />
 
@@ -479,6 +502,7 @@
                         <Button  
                         Click="Button_Click"
                             Grid.Row="0"  
+                            
                             VerticalContentAlignment="Center" 
                             Content="Muscle Use for Neck, Trunk and Legs"  
                             Background="{DynamicResource KinectBluish}" 
@@ -492,13 +516,15 @@
                                   TextChanged="TextBox_TextChanged" 
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <CheckBox 
-                        Checked="NeckMuscleUse_Checked"
+                    <RadioButton 
+                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                        Checked="RadioButton_Checked"
+                        GroupName="neck_trunk_legs_muscle"
                         FontSize="30" VerticalContentAlignment="Center" Margin="80,0,0,0" Height="auto" Tag="1" >
                         <TextBlock>
                         <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
                         </TextBlock>
-                    </CheckBox>
+                    </RadioButton>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -521,10 +547,10 @@
                             Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
 
-                    <RadioButton Tag="0" GroupName="rdb_neckForceLoad" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
-                    <RadioButton Tag="1" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked"  />
-                    <RadioButton Tag="2" GroupName="rdb_neckForceLoad" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
-                    <RadioButton Tag="3" GroupName="rdb_neckForceLoad" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="rdb_neckForceLoad_Checked" />
+                    <RadioButton Tag="0"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="1"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"  />
+                    <RadioButton Tag="2"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="3"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
                     <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
 
 

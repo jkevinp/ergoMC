@@ -30,9 +30,18 @@ namespace ProjectK.ErgoMC.Assessment
             this.DataContext = _employee;
             InitializeComponent();
         }
+        public EmployeeView(RulaObject _rulaObject , Employee _toemployee)
+        {
+            this._employee = _toemployee;
+            this._employee.RulaObject = _rulaObject;
+            _employee.Rula_score = new RulaScore();
+            _employee.Rula_score.CreateFromRulaObject(_rulaObject);
+            this.DataContext = _employee;
+            InitializeComponent();
+        }
         private void btn_evaluate_Click(object sender, RoutedEventArgs e)
         {
-            _employee.Id = _employee.Save(true);
+            if(_employee.Id == 0)_employee.Id = _employee.Save(true);
             if (_employee.Id == 0)
             {
                 MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");

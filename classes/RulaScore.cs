@@ -122,27 +122,81 @@ namespace ProjectK.ErgoMC.Assessment.classes
             get;
             set;
         }
+        public int user_id { get; set; }
+        public double unixtime
+        {
+            get;
+            set;
+        }
+        public bool isDone
+        {
+            get;
+            set;
+        }
+        public DateTime DateTimeEvaluated
+        {
+            get
+            {
+                if (this.unixtime == 0)
+                {
+                    this.unixtime = Helpers.ConvertToUnixTimestamp(DateTime.Now);
+                    return DateTime.Now;
+                }
+                return Helpers.ConvertFromUnixTimestamp(this.unixtime);
+            }
+            set { this.unixtime = Helpers.ConvertToUnixTimestamp(value); }
+        }
+        public string DateStringEvaluated
+        {
+            get
+            {
+                if (this.unixtime == 0)
+                {
+                    this.unixtime = Helpers.ConvertToUnixTimestamp(DateTime.Now);
+                    return DateTime.Now.ToShortDateString();
+                }
+                return Helpers.ConvertFromUnixTimestamp(this.unixtime).ToShortDateString();
+            }
+        }
 
+        public bool canTakeTest
+        {
+            get { return !this.isDone; }
+        }
+        public string evaluator_name { get; set; }
         public void Get(Employee emp)
         {
             DataTable t = this.selectQuery("SELECT * FROM `" + table + "` where `employee_id`='" + this.employee_id + "' LIMIT 1");
-            emp.Rula_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
-            emp.Rula_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
-            emp.Rula_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
-            emp.Rula_score.final_wrist_arm_score = Helpers.Convert(t.Rows[0]["final_wrist_arm_score"].ToString());
-            emp.Rula_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
-            emp.Rula_score.final_neck_trunk_leg_score = Helpers.Convert(t.Rows[0]["final_neck_trunk_leg_score"].ToString());
-            emp.Rula_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
-            emp.Rula_score.description = t.Rows[0]["description"].ToString();
-        }
+            if (t.Rows.Count != 0)
+            {
+                emp.Rula_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
+                emp.Rula_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
+                emp.Rula_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
+                emp.Rula_score.final_wrist_arm_score = Helpers.Convert(t.Rows[0]["final_wrist_arm_score"].ToString());
+                emp.Rula_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
+                emp.Rula_score.final_neck_trunk_leg_score = Helpers.Convert(t.Rows[0]["final_neck_trunk_leg_score"].ToString());
+                emp.Rula_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
+                emp.Rula_score.description = t.Rows[0]["description"].ToString();
+                emp.Rula_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
+                emp.Rula_score.isDone = true;
+                emp.Rula_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
+                DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.Rula_score.user_id);
+                if (x.Rows.Count > 0)
+                {
+                    emp.Rula_score.evaluator_name = x.Rows[0]["firstname"].ToString()  + " " + x.Rows[0]["lastname"].ToString();
+                 
+                }
+              
 
+            }
+         
+        }
         public int Save(bool is_unique)
         {
-            // var result = this.insert("INSERT INTO `" + table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id +"' ,'0' ,'" + score +"','" + +"','" + +"','" + +"')");
-
-            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_wrist_arm_score,posture_score_b,final_neck_trunk_leg_score,final_score,description,user_id) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_wrist_arm_score + "','" + posture_score_b + "','" + final_neck_trunk_leg_score + "','" + final_score + "','" + description + "',"  + Session.user.Id  + ")");
+            this.user_id = Session.user.Id;
+            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_wrist_arm_score,posture_score_b,final_neck_trunk_leg_score,final_score,description,user_id,unix_time) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_wrist_arm_score + "','" + posture_score_b + "','" + final_neck_trunk_leg_score + "','" + final_score + "','" + description + "',"  + this.user_id   + "," + this.unixtime +")");
             return result;
         }
-    
+      
     }
 }

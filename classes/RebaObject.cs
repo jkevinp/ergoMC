@@ -11,15 +11,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
     {
         private List<IndexScore> _scores = new List<IndexScore>();
 
-        private IndexScore score_neck = new IndexScore(1, 3, "score_neck");
-        private IndexScore score_trunk = new IndexScore(1, 5, "score_trunk");
-        private IndexScore score_legs = new IndexScore(1, 4, "score_legs");
-        private IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load");
-        private IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm");
-        private IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position");
-        private IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm");
-        private IndexScore score_coupling = new IndexScore(0, 3, "score_coupling");
-        private IndexScore score_activity= new IndexScore(0,1,"score_activitiy" );
+        private IndexScore score_neck = new IndexScore(1, 3, "score_neck" , "Neck Score");
+        private IndexScore score_trunk = new IndexScore(1, 5, "score_trunk" , "Trunk Score");
+        private IndexScore score_legs = new IndexScore(1, 4, "score_legs" , "Legs Score");
+        private IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load" , "Neck, Trunk and Legs Load Score");
+        private IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm" ,  "Upper Arm Score");
+        private IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position" , "Wrist Position Score");
+        private IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm" , "Lower Arm Score");
+        private IndexScore score_coupling = new IndexScore(0, 3, "score_coupling" , "Coupling Score");
+        private IndexScore score_activity= new IndexScore(0,1,"score_activitiy"  , "Activity Score");
 
         public IndexScore Score_neck {
             get { return this.score_neck; }

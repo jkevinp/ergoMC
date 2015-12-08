@@ -7,10 +7,26 @@ using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Animation;
+using System.Windows.Controls;
 namespace ProjectK.ErgoMC.Assessment.classes
 {
     class Helpers
     {
+
+       public static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
+        }
+
+
+       public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date - origin;
+            return Math.Floor(diff.TotalSeconds);
+        }
 
         public static void ToastSuccess(Window _owner, string _title, string _text, MessageBoxButton btn)
         {
@@ -51,6 +67,40 @@ namespace ProjectK.ErgoMC.Assessment.classes
             table_c
         }
 
+        public static void Animate(Window _this, float _time, float from, float to, DependencyProperty property)
+        {
+            DoubleAnimation da = new DoubleAnimation(from, to, new Duration(TimeSpan.FromSeconds(_time)));
+            _this.BeginAnimation(property, da);
+            //da.Completed += (s, e) =>
+            //{
+
+            //};
+        }
+
+        public static void Animate(Page _this, float _time, float from, float to, DependencyProperty property)
+        {
+            DoubleAnimation da = new DoubleAnimation(from, to, new Duration(TimeSpan.FromSeconds(_time)));
+            _this.BeginAnimation(property, da);
+            
+        }
+        public static void Animate(Page _this, float _time, float from, float to, DependencyProperty property , EventHandler eh)
+        {
+            DoubleAnimation da = new DoubleAnimation(from, to, new Duration(TimeSpan.FromSeconds(_time)));
+            _this.BeginAnimation(property, da);
+
+            da.Completed += eh;
+        }
+        public static void Animate(Window _this, float _time, float from, float to, DependencyProperty property , bool isClosing)
+        {
+            DoubleAnimation da = new DoubleAnimation(from, to, new Duration(TimeSpan.FromSeconds(_time)));
+            da.Completed += (s, e) =>
+            {
+               
+               _this.Close();
+            };
+            _this.BeginAnimation(property, da);
+          
+        }
 
         public static int[,] getRebaChart(reba_chart_type _type)
         {

@@ -49,6 +49,16 @@
         <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
           
         </TabControl>
-        <Button Content="Close Current Tab" Click="ButtonClose_Click" Grid.Column="1" Height="60" Grid.Row="3" Background="{DynamicResource KinectBlack}" FontSize="20" Foreground="White" BorderThickness="0,1"/>
+        <Grid Grid.Column="1" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="&lt; Previous Tab" Click="Button_Click_Back"  Height="60"  Background="{DynamicResource KinectBlack}" FontSize="20" Foreground="White" BorderThickness="0,1"/>
+            <Button Grid.Column="1" Content="Close Current Tab" Click="ButtonClose_Click"  Height="60"  Background="{DynamicResource KinectBlack}" FontSize="20" Foreground="White" BorderThickness="0,1"/>
+            <Button Grid.Column="2" Content="Next tab &gt;"  Height="60"  Background="{DynamicResource KinectBlack}" FontSize="20" Foreground="White" BorderThickness="0,1" Click="Button_Click_Next"/>
+
+        </Grid>
     </Grid>
 </Window>

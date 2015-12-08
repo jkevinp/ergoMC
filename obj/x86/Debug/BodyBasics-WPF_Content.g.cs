@@ -8,6 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("migradoc.documentobjectmodel-wpf.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("migradoc.rendering-wpf.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("migradoc.rtfrendering-wpf.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pdfsharp-wpf.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pdfsharp.charting-wpf.dll")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sqlite.interop.091.dll")]
 
 

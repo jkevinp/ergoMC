@@ -36,8 +36,22 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int final_score_b { get; set; }
         public int final_score { get; set; }
         public int posture_score_b { get; set; }
-        public int table_score_c { get; set; } //
-
+        public int table_score_c { get; set; }
+        public double unixtime { get; set; }
+        public bool isDone
+        {
+            get;
+            set;
+        }
+        public DateTime DateTimeEvaluated
+        {
+            get { return Helpers.ConvertFromUnixTimestamp(this.unixtime); }
+            set { this.unixtime = Helpers.ConvertToUnixTimestamp(value); }
+        }
+        public bool canTakeTest
+        {
+            get { return !this.isDone; }
+        }
         public RebaScore calculateAll(RebaObject _obj)
         {
             int[,] chart = Helpers.getRebaChart(Helpers.reba_chart_type.table_a);
@@ -104,15 +118,19 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public void Get(Employee emp)
         {
             DataTable t = this.selectQuery("SELECT * FROM `" + table + "` where `employee_id`='" + this.employee_id + "' LIMIT 1");
-            emp.Reba_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
-            emp.Reba_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
-            emp.Reba_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
-            emp.Reba_score.final_score_b = Helpers.Convert(t.Rows[0]["final_score_b"].ToString());
-            emp.Reba_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
-            emp.Reba_score.final_score_a = Helpers.Convert(t.Rows[0]["final_score_a"].ToString());
-            emp.Reba_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
-            emp.Reba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
-            emp.Reba_score.description = t.Rows[0]["description"].ToString();
+            if (t.Rows.Count > 0) { 
+                emp.Reba_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
+                emp.Reba_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
+                emp.Reba_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
+                emp.Reba_score.final_score_b = Helpers.Convert(t.Rows[0]["final_score_b"].ToString());
+                emp.Reba_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
+                emp.Reba_score.final_score_a = Helpers.Convert(t.Rows[0]["final_score_a"].ToString());
+                emp.Reba_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
+                emp.Reba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
+                emp.Reba_score.description = t.Rows[0]["description"].ToString();
+                emp.Reba_score.isDone = true;
+                emp.Reba_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
+            }
         }
 
         public int Save(bool is_unique)
