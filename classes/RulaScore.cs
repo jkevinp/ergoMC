@@ -181,13 +181,8 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 emp.Rula_score.isDone = true;
                 emp.Rula_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
                 DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.Rula_score.user_id);
-                if (x.Rows.Count > 0)
-                {
-                    emp.Rula_score.evaluator_name = x.Rows[0]["firstname"].ToString()  + " " + x.Rows[0]["lastname"].ToString();
-                 
-                }
-              
-
+                if (x.Rows.Count > 0)emp.Rula_score.evaluator_name = x.Rows[0]["firstname"].ToString()  + " " + x.Rows[0]["lastname"].ToString();
+                
             }
          
         }

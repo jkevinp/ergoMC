@@ -152,9 +152,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             return upper_arm_score - 1;
         }
 
-
-
-
         public static double AngleBetweenTwoVectors(Vector3D vectorA, Vector3D vectorB , double minus = 0)
         {
             double dotProduct = 0.0;

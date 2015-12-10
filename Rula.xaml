@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ErgoMC - Rapid Upper Limb Assessment" 
         Loaded="MainWindow_Loaded"
+      xmlns:local="clr-namespace:ProjectK.ErgoMC.Assessment"
         Grid.IsSharedSizeScope="True" Background="{DynamicResource KinectBluishBG}">
 
     <Page.Resources>
@@ -12,17 +13,10 @@
         <SolidColorBrush x:Key="KinectBluish" Color="#FF0095D4" />
         <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
         <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
-
-        <!--<DataTemplate x:Key="IndexScoreTemplate">
-            <StackPanel Grid.Row="1">
-                <TextBlock Text="{Binding score}" />
-                <TextBlock Text="{Binding additionalScore}" />
-            </StackPanel>
-        </DataTemplate>-->
     </Page.Resources>
 
 
-    <Grid Margin="0 0 0 0">
+    <Grid Margin="0 0 0 0"  Width="1692">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
@@ -62,12 +56,16 @@
 
 
             <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
-            <Viewbox Grid.Row="1">
-                <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
-            </Viewbox>
-            <!--<ContentControl Content="{Binding score_upper_arm}" ContentTemplate="{StaticResource IndexScoreTemplate}" />-->
-
-
+            <Grid Grid.Row="1" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.7*" />
+                    <RowDefinition Height="0.3*" />
+                </Grid.RowDefinitions>
+                <Viewbox >
+                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                </Viewbox>
+                <Label x:Name="txt_kinect_info" Grid.Row="1" Background="{DynamicResource KinectBlack}" Foreground="#FF31F327" Content="TEST" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBluish}" FontSize="30" FontStretch="SemiCondensed" FontFamily="Times New Roman" HorizontalContentAlignment="Stretch"/>
+            </Grid>
             <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />
             <ScrollViewer 
                       Height="Auto" Width="auto"  
@@ -124,35 +122,35 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton 
-                            GroupName="upper_arm"  
+                        <CheckBox 
+                            Uid="upper_arm"
                             Content="Shoulder is Raised"  
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0" 
                             Tag="1"
                             Checked="RadioButton_Checked"
-                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Unchecked="CheckBox_Unchecked"
                                    />
-                        <RadioButton      
-                            GroupName="upper_arm"
+                        <CheckBox      
+                           Uid="upper_arm"
                                    Content="Upper Arm is abducted" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0" 
                             Tag="1"
                              Checked="RadioButton_Checked"
-                                MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                Unchecked="CheckBox_Unchecked"
                             />
-                        <RadioButton  
-                            GroupName="upper_arm"
+                        <CheckBox  
+                            Uid="upper_arm"
                             Content="Arm is supported or is leaning" 
                             Tag="-1"
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0" 
                             Checked="RadioButton_Checked" 
-                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Unchecked="CheckBox_Unchecked"
                             />
                     </StackPanel>
 
@@ -171,28 +169,16 @@
                             Foreground="White" 
                             UseLayoutRounding="False" 
                             Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="lower_arm"
-                                  TextChanged="TextBox_TextChanged" 
-                            x:Name="lower_arm_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
+                        <TextBox  MaxLength="1"   Tag="lower_arm"  TextChanged="TextBox_TextChanged"   x:Name="lower_arm_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
                     </Grid>
 
                     <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton x:Name="lower_arm_add1"
-                                   GroupName="lower_arm"
+                        <Label HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" Content="Additional" FontSize="16" Foreground="Black" UseLayoutRounding="False" Height="40" FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
+                        <CheckBox x:Name="lower_arm_add1"
+                                   Uid="lower_arm"
                                   Tag="1"  
                                   Checked="RadioButton_Checked"
-                                  MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                                  Unchecked="CheckBox_Unchecked"
                                   Content="Either arm is working across midline or out to side of the body" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     </StackPanel>
 
@@ -236,10 +222,10 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <RadioButton 
+                        <CheckBox 
                             Tag="1"
-                            GroupName="wrist_position"
-                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Uid="wrist_position"
+                            Unchecked="CheckBox_Unchecked"
                             Checked="RadioButton_Checked"
                             Content="Wrist is bent from midline" 
                             FontSize="20" 
@@ -265,39 +251,25 @@
                             Foreground="White" 
                             UseLayoutRounding="False" 
                             Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="wrist_twist"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" 
-                            SpellCheck.IsEnabled="True" 
-                            Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
 
                     <StackPanel>
-                        <Label
-                    		HorizontalContentAlignment="Center"  
-                    		VerticalContentAlignment="Center" 
-                    		Content="Additional"  
-                    		Background="{x:Null}" 
-                    		FontSize="16" 
-                    		Foreground="Black" 
-                    		UseLayoutRounding="False" 
-                    		Height="40" 
-                    		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                         <RadioButton 
-                            GroupName="wrist_twist"
+                            Uid="wrist_twist"
                             Tag="1"
-                                MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                            Unchecked="CheckBox_Unchecked"
+                                 GroupName="wrist_twist"
                             Checked="RadioButton_Checked"
                             Content="Wrist is twisted in mid-range" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
                             Margin="80,0,0,0"  />
                         <RadioButton 
+                            Unchecked="CheckBox_Unchecked"
                             Checked="RadioButton_Checked"
                             Tag="2"
-                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                            GroupName="wrist_twist"
+                             GroupName="wrist_twist"
+                            Uid="wrist_twist"
                             Content="Wrist is at or near end of range" 
                             FontSize="20" 
                             VerticalContentAlignment="Center" 
@@ -321,49 +293,31 @@
                             Foreground="White" 
                             UseLayoutRounding="False" 
                             Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="arm_wrist_muscle"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton  
+                    <CheckBox  
                         FontSize="30" 
                         VerticalContentAlignment="Center" 
                         Margin="80,0,0,0" 
                         Height="auto"  
                         Tag="1"
                         Checked="RadioButton_Checked"
-                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                        GroupName="arm_wrist_muscle"
-                        >
+                        Unchecked="CheckBox_Unchecked"
+                        Uid="arm_wrist_muscle" >
                         <TextBlock>
                         <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
                         </TextBlock>
-                    </RadioButton>
+                    </CheckBox>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
                             <ColumnDefinition Width="0.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Button  
-                        Click="Button_Click"
-                            Grid.Row="0"  
-                            VerticalContentAlignment="Center" 
-                            Content="Force/Load for Arm and Wrist"  
-                            Background="{DynamicResource KinectBluish}" 
-                            FontSize="20" 
-                            Foreground="White" 
-                            UseLayoutRounding="False" 
-                            Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="arm_wrist_load"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        <Button Click="Button_Click"  Grid.Row="0" VerticalContentAlignment="Center" Content="Force/Load for Arm and Wrist"  Background="{DynamicResource KinectBluish}" FontSize="20" Foreground="White" UseLayoutRounding="False"  Height="40" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
                     </Grid>
-                    <RadioButton Tag="0"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="1"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="2"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton Tag="3"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" Checked="RadioButton_Checked" GroupName="arm_wrist_load" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="0"  Unchecked="CheckBox_Unchecked" Checked="RadioButton_Checked" Uid="arm_wrist_load" GroupName="arm_wrist_load" Content="If load is less than 4.4lbs(intermittent) "      FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="1"  Unchecked="CheckBox_Unchecked" Checked="RadioButton_Checked" Uid="arm_wrist_load" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(intermittent) "       FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="2"  Unchecked="CheckBox_Unchecked" Checked="RadioButton_Checked" Uid="arm_wrist_load" GroupName="arm_wrist_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <RadioButton Tag="3"  Unchecked="CheckBox_Unchecked" Checked="RadioButton_Checked" Uid="arm_wrist_load" GroupName="arm_wrist_load" Content="If more than 22lbs or repeated or shocks"        FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
 
 
                     <Label  
@@ -401,15 +355,15 @@
 
 
                     </Grid>
-                    <RadioButton 
-                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                    <CheckBox 
+                        Unchecked="CheckBox_Unchecked"
                         Tag="1"
                         Checked="RadioButton_Checked"
-                        GroupName="neck_position" Content="Neck is Twisted" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <RadioButton 
-                        MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                        Uid="neck_position" Content="Neck is Twisted" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <CheckBox 
+                        Unchecked="CheckBox_Unchecked"
                         Tag="1" 
-                        GroupName="neck_position" 
+                        Uid="neck_position" 
                         Checked="RadioButton_Checked"
                         Content="Neck is side bending" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
 
@@ -434,18 +388,18 @@
                                   TextChanged="TextBox_TextChanged" 
                             x:Name="trunk_poosition_score" Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton Tag="1" 
-                                 MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                                 GroupName="trunk_position" 
+                    <CheckBox Tag="1" 
+                                 Unchecked="CheckBox_Unchecked"
+                                 Uid="trunk_position" 
                                  Content="Trunk is twisted" 
                                  FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
                                  Checked="RadioButton_Checked"
                                  />
-                    <RadioButton Tag="1" 
-                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                                 GroupName="trunk_position" 
+                    <CheckBox Tag="1" 
+                                     Unchecked="CheckBox_Unchecked"
+                                 Uid="trunk_position" 
                                  Content="Trunk is side bending" 
                                  FontSize="20" 
                                  VerticalContentAlignment="Center" 
@@ -470,23 +424,21 @@
                             UseLayoutRounding="False" 
                             Height="40" 
                             FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1"  
-                               Tag="legs_position"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                     <RadioButton Tag="1" 
-                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                                 GroupName="legs_position" 
+                                  GroupName="legs_position"
+                                 Uid="legs_position" 
                                  Content="Legs or feet are supported" 
                                  FontSize="20" 
                                   Checked="RadioButton_Checked"
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
+                                 Unchecked="CheckBox_Unchecked"
                                  />
                     <RadioButton Tag="2" 
-                                     MouseRightButtonUp="RadioButton_MouseRightButtonUp"
-                                 GroupName="legs_position" 
+                                 Unchecked="CheckBox_Unchecked"
+                                   GroupName="legs_position"
+                                 Uid="legs_position" 
                                  Content="Legs or feet are Not supported" 
                                  FontSize="20" 
                                  Checked="RadioButton_Checked"
@@ -511,20 +463,16 @@
                             UseLayoutRounding="False" 
                             Height="40" 
                             FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="neck_trunk_legs_muscle"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
-                    <RadioButton 
-                            MouseRightButtonUp="RadioButton_MouseRightButtonUp"
+                    <CheckBox 
+                            Unchecked="CheckBox_Unchecked"
                         Checked="RadioButton_Checked"
-                        GroupName="neck_trunk_legs_muscle"
+                        Uid="neck_trunk_legs_muscle"
                         FontSize="30" VerticalContentAlignment="Center" Margin="80,0,0,0" Height="auto" Tag="1" >
                         <TextBlock>
                         <AccessText TextWrapping="Wrap" Text="If posture is mainly static(ie. held > 10 minutes) or if action repeated occrus 4 times per minute" FontSize="20"/>
                         </TextBlock>
-                    </RadioButton>
+                        </CheckBox>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -541,16 +489,12 @@
                             UseLayoutRounding="False" 
                             Height="40" 
                             FontFamily="Arial" ClickMode="Press" BorderThickness="10,1,0,1" Margin="50,0,0,0" Padding="55,1,1,1" HorizontalContentAlignment="Left" BorderBrush="{DynamicResource KinectBlack}"   />
-                        <TextBox  MaxLength="1" 
-                               Tag="neck_trunk_legs_load"
-                                  TextChanged="TextBox_TextChanged" 
-                            Grid.Column="2" SpellCheck.IsEnabled="True" Text="0" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
 
-                    <RadioButton Tag="0"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="1"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"  />
-                    <RadioButton Tag="2"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="3"     MouseRightButtonUp="RadioButton_MouseRightButtonUp" GroupName="neck_trunk_legs_load" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="0" Unchecked="CheckBox_Unchecked"   GroupName="neck_trunk_legs_load"  Uid="neck_trunk_legs_load" Content="If load is less than 4.4lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="1" Unchecked="CheckBox_Unchecked"   GroupName="neck_trunk_legs_load"  Uid="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(intermittent) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"  />
+                    <RadioButton Tag="2" Unchecked="CheckBox_Unchecked"   GroupName="neck_trunk_legs_load"  Uid="neck_trunk_legs_load" Content="If load is 4.4lbs to 22lbs(static or repeated) " FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton Tag="3" Unchecked="CheckBox_Unchecked"   GroupName="neck_trunk_legs_load"  Uid="neck_trunk_legs_load" Content="If more than 22lbs or repeated or shocks" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
                     <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
 
 

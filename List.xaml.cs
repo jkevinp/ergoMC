@@ -19,7 +19,7 @@ namespace ProjectK.ErgoMC.Assessment
     /// <summary>
     /// Interaction logic for List.xaml
     /// </summary>
-    public partial class List : Page 
+    public partial class List : Page
     {
         Employee emp = new Employee();
         private Employee selectedEmployeee = new Employee();
@@ -34,12 +34,9 @@ namespace ProjectK.ErgoMC.Assessment
         public List()
         {
             
-
             InitializeComponent();
-
             FillList();
             this.DataContext = this;
-           
             _listView = lv_list;
         }
         public void FillList()
@@ -129,9 +126,9 @@ namespace ProjectK.ErgoMC.Assessment
             ErgoMcApp._this.AddFrame(new Rula(this.SelectedEmployee));
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_TakeAnalysis_Reba(object sender, RoutedEventArgs e)
         {
-            ErgoMcApp._this.AddFrame(new Reba());
+            ErgoMcApp._this.AddFrame(new Reba(this.SelectedEmployee));
 
         }
 
@@ -147,6 +144,15 @@ namespace ProjectK.ErgoMC.Assessment
             r.Show();
         }
 
+        private void Page_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            if (ErgoMcApp.status == 1)
+            {
+
+                FillList();
+                ErgoMcApp.status = 0;
+            }
+        }
 
     }
 }

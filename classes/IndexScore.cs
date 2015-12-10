@@ -49,12 +49,14 @@ namespace ProjectK.ErgoMC.Assessment.classes
         /// <param name="_min">Minimum Value</param>
         /// <param name="_max">Maximum Value</param>
         /// <param name="_name">Name to be inserted at the database</param>
-        public IndexScore(int _min, int _max , string _name , string _displayname)
+        public IndexScore(int _min, int _max, string _name, string _displayname)//, int _maxAscore
         {
             this.name = _name;
             this.min = _min;
             this.max = _max;
-            this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + name.Replace('_' , ' ');
+          //  this.MaxAScore = _maxAscore;
+           // this.MaxScore = this.max - this.MaxAScore;
+            this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + this.DisplayName;
             this.DisplayName = _displayname;
             this.table = _table;
 
@@ -63,6 +65,10 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int min = 0;
         public int max = 0;
         public int id = 0;
+
+        public int MaxScore = 0;
+        public int MaxAScore = 0;
+
         public string name = string.Empty;
         public int employee_id = 0;
 
@@ -150,7 +156,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public bool validate()
         {
             int _total = this.getTotal();
-            if (this.getTotal() >= this.min && this.getTotal()<= max)
+            if ((this.getTotal() >= this.min && this.getTotal() <= max)) // && (this.Score <= this.MaxScore) && this.AdditionalScore <= this.MaxAScore
             {
                 return true;
             }

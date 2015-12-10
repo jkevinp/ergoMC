@@ -19,7 +19,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         private IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position" , "Wrist Position Score");
         private IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm" , "Lower Arm Score");
         private IndexScore score_coupling = new IndexScore(0, 3, "score_coupling" , "Coupling Score");
-        private IndexScore score_activity= new IndexScore(0,1,"score_activitiy"  , "Activity Score");
+        private IndexScore score_activity= new IndexScore(0,3,"score_activitiy"  , "Activity Score");
 
         public IndexScore Score_neck {
             get { return this.score_neck; }

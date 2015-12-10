@@ -19,11 +19,11 @@
             <StackPanel Margin="0,20,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Username:" FontSize="16" MinWidth="120" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
-                    <TextBox Name="txt_username"  Text="admin1" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Name="txt_username"  Text="admin1" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45" KeyUp="txt_password_KeyUp"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Password:" FontSize="16" MinWidth="120" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
-                    <PasswordBox Name="txt_password" Password="admin1" PasswordChar="*" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20"  BorderThickness="0,0,0,3" Padding="0,10,0,5" Width="321" Margin="0" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <PasswordBox Name="txt_password" Password="admin1" PasswordChar="*" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20"  BorderThickness="0,0,0,3" Padding="0,10,0,5" Width="321" Margin="0" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45" KeyUp="txt_password_KeyUp"/>
                 </StackPanel>
                 <StackPanel >
                     <Button Content="Login" HorizontalAlignment="Center" Width="500" Click="Button_Click" Background="{DynamicResource KinectBluish}" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" Padding="1,5" Margin="10,20,10,0"/>

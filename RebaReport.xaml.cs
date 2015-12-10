@@ -30,9 +30,18 @@ namespace ProjectK.ErgoMC.Assessment
             this.DataContext = _employee;
             InitializeComponent();
         }
+        public RebaReport(RebaObject _rebaObject , Employee _emp)
+        {
+            this._employee = _emp;
+            this._employee.RebaObject = _rebaObject;
+            this._employee.Reba_score = new RebaScore();
+            this._employee.Reba_score.calculateAll(_rebaObject);
+            this.DataContext = _employee;
+            InitializeComponent();
+        }
         private void btn_evaluate_Click(object sender, RoutedEventArgs e)
         {
-            _employee.Id = _employee.Save(true);
+            if (_employee.Id == 0) _employee.Id = _employee.Save(true);
             if (_employee.Id == 0)
             {
                 MessageBox.Show("Please Fill in all fields or Check if the employee record already exists.");

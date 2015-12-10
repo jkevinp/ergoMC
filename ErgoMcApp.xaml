@@ -46,7 +46,7 @@
             <Button Click="Button_Click" Tag="List" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">LIST</Button>
             <Button  Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Help">About</Button>
         </StackPanel>
-        <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionChanged="TabControl_SelectionChanged" >
           
         </TabControl>
         <Grid Grid.Column="1" Grid.Row="3">

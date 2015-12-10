@@ -175,12 +175,12 @@
             init();
             this.InitializeComponent();
         }
+        private Employee _employee = null;
         public Reba(Employee _emp)
         {
-            
             init();
             this.InitializeComponent();
-
+            this._employee = _emp;
         }
         
         private void addJointLeg()
@@ -715,10 +715,17 @@
                 ctr++;
             }
 
-            RebaScore scoree = new RebaScore();
-            scoree.calculateAll(RebaObject);
-            RebaReport report = new RebaReport(RebaObject);
-            report.Show();
+            RebaReport _view;
+            if (this._employee != null)
+            {
+                _view = new RebaReport(this.RebaObject, this._employee);
+            }
+            else
+            {
+                _view = new RebaReport(this.RebaObject);
+            }
+            _view.Show();
+
 
 
            // Helpers.ToastSuccess(Window.GetWindow(this), "Reba Final Score", "The calculated REBA score for the current employee is " + scoree.final_score + "\n" , MessageBoxButton.OK);
@@ -726,40 +733,39 @@
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            RadioButton rdb = sender as RadioButton;
+            var rdb = sender as System.Windows.Controls.Control;
             if (rdb.Tag == null) return;
             String _tag = rdb.Tag.ToString();
-            String _value = rdb.IsChecked.ToString();
-            string _group = rdb.GroupName.ToString();
+            string _group = rdb.Uid.ToString();
             switch (_group)
             {
                 case "neck_position":
-                    this.rebaObject.Score_neck.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_neck.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "trunk_position":
-                    this.rebaObject.Score_trunk.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_trunk.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "legs_position":
-                    this.rebaObject.Score_legs.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_legs.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "neck_trunk_legs_load":
-                    this.rebaObject.Score_neck_trunk_legs_load.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_neck_trunk_legs_load.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "upper_arm":
-                    this.rebaObject.Score_upper_arm.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_upper_arm.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "lower_arm":
-                    this.rebaObject.Score_lower_arm.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_lower_arm.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "wrist_position":
-                    this.rebaObject.Score_wrist_position.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_wrist_position.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                    
                 case "coupling":
-                    this.rebaObject.Score_coupling.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_coupling.AdditionalScore += (Helpers.Convert(_tag));
                     break;
                 case "activity":
-                    this.rebaObject.Score_activity.SetAscore(Helpers.Convert(_tag));
+                    this.rebaObject.Score_activity.AdditionalScore += (Helpers.Convert(_tag));
                 break;
 
             }
@@ -861,7 +867,7 @@
         }
         private void RadioButton_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            RadioButton rdb = sender as RadioButton;
+            CheckBox rdb = sender as CheckBox;
             if (rdb.Tag == null) return;
             String _tag = rdb.Tag.ToString();
             String _value = rdb.IsChecked.ToString();
@@ -870,7 +876,7 @@
                 rdb.IsChecked = false;
                 _tag = "0";
             }
-            string _group = rdb.GroupName.ToString();
+            string _group = rdb.Uid.ToString();
             switch (_group)
             {
                 case "neck_position":
@@ -904,6 +910,43 @@
 
             }
         }
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var rdb = sender as System.Windows.Controls.Control;
+            if (rdb.Tag == null) return;
+            String _tag = rdb.Tag.ToString();
+            string _group = rdb.Uid.ToString();
+            switch (_group)
+            {
+                case "neck_position":
+                    this.rebaObject.Score_neck.AdditionalScore -=(Helpers.Convert(_tag));
+                    break;
+                case "trunk_position":
+                    this.rebaObject.Score_trunk.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "legs_position":
+                    this.rebaObject.Score_legs.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "neck_trunk_legs_load":
+                    this.rebaObject.Score_neck_trunk_legs_load.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "upper_arm":
+                    this.rebaObject.Score_upper_arm.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "lower_arm":
+                    this.rebaObject.Score_lower_arm.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "wrist_position":
+                    this.rebaObject.Score_wrist_position.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
 
+                case "coupling":
+                    this.rebaObject.Score_coupling.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+                case "activity":
+                    this.rebaObject.Score_activity.AdditionalScore -= (Helpers.Convert(_tag));
+                    break;
+            }
+        }
     }
 }

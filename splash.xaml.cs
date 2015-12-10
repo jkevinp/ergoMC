@@ -31,6 +31,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
 
             Model m = new Model(CONFIG.DB_NAME);
             m.CreateDatabase(CONFIG.DB_NAME);
+            txt_username.Focus();
         }
         
 
@@ -75,6 +76,14 @@ namespace ProjectK.ErgoMC.Assessment.classes
         {
             Helpers.Animate(this, 0.3f, 0, (float)this.Height, Window.HeightProperty);
             Helpers.Animate(this, 0.5f, 0, 1f, Window.OpacityProperty);
+        }
+
+        private void txt_password_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Button_Click(sender, new RoutedEventArgs());
+            }
         }
     }
 }

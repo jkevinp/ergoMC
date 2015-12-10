@@ -37,7 +37,12 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int final_score { get; set; }
         public int posture_score_b { get; set; }
         public int table_score_c { get; set; }
-        public double unixtime { get; set; }
+        public int user_id { get; set; }
+        public double unixtime
+        {
+            get;
+            set;
+        }
         public bool isDone
         {
             get;
@@ -45,9 +50,30 @@ namespace ProjectK.ErgoMC.Assessment.classes
         }
         public DateTime DateTimeEvaluated
         {
-            get { return Helpers.ConvertFromUnixTimestamp(this.unixtime); }
+            get
+            {
+                if (this.unixtime == 0)
+                {
+                    this.unixtime = Helpers.ConvertToUnixTimestamp(DateTime.Now);
+                    return DateTime.Now;
+                }
+                return Helpers.ConvertFromUnixTimestamp(this.unixtime);
+            }
             set { this.unixtime = Helpers.ConvertToUnixTimestamp(value); }
         }
+        public string DateStringEvaluated
+        {
+            get
+            {
+                if (this.unixtime == 0)
+                {
+                    this.unixtime = Helpers.ConvertToUnixTimestamp(DateTime.Now);
+                    return DateTime.Now.ToShortDateString();
+                }
+                return Helpers.ConvertFromUnixTimestamp(this.unixtime).ToShortDateString();
+            }
+        }
+        public string evaluator_name { get; set; }
         public bool canTakeTest
         {
             get { return !this.isDone; }
@@ -129,15 +155,20 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 emp.Reba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
                 emp.Reba_score.description = t.Rows[0]["description"].ToString();
                 emp.Reba_score.isDone = true;
+
                 emp.Reba_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
+                emp.Reba_score.isDone = true;
+                emp.Reba_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
+                DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.Reba_score.user_id);
+                if (x.Rows.Count > 0) emp.Reba_score.evaluator_name = x.Rows[0]["firstname"].ToString() + " " + x.Rows[0]["lastname"].ToString();
+                
             }
         }
 
         public int Save(bool is_unique)
         {
-            // var result = this.insert("INSERT INTO `" + table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total) values('" + this.employee_id +"' ,'0' ,'" + score +"','" + +"','" + +"','" + +"')");
-
-            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_score_a,posture_score_b,final_score_b,table_score_c,final_score,description,user_id) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_score_a + "','" + posture_score_b + "','" + final_score_b + "','" + table_score_c +  "','" + final_score + "','" + description + "',"  + Session.user.Id  + ")");
+            this.user_id = Session.user.Id;
+            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_score_a,posture_score_b,final_score_b,table_score_c,final_score,description,user_id,unix_time) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_score_a + "','" + posture_score_b + "','" + final_score_b + "','" + table_score_c + "','" + final_score + "','" + description + "'," + this.user_id + "," + this.unixtime + ")");
             return result;
         }
        

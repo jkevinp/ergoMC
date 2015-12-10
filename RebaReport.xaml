@@ -7,6 +7,7 @@
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized" 
         Icon="Images/Ico/favicon.ico"  
+          xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Background="{DynamicResource KinectBluishBG}">
 
     <Window.Resources>
@@ -64,6 +65,13 @@
                     <Label Content="Company:"  Margin="20,0" />
                 </TextBlock>
                 <TextBox Text="{Binding Path=Company, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+
+
+                <TextBlock>
+                    <Label Content="Date of Evaluation:"  Margin="20,0" />
+                </TextBlock>
+                <DatePicker SelectedDate="{Binding Path=Reba_score.DateTimeEvaluated, Mode=TwoWay}" SelectedDateFormat="Short"  DisplayDateEnd="{x:Static sys:DateTime.Now}" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1"  Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue" />
+
 
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1">

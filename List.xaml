@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="List" 
          xmlns:local="clr-namespace:ProjectK.ErgoMC.Assessment"
-        Background="{DynamicResource KinectBluishBG}" Loaded="Page_Loaded" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+        Background="{DynamicResource KinectBluishBG}" Loaded="Page_Loaded" ScrollViewer.HorizontalScrollBarVisibility="Auto" RequestBringIntoView="Page_RequestBringIntoView"
         >
     <Page.Resources>
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
@@ -81,7 +81,7 @@
 
 
         <Label Grid.Row="0" Content="Employee Information" Foreground="White" FontSize="16" Background="{DynamicResource KinectBluish}" Grid.Column="2"/>
-        <ScrollViewer Height="auto" Width="auto" Grid.Column="2" Name="scrollView" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=lv_list, Path=SelectedItem}" Margin="0,10,0,0" CanContentScroll="False" >
+        <ScrollViewer Height="auto" Width="auto" Grid.Column="2" Name="scrollView" Grid.Row="1" Grid.RowSpan="3" DataContext="{Binding ElementName=lv_list, Path=SelectedItem}" Margin="0,10,0,0" CanContentScroll="False" >
             <StackPanel>
                 <DockPanel>
                     <Label Content="Employee ID: " Margin="18,0,0,0" Width="120" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
@@ -214,6 +214,14 @@
                             <Label Content="Reba Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
                             <TextBox Width="Auto" Text="{Binding Path=Reba_score.final_score ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
                         </DockPanel>
+                        <DockPanel>
+                            <Label Content="Date Evaluated:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=Reba_score.DateStringEvaluated ,Mode=OneTime ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Evaluated By:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=Reba_score.evaluator_name ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
 
                         <DockPanel>
                             <Label Width="Auto" Content="Level of MSD Risk"  DockPanel.Dock="Top" Foreground="Black" FontSize="16" BorderThickness="2" HorizontalContentAlignment="Center" Background="#FFFFF8B3" Margin="0,10,0,0" >
@@ -229,7 +237,7 @@
                         </DockPanel>
 
 
-                        <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=Reba_score.canTakeTest}" Content="Take Analysis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_2" />
+                        <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=Reba_score.canTakeTest}" Content="Take Analysis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_TakeAnalysis_Reba" />
                         <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=Reba_score.isDone}" Content="View Scores" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_3" />
 
                     </StackPanel>

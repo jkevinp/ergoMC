@@ -30,21 +30,22 @@ namespace ProjectK.ErgoMC.Assessment
         public ErgoMcApp()
         {
             InitializeComponent();
-            AddFrame(new List());
+            AddFrame(new Rula());
             this.DataContext = this;
-
             _this = this;
         }
-        public void AddFrame(Page _window)
+        public TabItem AddFrame(Page _window)
         {
             TabItem tabitem = new TabItem();
             tabitem.Header = "Tab: " + _window.GetType().Name;
             Frame tabFrame = new Frame();
             _window.GetType();
+            tabitem.Tag = _window.GetType().Name;
             tabFrame.Content = _window;
             tabitem.Content = tabFrame;
             TabControl.Items.Add(tabitem);
             tabitem.Focus();
+            return tabitem;
         }
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
@@ -85,6 +86,21 @@ namespace ProjectK.ErgoMC.Assessment
                 TabControl.SelectedIndex = t +1;
             }
         }
+        TabItem last = null;
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabItem _tabitem = TabControl.SelectedItem as TabItem;
+            if (_tabitem == null) return;
+            string _tag = _tabitem.Tag.ToString();
+            if (_tag == "List" && _tabitem != last)
+            {
+                _tabitem.InvalidateVisual();
+                status = 1;
+            }
+            last = _tabitem;
+        }
+
+        public static int status = 0;
 
     }
 }
