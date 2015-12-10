@@ -48,9 +48,10 @@
                 </DockPanel>
             </Grid>
             <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
-            <Viewbox Grid.Row="1">
-                <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
-            </Viewbox>
+
+            <Image Source="{Binding BodyImageSource}" Stretch="UniformToFill" Grid.Row="1"/>
+            <Image Source="{Binding ImageSource}" Stretch="UniformToFill" Grid.Row="1"/>
+
             <!--<ContentControl Content="{Binding score_upper_arm}" ContentTemplate="{StaticResource IndexScoreTemplate}" />-->
 
             <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />

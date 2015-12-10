@@ -15,6 +15,7 @@
     using ProjectK.ErgoMC.Assessment.Library;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Shapes;
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
@@ -23,6 +24,7 @@
         private RulaObject rulaObject = new RulaObject();
         public RulaObject RulaObject { get; set; }
 
+
         /// <summary>
         /// Radius of drawn hand circles
         /// </summary>
@@ -30,7 +32,7 @@
         /// <summary>
         /// Thickness of drawn joint lines
         /// </summary>
-        private const double JointThickness = 6;
+        private const double JointThickness = 10;
         /// <summary>
         /// Thickness of clip edge rectangles
         /// </summary>
@@ -84,6 +86,7 @@
         /// Reader for body frames
         /// </summary>
         private BodyFrameReader bodyFrameReader = null;
+        private ColorFrameReader colorFrameReader = null;
         /// <summary>
         /// Array for the bodies
         /// </summary>
@@ -108,7 +111,7 @@
         /// Current status text to display
         /// </summary>
         private string statusText = null;
-
+        WriteableBitmap bitmap;
         public enum ScanType
         {
             UpperBody,
@@ -128,10 +131,17 @@
         {
             this.kinectSensor = KinectSensor.GetDefault();
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
-            FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
-            this.displayWidth = frameDescription.Width;
-            this.displayHeight = frameDescription.Height;
-            this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
+         
+            FrameDescription frameDescription =      this.kinectSensor.DepthFrameSource.FrameDescription;
+            FrameDescription colorFrameDescription = this.kinectSensor.ColorFrameSource.FrameDescription;
+            this.displayWidth = colorFrameDescription.Width;
+            this.displayHeight = colorFrameDescription.Height;
+            this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+            this.bodyFrameReader =  this.kinectSensor.BodyFrameSource.OpenReader();
+            this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
+
+            if (this.bodyFrameReader != null)  this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
+            if (this.colorFrameReader != null) this.colorFrameReader.FrameArrived += this.ColorFrameReaderFrameArrived;
             this.bones = new List<Tuple<JointType, JointType>>();
             switch (scanType)
             {
@@ -163,14 +173,13 @@
             this.bodyColors.Add(new Pen(Brushes.Blue, 3));
             this.bodyColors.Add(new Pen(Brushes.Indigo, 3));
             this.bodyColors.Add(new Pen(Brushes.Violet, 3));
-       
             this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.NoSensorStatusText;
             this.drawingGroup = new DrawingGroup();
             this.imageSource = new DrawingImage(this.drawingGroup);
             this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
+            this.kinectSensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.BodyIndex | FrameSourceTypes.Color | FrameSourceTypes.Depth);
+           
             this.kinectSensor.Open();
-       
-
             this.DataContext = this;
 
         }
@@ -180,17 +189,7 @@
         public Rula()
         {
             init();
-            this.InitializeComponent();
-            Model m = new Model(CONFIG.DB_NAME);
-            if (m.CreateDatabase(CONFIG.DB_NAME) == 1)
-            {
-                MessageBox.Show("Database created.");
-            }
-            else
-            {
-                Console.WriteLine("Database exists");
-            }
-            
+            this.InitializeComponent();    
         }
         private void addJointLeg()
         {
@@ -248,6 +247,14 @@
         /// <summary>
         /// Gets the bitmap to display
         /// </summary>
+
+        public ImageSource BodyImageSource
+        {
+            get
+            {
+                return this.bitmap;
+            }
+        }
         public ImageSource ImageSource
         {
             get
@@ -286,13 +293,9 @@
         /// <param name="e">event arguments</param>
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.bodyFrameReader != null)
-            {
-                this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
-            }
-            Employee emp = new Employee().Find(1);
-            Console.Write(emp);
+           
         }
+
         /// <summary>
         /// Execute shutdown tasks
         /// </summary>
@@ -302,9 +305,13 @@
         {
             if (this.bodyFrameReader != null)
             {
-                // BodyFrameReader is IDisposable
                 this.bodyFrameReader.Dispose();
                 this.bodyFrameReader = null;
+            }
+            if (this.colorFrameReader != null)
+            {
+                this.colorFrameReader.Dispose();
+                this.colorFrameReader = null;
             }
 
             if (this.kinectSensor != null)
@@ -347,7 +354,7 @@
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
                     // Draw a transparent background to set the render size
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                    dc.DrawRectangle(Brushes.Transparent, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
                      int penIndex = 0;
                     foreach (Body body in this.bodies)
                     {
@@ -358,6 +365,7 @@
                             this.DrawClippedEdges(body, dc);
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
                             Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
+
                             CameraSpacePoint a = new CameraSpacePoint();
                             CameraSpacePoint b = new CameraSpacePoint();
                             CameraSpacePoint c = new CameraSpacePoint();
@@ -368,6 +376,7 @@
                             foreach (JointType jointType in joints.Keys)
                             {
                                 CameraSpacePoint position = joints[jointType].Position;
+                                float x = position.X;
                                 switch (jointType)
                                 {
                                     case JointType.ShoulderRight:
@@ -399,7 +408,7 @@
                                 {
                                     //position.Z = InferredZPositionClamp;
                                 }
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
+                                var depthSpacePoint = this.coordinateMapper.MapCameraPointToColorSpace(position);
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                                 JointType parent = Helpers.GetOrigintJoint(jointType);
                                 if (parent != JointType.Head && a != null  && b != null && c != null && d != null && neck != null)
@@ -478,8 +487,46 @@
 
             }
         }
-        DepthSpacePoint _upSpacePoint;
+        public void DrawPoint(ColorSpacePoint point)
+        {
+            // Create an ellipse.
+            Ellipse ellipse = new Ellipse
+            {
+                Width = 20,
+                Height = 20,
+                Fill = Brushes.Red
+            };
+            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
+            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
+            canvas.Children.Add(ellipse);
+        }
+        private void ColorFrameReaderFrameArrived(object sender, ColorFrameArrivedEventArgs e)
+        {
+            using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
+            {
+                if (colorFrame != null)
+                {
+                    FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+                    using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                    {
+                        this.bitmap.Lock();
 
+                        // verify data and write the new color frame data to the display bitmap
+                        if ((colorFrameDescription.Width == this.bitmap.PixelWidth) && (colorFrameDescription.Height == this.bitmap.PixelHeight))
+                        {
+                            colorFrame.CopyConvertedFrameDataToIntPtr(
+                                this.bitmap.BackBuffer,
+                                (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
+                                ColorImageFormat.Bgra);
+
+                            this.bitmap.AddDirtyRect(new Int32Rect(0, 0, this.bitmap.PixelWidth, this.bitmap.PixelHeight));
+                        }
+
+                        this.bitmap.Unlock();
+                    }
+                }
+            }
+        }
         private static double Angle(CameraSpacePoint v1, CameraSpacePoint v2, double offsetInDegrees = 0.0)
         {
             return (RadianToDegree(Math.Atan2(-v2.Y + v1.Y, -v2.X + v1.X)) + offsetInDegrees) % 360.0;
@@ -487,9 +534,7 @@
         public static double RadianToDegree(double radian)
         {
             var degree = radian * (180.0 / Math.PI);
-            if (degree < 0)
-                degree = 360 + degree;
-
+            if (degree < 0) degree = 360 + degree;
             return degree;
         }
 
@@ -502,7 +547,6 @@
         /// <param name="drawingPen">specifies color to draw a specific body</param>
         private void DrawBody(IReadOnlyDictionary<JointType, Joint> joints, IDictionary<JointType, Point> jointPoints, DrawingContext drawingContext, Pen drawingPen)
         {
-
 
             foreach (var bone in this.bones)
             {
@@ -517,8 +561,8 @@
                 if (trackingState == TrackingState.Tracked)
                 {
                     drawBrush = this.trackedJointBrush;
-                    FormattedText text = new FormattedText(jointType.ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, t, 2, drawBrush);
-                    drawingContext.DrawText(text, jointPoints[jointType]);
+                    //FormattedText text = new FormattedText(jointType.ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, t, 2, drawBrush);
+                    //drawingContext.DrawText(text, jointPoints[jointType]);
                    
                 }
                 else if (trackingState == TrackingState.Inferred)
@@ -528,7 +572,7 @@
 
                 if (drawBrush != null)
                 {
-                   // drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
+                    drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
                     if (this.bones.Exists(x => x.Item1.Equals(jointType)) && this.drawNames)
                     {
                         

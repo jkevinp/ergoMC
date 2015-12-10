@@ -61,9 +61,11 @@
                     <RowDefinition Height="0.7*" />
                     <RowDefinition Height="0.3*" />
                 </Grid.RowDefinitions>
-                <Viewbox >
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
-                </Viewbox>
+
+
+                <Image Source="{Binding BodyImageSource}" Stretch="UniformToFill" Width="555" Height="555"/>
+                <Image Source="{Binding ImageSource}"     Stretch="UniformToFill" Width="555" Height="555" />
+                <Canvas Name="canvas"></Canvas>
                 <Label x:Name="txt_kinect_info" Grid.Row="1" Background="{DynamicResource KinectBlack}" Foreground="#FF31F327" Content="TEST" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBluish}" FontSize="30" FontStretch="SemiCondensed" FontFamily="Times New Roman" HorizontalContentAlignment="Stretch"/>
             </Grid>
             <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />
