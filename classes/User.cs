@@ -82,7 +82,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public string Name
         {
             get {
-                string _middlename = (this.middlename.Length > 0) ? this.middlename.Substring(0, 1) : " ";
+                string _middlename = (this.middlename.TrimStart(' ').Length > 0) ? this.middlename.TrimStart(' ').Substring(0, 1) + "." : "";
                 return this.firstname + " "  + _middlename  +" " + this.lastname; }
         }
 

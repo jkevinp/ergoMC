@@ -36,23 +36,23 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Firstname" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
-                    <TextBox Text="{Binding Path=User.FirstName, Mode=TwoWay}" Name="txt_firstname"  MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Text="{Binding Path=User.FirstName, Mode=TwoWay}" Name="txt_firstname"  MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Middlename" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
-                    <TextBox Name="txt_middlename"  Text="{Binding Path=User.MiddleName, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Name="txt_middlename"  Text="{Binding Path=User.MiddleName, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Lastname" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
-                    <TextBox Name="txt_lastname" Text="{Binding Path=User.LastName, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Name="txt_lastname" Text="{Binding Path=User.LastName, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Forgot Password Question" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
-                    <TextBox Name="txt_forgot_question" Text="{Binding Path=User.Forgot_question, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Name="txt_forgot_question" Text="{Binding Path=User.Forgot_question, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Forgot Password Answer" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
-                    <TextBox Name="txt_forgot_answer"  Text="{Binding Path=User.Forgot_answer, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="16" MaxHeight="45" MinHeight="45"/>
+                    <TextBox Name="txt_forgot_answer"  Text="{Binding Path=User.Forgot_answer, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
                 </StackPanel>
 
                 <StackPanel >

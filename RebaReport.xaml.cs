@@ -21,21 +21,23 @@ namespace ProjectK.ErgoMC.Assessment
     public partial class RebaReport : Window
     {
         Employee _employee = null;
-        public RebaReport(RebaObject _rebaObject)
+        public RebaReport(RebaObject _rebaObject , string _type)
         {
             this._employee = new Employee();
             this._employee.RebaObject = _rebaObject;
             this._employee.Reba_score = new RebaScore();
             this._employee.Reba_score.calculateAll(_rebaObject);
+            this._employee.Reba_score.Type = _type;
             this.DataContext = _employee;
             InitializeComponent();
         }
-        public RebaReport(RebaObject _rebaObject , Employee _emp)
+        public RebaReport(RebaObject _rebaObject, Employee _emp, string _type)
         {
             this._employee = _emp;
             this._employee.RebaObject = _rebaObject;
             this._employee.Reba_score = new RebaScore();
             this._employee.Reba_score.calculateAll(_rebaObject);
+            this._employee.Reba_score.Type = _type;
             this.DataContext = _employee;
             InitializeComponent();
         }
@@ -62,6 +64,7 @@ namespace ProjectK.ErgoMC.Assessment
                 indexScore.employee_id = _employee.Id;
                 indexScore.id = id;
                 indexScore.SaveReba();
+                indexScore.currentAdditionalChoices.ForEach(x => x.Save(id, "Additional", this._employee.Reba_score.table));
             }
             MessageBox.Show(this, "The Record has been saved", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
             this.btn_evaluate.IsEnabled = false;

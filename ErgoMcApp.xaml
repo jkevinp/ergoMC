@@ -26,29 +26,30 @@
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource KinectBlack}" Foreground="White" BorderBrush="{DynamicResource KinectPurpleBrush}" BorderThickness="0,2" Padding="0,5">
             <MenuItem Header="_File" Background="{DynamicResource KinectBlack}" Foreground="White" >
-                <MenuItem Header="_New" Background="{DynamicResource KinectBlack}"   />
-                <MenuItem Header="_Open"  Background="{DynamicResource KinectBlack}" />
-                <MenuItem Header="_Save"  Background="{DynamicResource KinectBlack}"/>
-                <MenuItem Header="_Save As"  Background="{DynamicResource KinectBlack}"/>
-                <Separator />
-                <MenuItem Header="_Exit" Background="{DynamicResource KinectBlack}" />
+                <MenuItem Header="_New Employee" Background="{DynamicResource KinectBlack}"   Click="MenuItem_Click_4" BorderThickness="1" BorderBrush="{DynamicResource KinectBlueBrush}"/>
+                <MenuItem Header="_New Reba Analysis"  Background="{DynamicResource KinectBlack}" Click="MenuItem_Click_3" BorderBrush="{DynamicResource KinectBlueBrush}"/>
+                <MenuItem Header="_New Rula Analysis"  Background="{DynamicResource KinectBlack}" Click="MenuItem_Click_2" BorderBrush="{DynamicResource KinectBlueBrush}"/>
+                <MenuItem Header="_Exit" Background="{DynamicResource KinectBlack}" Click="MenuItem_Click" BorderBrush="#FFE23535"/>
             </MenuItem>
-            <MenuItem Header="_Edit" />
+            
             <MenuItem Header="_View" >
-                <MenuItem Header="List Evaluated Employee" Background="{DynamicResource KinectBlack}"   />
+                <MenuItem Header="List Evaluated Employee" Background="{DynamicResource KinectBlack}" BorderBrush="{DynamicResource KinectBlueBrush}" Foreground="White"  Click="MenuItem_Click_1"  />
             </MenuItem>
-            <MenuItem Header="_Help" />
+            <MenuItem Header="_Help">
+                <MenuItem Header="Help" Background="{DynamicResource KinectBlack}" BorderBrush="{DynamicResource KinectBlueBrush}" Foreground="White" Click="MenuItem_Click_5" />
+            </MenuItem>
         </Menu>
-        <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto">
+        <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto" Name="stack_nav_bar">
             <Label Content="{Binding Path=user.Name}" Foreground="White" FontSize="16"/>
             <Button Click="Button_Click" Tag="Rula" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">RULA</Button>
             <Button Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Reba">REBA</Button>
             <Button Click="Button_Click" Tag="List" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5">LIST</Button>
             <Button  Click="Button_Click" Background="{DynamicResource KinectGray}" Foreground="White" BorderThickness="5,0" BorderBrush="{DynamicResource KinectBlueBrush}" FontSize="20" Margin="10,10,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,5,1,5" Tag="Help">About</Button>
         </StackPanel>
-        <TabControl Grid.Column="1" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" SelectionChanged="TabControl_SelectionChanged" >
-          
-        </TabControl>
+        <DockPanel Grid.Row="3" Grid.Column="0">
+            <Button Click="Button_Click_1" >Toggle Navigation Bar</Button>
+        </DockPanel>
+        <TabControl Grid.Column="{Binding TabColumn}" Grid.ColumnSpan="{Binding TabColSpan}" Grid.Row="2" Name="TabControl" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" TargetUpdated="TabControl_SelectionChanged" />
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.25*"/>

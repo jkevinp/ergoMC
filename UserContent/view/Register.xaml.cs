@@ -71,17 +71,5 @@ namespace ProjectK.ErgoMC.Assessment.UserContent.view
             Helpers.Animate(this, 0.3f, 0, (float)this.Height, Window.HeightProperty);
             Helpers.Animate(this, 0.5f, 0, 1f, Window.OpacityProperty);
         }
-
-   
-
-
-
-
-     
-
-      
-
-
-       
     }
 }

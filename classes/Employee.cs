@@ -16,12 +16,23 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public Employee()
         {
             _employee = this;
+
             RulaObject = new RulaObject();
             RebaObject = new RebaObject();
+
+            //Right
             rula_score = new RulaScore();
-            rula_score.Get(this);
+            rula_score.Get(this, "right");
+
             reba_score = new RebaScore();
-            reba_score.Get(this);
+            reba_score.Get(this , "right");
+            //left
+            l_rula_score = new RulaScore();
+            l_rula_score.Get(this, "left");
+
+            l_reba_score = new RebaScore();
+            l_reba_score.Get(this , "left");
+
             this.table = TABLE;
         }
         public const string TABLE = "employee";
@@ -35,22 +46,17 @@ namespace ProjectK.ErgoMC.Assessment.classes
             private int id = 0;
             private RulaScore rula_score = null;
             private RebaScore reba_score = null;
+            private RulaScore l_rula_score = null;
+            private RebaScore l_reba_score = null;
         #endregion
         #region public properties
-        /// <summary>
-        /// Rula Score Object
-        /// </summary>
         public RulaObject RulaObject = null;
         public RebaObject RebaObject = null;
-
-        public RebaScore Reba_score{
+        public RebaScore Reba_score
+        {
             get { return this.reba_score; }
             set { this.reba_score = value; }
         }
-
-        /// <summary>
-        /// Rula Model
-        /// </summary>
         public RulaScore Rula_score
         {
             get { return this.rula_score; }
@@ -60,7 +66,22 @@ namespace ProjectK.ErgoMC.Assessment.classes
             }
         }
 
-            public string Firstname
+        public RebaScore LeftReba_score
+        {
+            get { return this.l_reba_score; }
+            set { this.l_reba_score = value; }
+        }
+        public RulaScore LeftRula_score
+        {
+            get { return this.l_rula_score; }
+            set
+            {
+                l_rula_score = value;
+            }
+        }
+    
+
+        public string Firstname
             {
                 get { return this.firstname; }
                 set
@@ -69,12 +90,12 @@ namespace ProjectK.ErgoMC.Assessment.classes
                     OnPropertyChanged("Firstname");
                 }
             }
-            public string Lastname
+        public string Lastname
             {
                 get { return this.lastname; }
                 set { lastname = value; OnPropertyChanged("Lastname"); }
             }
-            public string Middlename
+        public string Middlename
             {
                 get { return this.middlename; }
                 set
@@ -83,7 +104,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
                     OnPropertyChanged("Middlename");
                 }
             }
-            public string Company
+        public string Company
             {
                 get { return this.company; }
                 set
@@ -92,7 +113,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
                     OnPropertyChanged("Company");
                 }
             }
-            public string Job
+        public string Job
             {
                 get { return this.job; }
                 set
@@ -101,20 +122,21 @@ namespace ProjectK.ErgoMC.Assessment.classes
                     OnPropertyChanged("Job");
                 }
             }
-            public int Id
+        public int Id
             {
                 get { return this.id; }
                 set { id = value; OnPropertyChanged("Id"); }
             }
         #endregion
 
-            public string Name
+       public string Name
             {
                 get { return this.Firstname + " " + this.Middlename + " " + this.Lastname; }
             }
 
-         
-        public void Reset()
+
+       #region Constructors
+       public void Reset()
         {
         
             _employee.Firstname = "";
@@ -131,7 +153,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         /// <returns></returns>
         public Employee Find(int _id)
         {
-            DataTable result = this.selectQuery("SELECT * FROM " +table  + " where `id`='" + _id + "' LIMIT 1");
+            DataTable result = this.selectQuery("SELECT * FROM " + table + " where `id`='" + _id + "' LIMIT 1");
             if (result.Rows.Count == 0) return null;
             _employee.Id = Helpers.Convert(result.Rows[0]["id"].ToString());
             _employee.Firstname = result.Rows[0]["firstname"].ToString();
@@ -173,7 +195,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public List<Employee> All()
         {
             List<Employee> _result = new List<Employee>();
-            DataTable result = this.selectQuery("SELECT * FROM `" + table +  "`");
+            DataTable result = this.selectQuery("SELECT * FROM `" + table + "` ");
             foreach(DataRow row in result.Rows){
                 Employee employee = new Employee();
                 employee.Id = Helpers.Convert(row["id"].ToString());
@@ -184,14 +206,21 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 employee.company = row["company"].ToString();
                 employee.Rula_score = new RulaScore();
                 employee.Rula_score.employee_id = employee.Id;
-                employee.Rula_score.Get(employee);
+                employee.Rula_score.Get(employee , "right");
                 employee.Reba_score.employee_id = employee.Id;
-                employee.Reba_score.Get(employee);
+                employee.Reba_score.Get(employee , "right");
+
+                //Left Side
+                employee.LeftRula_score.employee_id = employee.Id;
+                employee.LeftRula_score.Get(employee , "left");
+                employee.LeftReba_score.employee_id = employee.Id;
+                employee.LeftReba_score.Get(employee, "left");
                 _result.Add(employee);
             }
             return _result;
-
         }
+        
+
         public List<Employee> All(Dictionary<string, string> _param , string _condition)
         {
             List<Employee> _result = new List<Employee>();
@@ -205,6 +234,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
                     search_sql += " " +_condition + " ";
                 }
             }
+           
             DataTable result = this.selectQuery("SELECT * FROM `" + table + "`" + search_sql);
             foreach (DataRow row in result.Rows)
             {
@@ -215,14 +245,19 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 employee.Lastname = row["lastname"].ToString();
                 employee.Job = row["job"].ToString();
                 employee.company = row["company"].ToString();
-
                 employee.Reba_score = new RebaScore();
                 employee.Reba_score.employee_id = employee.Id;
-                employee.Reba_score.Get(employee);
-                
+                employee.Reba_score.Get(employee, "right");
                 employee.Rula_score = new RulaScore();
                 employee.Rula_score.employee_id = employee.Id;
-                employee.Rula_score.Get(employee);
+                employee.Rula_score.Get(employee ,"right");
+
+                employee.Reba_score.Get(employee, "left");
+                employee.Rula_score = new RulaScore();
+                employee.Rula_score.employee_id = employee.Id;
+                employee.Rula_score.Get(employee , "left");
+                
+                
                 _result.Add(employee);
             }
             return _result;
@@ -262,9 +297,17 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int Edit()
         {
             Employee _data = this._employee;
-            var result = this.update("UPDATE `" + table + "` SET firstname= '" + _data.Firstname + "', lastname='" + _data.Lastname + "' , middlename='" + _data.Middlename + "' ,company='" + _data.Company + "' ,job='" + _data.Job + "' where `id`=" + this._employee.id);
+            var result = this.update("UPDATE `" + table + "` SET  firstname= '" + _data.Firstname + "', lastname='" + _data.Lastname + "' , middlename='" + _data.Middlename + "' ,company='" + _data.Company + "' ,job='" + _data.Job + "' where `id`=" + this._employee.id);
             return result;
         }
+        public int Delete()
+        {
+            Employee _data = this._employee;
+            var result = this.update("DELETE from `" + table + "` where `id`=" + this._employee.id);
+            return result;
+        }
+
+
         private void OnPropertyChanged(String property)
         {
             if (PropertyChanged != null)
@@ -272,5 +315,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+       #endregion
     }
 }

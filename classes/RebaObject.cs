@@ -11,15 +11,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
     {
         private List<IndexScore> _scores = new List<IndexScore>();
 
-        private IndexScore score_neck = new IndexScore(1, 3, "score_neck" , "Neck Score");
-        private IndexScore score_trunk = new IndexScore(1, 5, "score_trunk" , "Trunk Score");
-        private IndexScore score_legs = new IndexScore(1, 4, "score_legs" , "Legs Score");
-        private IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load" , "Neck, Trunk and Legs Load Score");
-        private IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm" ,  "Upper Arm Score");
-        private IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position" , "Wrist Position Score");
-        private IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm" , "Lower Arm Score");
-        private IndexScore score_coupling = new IndexScore(0, 3, "score_coupling" , "Coupling Score");
-        private IndexScore score_activity= new IndexScore(0,3,"score_activitiy"  , "Activity Score");
+        public IndexScore score_neck = new IndexScore(1, 3, "score_neck" , "Neck Score");
+        public IndexScore score_trunk = new IndexScore(1, 5, "score_trunk" , "Trunk Score");
+        public IndexScore score_legs = new IndexScore(1, 4, "score_legs" , "Legs Score");
+        public IndexScore score_neck_trunk_legs_load = new IndexScore(0, 3, "score_neck_trunk_legs_load" , "Neck, Trunk and Legs Load Score");
+        public IndexScore score_upper_arm = new IndexScore(1, 6, "score_upper_arm" ,  "Upper Arm Score");
+        public IndexScore score_wrist_position = new IndexScore(1, 3, "score_wrist_position" , "Wrist Position Score");
+        public IndexScore score_lower_arm = new IndexScore(1, 2, "score_lower_arm" , "Lower Arm Score");
+        public IndexScore score_coupling = new IndexScore(0, 3, "score_coupling" , "Coupling Score");
+        public IndexScore score_activity= new IndexScore(0,3,"score_activitiy"  , "Activity Score");
 
         public IndexScore Score_neck {
             get { return this.score_neck; }
@@ -70,6 +70,7 @@ namespace ProjectK.ErgoMC.Assessment.classes
         }
         public void init()
         {
+            
             _scores.Add(score_neck);
             _scores.Add(score_trunk);
             _scores.Add(score_legs);
@@ -77,7 +78,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             _scores.Add(score_upper_arm);
             _scores.Add(score_lower_arm);
             _scores.Add(score_wrist_position);
-           
             _scores.Add(score_coupling);
             _scores.Add(score_activity);
         }

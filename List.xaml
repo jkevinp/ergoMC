@@ -33,29 +33,28 @@
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
-
         <Label Grid.Row="0" Content="List Of Workers Evaluated" Foreground="White" FontSize="16" Background="{DynamicResource KinectBluish}" Grid.Column="0" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Row="1" Grid.Column="0">
             <DockPanel Margin="10,10,10,10" Grid.Row="1">
                 <Label Content="Search:" />
-                <TextBox x:Name="txt_search" VerticalContentAlignment="Center" Width="343" TextChanged="txt_search_TextChanged"/>
+                <TextBox x:Name="txt_search" VerticalContentAlignment="Center" Width="238" TextChanged="txt_search_TextChanged"/>
                 <ComboBox Text="Filter By" Width="132">
                     <ComboBoxItem IsEnabled="False" IsSelected="True">Filter By</ComboBoxItem>
                     <ComboBoxItem>Company</ComboBoxItem>
                     <ComboBoxItem>Job</ComboBoxItem>
                 </ComboBox>
-                <Button x:Name="btn_search" Content="Search"  Click="btn_search_Click" />
+                <Button Content="Refresh" Click="Button_Click_2"/>
+                <Button x:Name="btn_search" Content="Search"  Click="btn_search_Click" Background="{DynamicResource KinectBluish}" Foreground="White" />
             </DockPanel>
         </StackPanel>
 
-        <ListView Grid.Row="2" Grid.Column="0" x:Name="lv_list"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" SelectionChanged="lv_list_SelectionChanged" BorderBrush="#FF005BFF" ClipToBounds="True" Width="Auto" Height="auto" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
+        <ListView Grid.Row="2" Grid.RowSpan="1" Grid.Column="0" x:Name="lv_list" Height="Auto"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="lv_list_SelectionChanged" BorderBrush="#FF005BFF" ClipToBounds="True" Width="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     <Setter Property="VerticalAlignment" Value="Stretch"/>
                 </Style>
             </ListView.ItemContainerStyle>
-
             <ListView.View>
 
                 <GridView AllowsColumnReorder="False" >
@@ -72,17 +71,21 @@
                     <GridViewColumn Header="Lastname"    Width="{Binding Path=HeaderWidth}" DisplayMemberBinding="{Binding Lastname}" />
                     <GridViewColumn Header="Job"         Width="{Binding Path=HeaderWidth}" DisplayMemberBinding="{Binding Job}" />
                     <GridViewColumn Header="Company"     Width="{Binding Path=HeaderWidth}" DisplayMemberBinding="{Binding Company}" />
-                    <GridViewColumn Header="Final Score" Width="{Binding Path=HeaderWidth}" DisplayMemberBinding="{Binding Rula_score.final_score}" />
-                    <GridViewColumn Header="Final Score" Width="{Binding Path=HeaderWidth}" DisplayMemberBinding="{Binding Reba_score.final_score}" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Label Content="Number Of Workers Assessed" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14" />
+            <Label Content="{Binding EmployeeCount}" BorderThickness="1" Padding="10,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center" Foreground="#FFE22626" />
+            <Button Content="View Summary" BorderThickness="1" Padding="10,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" FontSize="14" VerticalContentAlignment="Center" Foreground="White" Background="{DynamicResource KinectBlueBrush}" Click="Button_Click_5" />
+
+        </StackPanel>
+
         <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Background="{DynamicResource KinectBlack}" BorderThickness="2,0" BorderBrush="{DynamicResource KinectBlack}" Cursor="None" Focusable="False" IsEnabled="False"/>
-
-
         <Label Grid.Row="0" Content="Employee Information" Foreground="White" FontSize="16" Background="{DynamicResource KinectBluish}" Grid.Column="2"/>
-        <ScrollViewer Height="auto" Width="auto" Grid.Column="2" Name="scrollView" Grid.Row="1" Grid.RowSpan="3" DataContext="{Binding ElementName=lv_list, Path=SelectedItem}" Margin="0,10,0,0" CanContentScroll="False" >
-            <StackPanel>
+        <ScrollViewer  Height="Auto" Width="Auto" Grid.Column="2" Name="scrollView" Grid.Row="1" Grid.RowSpan="3" DataContext="{Binding ElementName=lv_list, Path=SelectedItem}" Margin="0,10,0,0">
+            <StackPanel  Height="Auto">
+                <!-- Employee Information-->
                 <DockPanel>
                     <Label Content="Employee ID: " Margin="18,0,0,0" Width="120" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
                     <TextBox Width="Auto" Text="{Binding Path=Id ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16" Name="txt_id" DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
@@ -101,22 +104,26 @@
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Job: " Margin="18,0,0,0" Width="120" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
-                    <TextBox Width="Auto" Text="{Binding Path=Company,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    FontSize="16" Name="txt_company" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                    <TextBox Width="Auto" Text="{Binding Path=Job,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"    FontSize="16" Name="txt_company" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
                 </DockPanel>
                 <DockPanel>
                     <Label Content="Company: " Margin="18,0,0,0" Width="120" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
-                    <TextBox Width="Auto" Text="{Binding Path=Job,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"        FontSize="16" Name="txt_job" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                    <TextBox Width="Auto" Text="{Binding Path=Company,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"        FontSize="16" Name="txt_job" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
                 </DockPanel>
                 <DockPanel LastChildFill="True" Margin="0,15,0,0" >
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*" />
-                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.33*" />
+                            <ColumnDefinition Width="0.33*" />
+                            <ColumnDefinition Width="0.33*" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Width="auto" DockPanel.Dock="Left" Content="test" Background="{DynamicResource KinectBlueBrush}" BorderBrush="{DynamicResource KinectBlack}" FontSize="16" Foreground="White"/>
-                        <Button Grid.Column="1" Width="auto" DockPanel.Dock="Right" Content="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click"/>
+                        <Button Grid.Column="0" Width="auto" DockPanel.Dock="Left" Content="Print" Background="{DynamicResource KinectBlueBrush}" BorderBrush="{DynamicResource KinectBlack}" FontSize="16" Foreground="White" Click="Button_Click_1"/>
+                        <Button Grid.Column="1" Width="auto" DockPanel.Dock="Top" Content="Save" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click" />
+                        <Button Grid.Column="2" Width="auto" DockPanel.Dock="Right" Content="Delete" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="BtnDelete_Click"/>
                     </Grid>
                 </DockPanel>
+                <!--end Employee Information-->
+                <!--Evaluation-->
                 <Label Content="Evaluation" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="16" HorizontalContentAlignment="Center" Margin="0,20,0,0"></Label>
                 <Grid Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
@@ -124,9 +131,14 @@
                         <ColumnDefinition Width="1" />
                         <ColumnDefinition Width="0.5*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="0.5*"/>
+                        <RowDefinition  Height="0.5*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Start Right-->
                     <StackPanel>
                         <Label Background="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" HorizontalContentAlignment="Center">
-                            <CheckBox IsChecked="{Binding Path=Rula_score.isDone}" Content="Rula" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White"/>
+                            <CheckBox IsChecked="{Binding Path=Rula_score.isDone}" Content="Rula(Right)" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White"/>
                         </Label>
                         <DockPanel>
                             <Label Content="Record ID" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
@@ -177,14 +189,11 @@
                         </DockPanel>
                         <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=Rula_score.canTakeTest}" Content="Take Analysis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_TakeAnalysis_Rula" />
                         <Button Width="auto" IsEnabled="{Binding Path=Rula_score.isDone}" Content="View Scores" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_4" />
-
-
-
                     </StackPanel>
                     <GridSplitter Grid.Column="1" Cursor="None" BorderBrush="{DynamicResource KinectBlack}" BorderThickness="1,0,0,0" IsEnabled="False"></GridSplitter>
                     <StackPanel Grid.Column="2">
                         <Label Background="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" HorizontalContentAlignment="Center" >
-                            <CheckBox IsChecked="{Binding Path=Reba_score.isDone}"  Content="Reba" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White" />
+                            <CheckBox IsChecked="{Binding Path=Reba_score.isDone}"  Content="Reba(Right)" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White" />
                         </Label>
                         <DockPanel>
                             <Label Content="Record ID" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
@@ -241,6 +250,123 @@
                         <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=Reba_score.isDone}" Content="View Scores" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_3" />
 
                     </StackPanel>
+                    <!-- End Right-->
+                    <!-- Start Left-->
+
+                    <StackPanel Grid.Row="1">
+                        <Label Background="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" HorizontalContentAlignment="Center">
+                            <CheckBox IsChecked="{Binding Path=LeftRula_score.isDone}" Content="Rula(Left)" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White"/>
+                        </Label>
+                        <DockPanel>
+                            <Label Content="Record ID" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.id ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Posture Score A:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.posture_score_a ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Wrist &amp; Arm Score" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.final_wrist_arm_score ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Posture Score B:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.posture_score_b ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Neck,Trunk &amp; Legs Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.final_neck_trunk_leg_score ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Rula Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.final_score ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Date Evaluated:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.DateStringEvaluated ,Mode=OneTime ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Evaluated By:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftRula_score.evaluator_name ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Width="Auto" Content="Level of MSD Risk"  DockPanel.Dock="Top" Foreground="Black" FontSize="16" BorderThickness="2" HorizontalContentAlignment="Center" Background="#FFFFF8B3" Margin="0,10,0,0" >
+                                <Label.BorderBrush>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="Black" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Label.BorderBrush>
+                            </Label>
+                            <Label Width="Auto" Content="{Binding Path=LeftRula_score.description, Mode=TwoWay}"  DockPanel.Dock="Bottom" Foreground="{DynamicResource KinectPurpleBrush}" BorderThickness="2" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="White" Margin="0" Padding="5,15" MaxHeight="60" MinHeight="60" FontSize="13" />
+                        </DockPanel>
+                        <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=LeftRula_score.canTakeTest}" Content="Take Analysis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_TakeAnalysis_Rula_Left" />
+                        <Button Width="auto" Tag="left" IsEnabled="{Binding Path=LeftRula_score.isDone}" Content="View Scores" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_4" />
+                    </StackPanel>
+                    <GridSplitter Grid.Column="1" Cursor="None" BorderBrush="{DynamicResource KinectBlack}" BorderThickness="1,0,0,0" IsEnabled="False"></GridSplitter>
+                    <StackPanel Grid.Column="2" Grid.Row="1">
+                        <Label Background="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" HorizontalContentAlignment="Center" >
+                            <CheckBox IsChecked="{Binding Path=LeftReba_score.isDone}"  Content="Reba(Left)" Foreground="{DynamicResource KinectBluishBG}" FontSize="20" VerticalContentAlignment="Center" AllowDrop="True" FontWeight="Bold" BorderThickness="2" BorderBrush="{DynamicResource MediumGreyBrush}" Background="White" />
+                        </Label>
+                        <DockPanel>
+                            <Label Content="Record ID" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.id ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Posture Score A:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.posture_score_a ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Neck,Trunk &amp; Legs Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.final_score_a ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Posture Score B:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.posture_score_b ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Wrist &amp; Arm Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.final_score_b ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Table Score C:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.table_score_c ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Reba Score:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.final_score ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Date Evaluated:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.DateStringEvaluated ,Mode=OneTime ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Evaluated By:" Margin="18,0,0,0" Width="180" Height="35" HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBox Width="Auto" Text="{Binding Path=LeftReba_score.evaluator_name ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" FontSize="16"  DockPanel.Dock="Right" VerticalContentAlignment="Center" Margin="0,0,20,0" BorderThickness="0,0,0,3" BorderBrush="{DynamicResource KinectBlueBrush}" Background="{x:Null}" TextAlignment="Center"/>
+                        </DockPanel>
+
+                        <DockPanel>
+                            <Label Width="Auto" Content="Level of MSD Risk"  DockPanel.Dock="Top" Foreground="Black" FontSize="16" BorderThickness="2" HorizontalContentAlignment="Center" Background="#FFFFF8B3" Margin="0,10,0,0" >
+                                <Label.BorderBrush>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="Black" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Label.BorderBrush>
+                            </Label>
+                            <Label Width="Auto" Content="{Binding Path=LeftReba_score.description, Mode=TwoWay}"  DockPanel.Dock="Bottom" Foreground="{DynamicResource KinectPurpleBrush}" BorderThickness="2" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="White" Margin="0" Padding="5,15" MaxHeight="60" MinHeight="60" FontSize="13" />
+
+                        </DockPanel>
+
+
+                        <Button Width="auto" Grid.Column="1" IsEnabled="{Binding Path=LeftReba_score.canTakeTest}" Content="Take Analysis" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_TakeAnalysis_Reba_Left"  />
+                        <Button Width="auto" Tag="left" Grid.Column="1" IsEnabled="{Binding Path=LeftReba_score.isDone}" Content="View Scores" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource KinectBlack}" Background="{DynamicResource KinectBlueBrush}" FontSize="16" Foreground="White" Click="Button_Click_3" />
+
+                    </StackPanel>
+                    <!-- End Left-->
 
 
                 </Grid>
@@ -248,7 +374,7 @@
         </ScrollViewer>
 
 
-        <Label Grid.Row="3" Content="Status" Foreground="White" FontSize="32" Background="{DynamicResource KinectBluish}" />
+
 
 
 

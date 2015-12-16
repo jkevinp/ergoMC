@@ -1,8 +1,0 @@
-﻿<Window x:Class="ProjectK.ErgoMC.Assessment.RebaWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RebaWindow" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid Name="main_grid">
-        <StackPanel Orientation="Horizontal" x:Name="stack_panel"/>
-    </Grid>
-</Window>

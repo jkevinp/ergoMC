@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         
-        Title="Rula Employee Information" Height="900" Width="900" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Images/Ico/favicon.ico"  Background="{DynamicResource KinectBluishBG}">
+        Title="Rula Employee Information"  
+        Width="600"  WindowStartupLocation="CenterScreen" Icon="Images/Ico/favicon.ico"  Background="{DynamicResource KinectBluishBG}" WindowStyle="ToolWindow">
 
     <Window.Resources>
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
@@ -21,7 +22,7 @@
         </DataTemplate>-->
     </Window.Resources>
 
-
+    <ScrollViewer>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -30,71 +31,82 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition  Width="0.5*"/>
-                <ColumnDefinition  Width="0.5*"/>
+                <ColumnDefinition  Width="92*"/>
+                <ColumnDefinition Width="354*"/>
+                <ColumnDefinition  Width="87*"/>
+                <ColumnDefinition Width="359*"/>
             </Grid.ColumnDefinitions>
             <Label  
                 Grid.Row="0"
                 Grid.Column="0"
-                Grid.ColumnSpan="2" 
+                Grid.ColumnSpan="4" 
                 Content="Rapid Upper Limb Assessment" 
                 FontSize="16" 
                 Foreground="White" UseLayoutRounding="False" Height="Auto" 
                 FontFamily="Arial" Background="{DynamicResource KinectBluish}" Padding="20,0,0,0" VerticalContentAlignment="Center"  />
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
                 <Label Content="Employee Information" FontSize="20" />
                 <Label Content="Please Fill All Fields to Continue." Margin="20,0" FontStyle="Italic" Foreground="#FF979797" />
                 <Separator />
+                <!--
+                <TextBlock>
+                    <Label Content="Select Existing Employee" Margin="20,0" />
+                </TextBlock>
+                
+                <ComboBox Name="cb_employee" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Stretch"  Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
+             
+                    <Label Content="Or Create new Entry" Margin="20,0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" FontStyle="Italic" />
+              -->
                 <TextBlock>
                     <Label Content="First Name:" Margin="20,0" />
                 </TextBlock>
-                <TextBox  Text="{Binding Path=Firstname, Mode=TwoWay}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox  Text="{Binding Path=Firstname, Mode=TwoWay}" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
                 <TextBlock>
                     <Label Content="Middle Name:" Margin="20,0" />
                 </TextBlock>
-                <TextBox  Text="{Binding Path=Middlename, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox  Text="{Binding Path=Middlename, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
                 <TextBlock>
                     <Label Content="Last Name:" Margin="20,0" />
                 </TextBlock>
-                <TextBox Text="{Binding Path=Lastname, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox Text="{Binding Path=Lastname, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
                 <TextBlock>
                     <Label Content="Job/Work:" Margin="20,0" />
                 </TextBlock>
-                <TextBox  Text="{Binding Path=Job, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox  Text="{Binding Path=Job, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
                 <TextBlock>
                     <Label Content="Company:"  Margin="20,0" />
                 </TextBlock>
-                <TextBox Text="{Binding Path=Company, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
-                
+                <TextBox Text="{Binding Path=Company, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
+
                 <TextBlock>
                     <Label Content="Date of Evaluation:"  Margin="20,0" />
                 </TextBlock>
-                <DatePicker SelectedDate="{Binding Path=Rula_score.DateTimeEvaluated, Mode=TwoWay}" SelectedDateFormat="Short"  DisplayDateEnd="{x:Static sys:DateTime.Now}" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1"  Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue" />
+                <DatePicker SelectedDate="{Binding Path=Rula_score.DateTimeEvaluated, Mode=TwoWay}" SelectedDateFormat="Short"  DisplayDateEnd="{x:Static sys:DateTime.Now}" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  Margin="20,0" Height="30" FontSize="18" Foreground="#FF272727" BorderBrush="{DynamicResource KinectPurpleBrush}" />
 
             </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2">
                 <Label Content="Employee Score Summary" FontSize="20" />
                 <Label Content="Information calculated based on input." Margin="20,0" FontStyle="Italic" Foreground="#FF979797" />
                 <Separator />
 
                 <Label Content="Posture Score A:"  Margin="20,0" />
-                <TextBox Text="{Binding Path=Rula_score.posture_score_a, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox Text="{Binding Path=Rula_score.posture_score_a, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
                 <Label Content="Final Wrist and Arm Score:"  Margin="20,0" />
-                <TextBox Text="{Binding Path=Rula_score.final_wrist_arm_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox Text="{Binding Path=Rula_score.final_wrist_arm_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
                 <Label Content="Posture Score B:"  Margin="20,0" />
-                <TextBox Text="{Binding Path=Rula_score.posture_score_b, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox Text="{Binding Path=Rula_score.posture_score_b, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
                 <Label Content="Final Neck,Trunk and Leg Score"  Margin="20,0" />
-                <TextBox Text="{Binding Path=Rula_score.final_neck_trunk_leg_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                <TextBox Text="{Binding Path=Rula_score.final_neck_trunk_leg_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
 
 
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4">
 
                 <TextBlock>
                     <Label Content="Result" FontSize="20" Background="#FFFFF29D" Width="255" HorizontalContentAlignment="Center" />
@@ -107,11 +119,11 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <Label Content="Score"  Margin="20,0"  />
-                        <TextBox Grid.Column="0"  Text="{Binding Path=Rula_score.final_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                        <TextBox Grid.Column="0"  Text="{Binding Path=Rula_score.final_score, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <Label Content="Level of MSD Risk"  Margin="20,0"  />
-                        <TextBox Text="{Binding Path=Rula_score.description, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" BorderThickness="5,0,0,1" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="CornflowerBlue"/>
+                        <TextBox Text="{Binding Path=Rula_score.description, Mode=TwoWay}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" TextWrapping="Wrap" Margin="20,0" Height="30" FontSize="18" Foreground="BlueViolet" BorderBrush="{DynamicResource KinectPurpleBrush}" Background="{x:Null}"/>
                     </StackPanel>
 
 
@@ -126,4 +138,5 @@
         </Grid>
 
     </Grid>
+    </ScrollViewer>
 </Window>

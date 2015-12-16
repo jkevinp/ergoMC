@@ -30,7 +30,7 @@ namespace ProjectK.ErgoMC.Assessment
         public ErgoMcApp()
         {
             InitializeComponent();
-            AddFrame(new Rula());
+            AddFrame(new List());
             this.DataContext = this;
             _this = this;
         }
@@ -87,7 +87,47 @@ namespace ProjectK.ErgoMC.Assessment
             }
         }
         TabItem last = null;
+
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        public static int status = 0;
+        private int _tabColumn = 1;
+        public int TabColumn
+        {
+            get { return this._tabColumn; }
+            set { this._tabColumn = value; }
+        }
+        private int _tabColSpan = 1;
+        public int TabColSpan {
+            get
+            {
+                return this._tabColSpan;
+            }
+            set { this._tabColSpan = value; }
+        }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (TabColSpan == 1)this.TabColSpan = 2;
+            else this.TabColSpan = 1;
+            if (this.TabColumn == 1){
+                this.TabColumn = 0;
+                stack_nav_bar.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else
+            {
+                stack_nav_bar.Visibility = System.Windows.Visibility.Visible;
+                this.TabColumn = 1;
+            }
+            this.TabControl.SetValue(Grid.ColumnProperty, this.TabColumn);
+            this.TabControl.SetValue(Grid.ColumnSpanProperty, this.TabColSpan);
+            TabControl.UpdateLayout();
+        }
+
+        private void TabControl_SelectionChanged(object sender, DataTransferEventArgs e)
         {
             TabItem _tabitem = TabControl.SelectedItem as TabItem;
             if (_tabitem == null) return;
@@ -100,7 +140,36 @@ namespace ProjectK.ErgoMC.Assessment
             last = _tabitem;
         }
 
-        public static int status = 0;
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            AddFrame(new List());
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            AddFrame(new Rula());
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            AddFrame(new Reba());
+        }
+
+        //add emp
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+           (new EmployeeContent.view.Register()).Show();
+        }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            AddFrame(new Help());
+        }
 
     }
 }

@@ -1,0 +1,58 @@
+﻿<Window x:Class="ProjectK.ErgoMC.Assessment.EmployeeContent.view.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Register" Height="488" Width="650
+" WindowStartupLocation="CenterScreen" Background="{DynamicResource KinectBluishBG}" WindowStyle="None" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <SolidColorBrush x:Key="KinectBluish" Color="#FF0095D4" />
+        <SolidColorBrush x:Key="KinectBluishBG" Color="#FFF1F5F8" />
+        <SolidColorBrush x:Key="KinectBlack" Color="#213035" />
+    </Window.Resources>
+
+    <Grid Margin="0">
+        <StackPanel>
+            <Label Content="ErgoMC"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="40" FontWeight="ExtraBold" Width="642" Background="{DynamicResource KinectBlack}" Foreground="White"/>
+            <Label Content="Add New Employee"  HorizontalAlignment="Center" FontSize="20" FontWeight="ExtraBold" Foreground="White" Width="642" Background="{DynamicResource KinectBluish}" Height="37">
+                <Label.Effect>
+                    <DropShadowEffect/>
+                </Label.Effect>
+            </Label>
+            <StackPanel Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Firstname" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
+                    <TextBox Text="{Binding Path=User.Firstname, Mode=TwoWay}" Name="txt_firstname"  MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Middlename" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
+                    <TextBox Name="txt_middlename"  Text="{Binding Path=User.Middlename, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Lastname" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
+                    <TextBox Name="txt_lastname" Text="{Binding Path=User.Lastname, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40"
+                             
+                             MaxHeight="45" MinHeight="45"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Job" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
+                    <TextBox Name="txt_forgot_question" Text="{Binding Path=User.Job, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Company" FontSize="16" MinWidth="200" VerticalContentAlignment="Bottom" Margin="0,0,50,0"/>
+                    <TextBox Name="txt_forgot_answer"  Text="{Binding Path=User.Company, Mode=TwoWay}" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"   FontSize="20" TextWrapping="Wrap" BorderThickness="0,0,0,3" Padding="0,10,0,5" BorderBrush="{DynamicResource KinectPurpleBrush}" HorizontalContentAlignment="Center" Background="{x:Null}" MaxLength="40" MaxHeight="45" MinHeight="45"/>
+                </StackPanel>
+
+                <StackPanel >
+                    <Button Content="Create" HorizontalAlignment="Center" Width="642"  Background="{DynamicResource KinectBluish}" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" Padding="1,5" Margin="0,20,0,0" Click="Button_Click"/>
+                    <Button Content="Reset" HorizontalAlignment="Center" Width="642" Background="{DynamicResource KinectBluish}" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" Padding="1,5" Margin="0,7,0,0" Click="Button_Click_1"/>
+                    <Button Content="Cancel" HorizontalAlignment="Center" Width="642" Background="{DynamicResource KinectBluish}" BorderThickness="20,0,0,0" BorderBrush="{DynamicResource KinectBlack}" Foreground="White" FontSize="16" Padding="1,5" Margin="0,7,0,0" Click="Button_Click_2"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

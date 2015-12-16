@@ -14,6 +14,12 @@ namespace ProjectK.ErgoMC.Assessment.classes
             this.table = TABLE;
             this.rebaScore = this;
         }
+        public RebaScore(string _type)
+        {
+            this.table = TABLE;
+            this.Type = _type;
+            this.rebaScore = this;
+        }
         private RebaScore rebaScore = null;
         public const string TABLE = "reba";
         public int id
@@ -38,6 +44,15 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int posture_score_b { get; set; }
         public int table_score_c { get; set; }
         public int user_id { get; set; }
+        private string type = string.Empty;
+        public string Type
+        {
+            get
+            {
+                return this.type;
+            }
+            set { this.type = value; }
+        }
         public double unixtime
         {
             get;
@@ -141,34 +156,63 @@ namespace ProjectK.ErgoMC.Assessment.classes
 
         }
 
-        public void Get(Employee emp)
-        {
-            DataTable t = this.selectQuery("SELECT * FROM `" + table + "` where `employee_id`='" + this.employee_id + "' LIMIT 1");
-            if (t.Rows.Count > 0) { 
-                emp.Reba_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
-                emp.Reba_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
-                emp.Reba_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
-                emp.Reba_score.final_score_b = Helpers.Convert(t.Rows[0]["final_score_b"].ToString());
-                emp.Reba_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
-                emp.Reba_score.final_score_a = Helpers.Convert(t.Rows[0]["final_score_a"].ToString());
-                emp.Reba_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
-                emp.Reba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
-                emp.Reba_score.description = t.Rows[0]["description"].ToString();
-                emp.Reba_score.isDone = true;
 
-                emp.Reba_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
-                emp.Reba_score.isDone = true;
-                emp.Reba_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
-                DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.Reba_score.user_id);
-                if (x.Rows.Count > 0) emp.Reba_score.evaluator_name = x.Rows[0]["firstname"].ToString() + " " + x.Rows[0]["lastname"].ToString();
-                
+        
+        public void Get(Employee emp , string _type)
+        {
+            DataTable t = this.selectQuery("SELECT * FROM `" + table + "` where `employee_id`='" + this.employee_id + "' AND `type`='" + _type + "'");
+            if (t.Rows.Count > 0)
+            {
+                if (_type == "left")
+                {
+                    emp.LeftReba_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
+                    emp.LeftReba_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
+                    emp.LeftReba_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
+                    emp.LeftReba_score.final_score_b = Helpers.Convert(t.Rows[0]["final_score_b"].ToString());
+                    emp.LeftReba_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
+                    emp.LeftReba_score.final_score_a = Helpers.Convert(t.Rows[0]["final_score_a"].ToString());
+                    emp.LeftReba_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
+                    emp.LeftReba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
+                    emp.LeftReba_score.description = t.Rows[0]["description"].ToString();
+                    emp.LeftReba_score.isDone = true;
+                    emp.LeftReba_score.Type = t.Rows[0]["type"].ToString();
+                    emp.LeftReba_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
+                    emp.LeftReba_score.isDone = true;
+                    emp.LeftReba_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
+                    DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.LeftReba_score.user_id);
+                    if (x.Rows.Count > 0) emp.LeftReba_score.evaluator_name = x.Rows[0]["firstname"].ToString() + " " + x.Rows[0]["lastname"].ToString();
+
+                }
+                else
+                {
+                    emp.Reba_score.posture_score_a = Helpers.Convert(t.Rows[0]["posture_score_a"].ToString());
+                    emp.Reba_score.posture_score_b = Helpers.Convert(t.Rows[0]["posture_score_b"].ToString());
+                    emp.Reba_score.id = Helpers.Convert(t.Rows[0]["id"].ToString());
+                    emp.Reba_score.final_score_b = Helpers.Convert(t.Rows[0]["final_score_b"].ToString());
+                    emp.Reba_score.final_score = Helpers.Convert(t.Rows[0]["final_score"].ToString());
+                    emp.Reba_score.final_score_a = Helpers.Convert(t.Rows[0]["final_score_a"].ToString());
+                    emp.Reba_score.employee_id = Helpers.Convert(t.Rows[0]["employee_id"].ToString());
+                    emp.Reba_score.table_score_c = Helpers.Convert(t.Rows[0]["table_score_c"].ToString());
+                    emp.Reba_score.description = t.Rows[0]["description"].ToString();
+                    emp.Reba_score.isDone = true;
+                    emp.Reba_score.Type = t.Rows[0]["type"].ToString();
+                    emp.Reba_score.unixtime = (double)Helpers.Convert(t.Rows[0]["unix_time"].ToString());
+                    emp.Reba_score.isDone = true;
+                    emp.Reba_score.user_id = Helpers.Convert(t.Rows[0]["user_id"].ToString());
+                    DataTable x = this.selectQuery("SELECT * FROM user where id=" + emp.Reba_score.user_id);
+                    if (x.Rows.Count > 0) emp.Reba_score.evaluator_name = x.Rows[0]["firstname"].ToString() + " " + x.Rows[0]["lastname"].ToString();
+
+                }
+               
+
             }
         }
+
 
         public int Save(bool is_unique)
         {
             this.user_id = Session.user.Id;
-            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_score_a,posture_score_b,final_score_b,table_score_c,final_score,description,user_id,unix_time) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_score_a + "','" + posture_score_b + "','" + final_score_b + "','" + table_score_c + "','" + final_score + "','" + description + "'," + this.user_id + "," + this.unixtime + ")");
+            var result = this.insert("INSERT INTO `" + table + "` (employee_id,posture_score_a,final_score_a,posture_score_b,final_score_b,table_score_c,final_score,description,user_id,unix_time,type) values('" + this.employee_id + "' ,'" + posture_score_a + "' ,'" + final_score_a + "','" + posture_score_b + "','" + final_score_b + "','" + table_score_c + "','" + final_score + "','" + description + "'," + this.user_id + "," + this.unixtime + ",'" + this.Type + "')");
             return result;
         }
        

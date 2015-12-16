@@ -16,14 +16,35 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Shapes;
+    using ProjectK.ErgoMC.Assessment.UI;
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
     public partial class Rula : Page, INotifyPropertyChanged
     {
         private RulaObject rulaObject = new RulaObject();
-        public RulaObject RulaObject { get; set; }
+        private string typeOfEvaluation = "right";
+        public string TypeOfEvaluation
+        {
+            get { return this.typeOfEvaluation; }
+        }
+        public RulaObject RulaObject
+        {
+            get
+            {
+                return this.rulaObject;
+            }
+            set
+            {
+                this.rulaObject = value;
+            }
+       }
+        /// <summary>
+        /// INotifyPropertyChangedPropertyChanged event to allow window controls to bind to changeable data
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        #region kinect parameters
 
         /// <summary>
         /// Radius of drawn hand circles
@@ -120,134 +141,11 @@
             All
         }
         private Employee _employee = null;
-        public Rula(Employee _emp)
-        {
-            init();
-            this.InitializeComponent();
-            this._employee = _emp;
-        }
+
         private ScanType scanType = ScanType.All;
-        public void init()
-        {
-            this.kinectSensor = KinectSensor.GetDefault();
-            this.coordinateMapper = this.kinectSensor.CoordinateMapper;
-         
-            FrameDescription frameDescription =      this.kinectSensor.DepthFrameSource.FrameDescription;
-            FrameDescription colorFrameDescription = this.kinectSensor.ColorFrameSource.FrameDescription;
-            this.displayWidth = colorFrameDescription.Width;
-            this.displayHeight = colorFrameDescription.Height;
-            this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
-            this.bodyFrameReader =  this.kinectSensor.BodyFrameSource.OpenReader();
-            this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
-
-            if (this.bodyFrameReader != null)  this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
-            if (this.colorFrameReader != null) this.colorFrameReader.FrameArrived += this.ColorFrameReaderFrameArrived;
-            this.bones = new List<Tuple<JointType, JointType>>();
-            switch (scanType)
-            {
-                case ScanType.All:
-                    addJointTorso();
-                    addJointArm();
-                    addJointLeg();
-                break;
-                case ScanType.Arm:
-               // addJointTorso();
-                addJointArm();
-                break;
-                case ScanType.LowerBody:
-                addJointLeg();
-                break;
-                case ScanType.UpperBody:
-                addJointArm();
-                break;
-                default:
-                    addJointTorso();
-                    addJointArm();
-                    addJointLeg();
-                break;
-            }
-            this.bodyColors = new List<Pen>();
-            this.bodyColors.Add(new Pen(Brushes.Red, 3));
-            this.bodyColors.Add(new Pen(Brushes.Orange, 3));
-            this.bodyColors.Add(new Pen(Brushes.Green, 3));
-            this.bodyColors.Add(new Pen(Brushes.Blue, 3));
-            this.bodyColors.Add(new Pen(Brushes.Indigo, 3));
-            this.bodyColors.Add(new Pen(Brushes.Violet, 3));
-            this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.NoSensorStatusText;
-            this.drawingGroup = new DrawingGroup();
-            this.imageSource = new DrawingImage(this.drawingGroup);
-            this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
-            this.kinectSensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.BodyIndex | FrameSourceTypes.Color | FrameSourceTypes.Depth);
-           
-            this.kinectSensor.Open();
-            this.DataContext = this;
-
-        }
-        /// <summary>
-        /// Initializes a new instance of the MainWindow class.
-        /// </summary>
-        public Rula()
-        {
-            init();
-            this.InitializeComponent();    
-        }
-        private void addJointLeg()
-        {
-
-            // Right Leg
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.HipRight, JointType.KneeRight));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeRight, JointType.AnkleRight));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleRight, JointType.FootRight));
-
-            // Left Leg
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.HipLeft, JointType.KneeLeft));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.KneeLeft, JointType.AnkleLeft));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.AnkleLeft, JointType.FootLeft));
-        }
-        public void addJointTorso()
-        {
-            // Torso
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.Head, JointType.Neck));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.Neck, JointType.SpineShoulder));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.SpineMid));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineMid, JointType.SpineBase));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderRight));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineShoulder, JointType.ShoulderLeft));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipRight));
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.SpineBase, JointType.HipLeft));
-
-        }
-        public void addJointArm()
-        {
-            // Right Arm
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.ShoulderRight, JointType.ElbowRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.HipRight, JointType.ShoulderRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.ElbowRight, JointType.WristRight));
-
-
-            this.bones.Add(new Tuple<JointType, JointType>(JointType.HipRight, JointType.Neck));
-            // this.bones.Add(new Tuple<JointType, JointType>(JointType.ShoulderRight, JointType.ElbowRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.ElbowRight, JointType.WristRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.WristRight, JointType.HandRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.HandRight, JointType.HandTipRight));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.WristRight, JointType.ThumbRight));
-
-            // Left Arm
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.ShoulderLeft, JointType.ElbowLeft));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.ElbowLeft, JointType.WristLeft));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.WristLeft, JointType.HandLeft));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.HandLeft, JointType.HandTipLeft));
-            //this.bones.Add(new Tuple<JointType, JointType>(JointType.WristLeft, JointType.ThumbLeft));
-        }
-
-        /// <summary>
-        /// INotifyPropertyChangedPropertyChanged event to allow window controls to bind to changeable data
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// Gets the bitmap to display
         /// </summary>
-
         public ImageSource BodyImageSource
         {
             get
@@ -291,11 +189,33 @@
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        #endregion
+        #region Constructor
+        public Rula(Employee _emp , string _type)
         {
-           
+            init();
+            this.InitializeComponent();
+            this.typeOfEvaluation = _type;
+            this._employee = _emp;
         }
-
+        /// <summary>
+        /// Initializes a new instance of the MainWindow class.
+        /// </summary>
+        public Rula()
+        {
+            Modal m = new Modal("Please select one", "Which side do you want to evaluate", "right", "left");
+            var x = m.ShowDialog();
+            if (x.Value)
+            {
+                this.typeOfEvaluation = "right";
+            }
+            else
+            {
+                this.typeOfEvaluation = "left";
+            }
+            init();
+            this.InitializeComponent();
+        }
         /// <summary>
         /// Execute shutdown tasks
         /// </summary>
@@ -320,11 +240,74 @@
                 this.kinectSensor = null;
             }
         }
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+        public void init()
+        {
+            this.kinectSensor = KinectSensor.GetDefault();
+            this.coordinateMapper = this.kinectSensor.CoordinateMapper;
+         
+            FrameDescription frameDescription =      this.kinectSensor.DepthFrameSource.FrameDescription;
+            FrameDescription colorFrameDescription = this.kinectSensor.ColorFrameSource.FrameDescription;
+            this.displayWidth = colorFrameDescription.Width;
+            this.displayHeight = colorFrameDescription.Height;
+            this.bitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+            this.bodyFrameReader =  this.kinectSensor.BodyFrameSource.OpenReader();
+            this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
+
+            if (this.bodyFrameReader != null)  this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
+            if (this.colorFrameReader != null) this.colorFrameReader.FrameArrived += this.ColorFrameReaderFrameArrived;
+            this.bones = new List<Tuple<JointType, JointType>>();
+            switch (scanType)
+            {
+                case ScanType.All:
+                    Helpers.addJointTorso(this.bones);
+                    Helpers.addJointArm(this.bones);
+                    Helpers.addJointLeg(this.bones);
+                break;
+                case ScanType.Arm:
+                Helpers.addJointArm(this.bones);
+                break;
+                case ScanType.LowerBody:
+                Helpers.addJointLeg(this.bones);
+                break;
+                case ScanType.UpperBody:
+                Helpers.addJointArm(this.bones);
+                break;
+                default:
+                Helpers.addJointTorso(this.bones);
+                Helpers.addJointArm(this.bones);
+                Helpers.addJointLeg(this.bones);
+                break;
+            }
+            this.bodyColors = new List<Pen>();
+            this.bodyColors.Add(new Pen(Brushes.Red, 3));
+            this.bodyColors.Add(new Pen(Brushes.Orange, 3));
+            this.bodyColors.Add(new Pen(Brushes.Green, 3));
+            this.bodyColors.Add(new Pen(Brushes.Blue, 3));
+            this.bodyColors.Add(new Pen(Brushes.Indigo, 3));
+            this.bodyColors.Add(new Pen(Brushes.Violet, 3));
+            this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.NoSensorStatusText;
+            this.drawingGroup = new DrawingGroup();
+            this.imageSource = new DrawingImage(this.drawingGroup);
+            this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
+            this.kinectSensor.OpenMultiSourceFrameReader(FrameSourceTypes.Body | FrameSourceTypes.BodyIndex | FrameSourceTypes.Color | FrameSourceTypes.Depth);
+           
+            this.kinectSensor.Open();
+            this.DataContext = this;
+
+        }
+      
+        #region Kinect Events
         /// <summary>
         /// Handles the body frame data arriving from the sensor
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
+        /// 
         private void Reader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
             bool dataReceived = false;
@@ -348,8 +331,8 @@
 
             if (dataReceived)
             {
-                txt_kinect_info.Content = this.scanType.ToString();
-                this.lb_orientations.Items.Clear();
+                txt_kinect_info.Content = "Tracking: " + this.scanType.ToString() + "\n";
+               
                 if(this.drawingGroup != null && this.bodyColors != null)
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
@@ -366,12 +349,19 @@
                             IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
                             Dictionary<JointType, Point> jointPoints = new Dictionary<JointType, Point>();
 
-                            CameraSpacePoint a = new CameraSpacePoint();
-                            CameraSpacePoint b = new CameraSpacePoint();
-                            CameraSpacePoint c = new CameraSpacePoint();
-                            CameraSpacePoint d = new CameraSpacePoint();
+                            CameraSpacePoint r_hip = new CameraSpacePoint();
+                            CameraSpacePoint r_shoulder = new CameraSpacePoint();
+                            CameraSpacePoint r_elbow = new CameraSpacePoint();
+                            CameraSpacePoint r_wrist = new CameraSpacePoint();
+                            CameraSpacePoint l_hip = new CameraSpacePoint();
+                            CameraSpacePoint l_shoulder = new CameraSpacePoint();
+                            CameraSpacePoint l_elbow = new CameraSpacePoint();
+                            CameraSpacePoint l_wrist = new CameraSpacePoint();
                             CameraSpacePoint neck = new CameraSpacePoint();
                             CameraSpacePoint up = new CameraSpacePoint();
+                            CameraSpacePoint spine_base = new CameraSpacePoint();
+                            CameraSpacePoint spine_mid = new CameraSpacePoint();
+                            CameraSpacePoint head = new CameraSpacePoint();
 
                             foreach (JointType jointType in joints.Keys)
                             {
@@ -380,101 +370,141 @@
                                 switch (jointType)
                                 {
                                     case JointType.ShoulderRight:
-                                            b.X = position.X;
-                                            b.Y = position.Y;
-                                    break;
+                                        r_shoulder.X = position.X;
+                                        r_shoulder.Y = position.Y;
+                                        break;
                                     case JointType.HipRight:
-                                         a.X = position.X;
-                                         a.Y = position.Y;
+                                        r_hip.X = position.X;
+                                        r_hip.Y = position.Y;
                                         //this is for trunk
-                                          up.X = position.X;
-                                          up.Y = position.Y + 0.1f;
-                                    break;
+                                        up.X = position.X;
+                                        up.Y = position.Y + 0.1f;
+                                        break;
                                     case JointType.ElbowRight:
-                                        c.X = position.X;
-                                        c.Y = position.Y;
-                                    break;
+                                        r_elbow.X = position.X;
+                                        r_elbow.Y = position.Y;
+                                        break;
                                     case JointType.WristRight:
-                                        d.X = position.X;
-                                        d.Y = position.Y;
-                                    break;
+                                        r_wrist.X = position.X;
+                                        r_wrist.Y = position.Y;
+                                        break;
+
+                                    case JointType.ShoulderLeft:
+                                        l_shoulder.X = position.X;
+                                        l_shoulder.Y = position.Y;
+                                        break;
+                                    case JointType.HipLeft:
+                                        l_hip.X = position.X;
+                                        l_hip.Y = position.Y;
+                                        //this is for trunk
+                                        up.X = position.X;
+                                        up.Y = position.Y + 0.1f;
+                                        break;
+                                    case JointType.ElbowLeft:
+                                        l_elbow.X = position.X;
+                                        l_elbow.Y = position.Y;
+                                        break;
+                                    case JointType.WristLeft:
+                                        l_wrist.X = position.X;
+                                        l_wrist.Y = position.Y;
+                                        break;
+
+
                                     case JointType.Neck:
                                         neck.X = position.X;
                                         neck.Y = position.Y;
                                      break;
-                                    
+                                    case JointType.SpineBase:
+                                     spine_base.X = position.X;
+                                     spine_base.Y = position.Y;
+                                     break;
+                                    case JointType.Head:
+                                     head.X = position.X;
+                                     head.Y = position.Y;
+                                     break;
+                                    case JointType.SpineMid:
+                                     spine_mid.X = position.X;
+                                     spine_mid.Y = position.Y;
+                                     break;
                                 }
-                                if (position.Z < 0)
-                                {
-                                    //position.Z = InferredZPositionClamp;
-                                }
+                                if (position.Z < 0) position.Z = InferredZPositionClamp;
                                 var depthSpacePoint = this.coordinateMapper.MapCameraPointToColorSpace(position);
                                 jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
                                 JointType parent = Helpers.GetOrigintJoint(jointType);
-                                if (parent != JointType.Head && a != null  && b != null && c != null && d != null && neck != null)
-                                {
 
-                                    double priorAngle = Angle(a, b);
-                                    double nextAngle = Angle(b, c);
-                                    double thirdAngle = Angle(c, d);
-                                    double upper_arm_angle = (priorAngle + nextAngle) - 360;
-                                    double lower_arm_angle = ((nextAngle + thirdAngle)% 360);
-                                    double trunk_angle = (Angle(up, a) + Angle(a, neck)) - 270;
-                                    int score_upper_armk = 0;
-                                    int score_lower_armk = 0;
-                                    #region upper_arm_angle
-                                    if (upper_arm_angle >= -20 && upper_arm_angle <= 20)
-                                    {
-                                        score_upper_armk = 1;
-                                    }
-                                    else if (upper_arm_angle < -20)
-                                    {
-                                        score_upper_armk = 2;
-                                    }
-                                    else if (upper_arm_angle > 20 && upper_arm_angle <= 45)
-                                    {
-                                        score_upper_armk = 2;
-                                    }
-                                    else if (upper_arm_angle > 45 && upper_arm_angle <= 90)
-                                    {
-                                        score_upper_armk = 3;
-                                    }
-                                    else if (upper_arm_angle > 90)
-                                    {
-                                        score_upper_armk = 4;
-                                    }
-#endregion
-                                    #region lower_arm_angle
-                                    if (lower_arm_angle >= -20 && lower_arm_angle <= 20)
-                                    {
-                                        score_lower_armk = 1;
-                                    }
-                                    else if (lower_arm_angle < -20)
-                                    {
-                                        score_lower_armk = 2;
-                                    }
-                                    else if (lower_arm_angle > 20 && lower_arm_angle <= 45)
-                                    {
-                                        score_lower_armk = 2;
-                                    }
-                                    else if (lower_arm_angle > 45 && lower_arm_angle <= 90)
-                                    {
-                                        score_lower_armk = 3;
-                                    }
-                                    else if (lower_arm_angle > 90)
-                                    {
-                                        score_lower_armk = 4;
-                                    }
+                                if (this.typeOfEvaluation == "right" && parent != JointType.Head && r_hip != null && r_shoulder != null && r_elbow != null && r_wrist != null && neck != null)
+                                {
+                                    #region Right Rula
+                                    double r_hip_shoulder = Helpers.Angle(r_shoulder, r_hip);
+                                    double r_shoulder_elbow = Helpers.Angle(r_shoulder, r_elbow , 90);
+                                    double r_elbow_wrist = Helpers.Angle(r_elbow, r_wrist ,90);
+                                    double upper_arm_angle = Helpers.Inverse(r_shoulder_elbow -180);
+                                    double lower_arm_angle = Helpers.Inverse((r_elbow_wrist - 180))  + upper_arm_angle;
+                                    double up_spinebase = Helpers.Angle(spine_mid, up);
+                                    double neck_spine_base = Helpers.Angle(neck, spine_mid);
+                                    //double trunk_angle = (Angle(up, r_hip) + Angle(r_hip, neck)) - 270;
+                                    double trunk_angle = neck_spine_base - 90;
+                                    double neck_head = Helpers.Angle(head, neck);
+                                    double neck_angle = (neck_head - trunk_angle) - 90 - 20;
+
+                                    #region Scores
+                                     score_upper_armk = Helpers.GetRulaUpperArmScore(upper_arm_angle);
+                                     score_lower_armk = Helpers.GetRulaLowerArmScore(lower_arm_angle);
+                                     score_trunk = Helpers.GetRulaTrunkScore(trunk_angle);
+                                     score_neck = Helpers.GetRulaNeckScore(neck_angle);
                                     #endregion
 
 
-                                    txt_kinect_info.Content += "UPPER ARM:" + upper_arm_angle.ToString("00.0") + "\n";
-                                    txt_kinect_info.Content += "UPPER ARM SCORE:" + score_upper_armk.ToString("0") + "\n";
-                                    txt_kinect_info.Content += "LOWER ARM:" + lower_arm_angle.ToString("00.0") + "\n";
-                                    txt_kinect_info.Content += "LOWER ARM SCORE:" + score_lower_armk.ToString("0") + "\n";
-                                    txt_kinect_info.Content += "Trunk Angle:" + trunk_angle.ToString("00.0") + "\n";
-                                
+                                    //txt_kinect_info.Content += "UPPER ARM:" + upper_arm_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "UPPER ARM SCORE:" + score_upper_armk.ToString("0") + "\n";
+
+                                    //txt_kinect_info.Content += "LOWER ARM:" + lower_arm_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "LOWER ARM SCORE:" + score_lower_armk.ToString("0") + "\n";
+
+                                    //txt_kinect_info.Content += "Trunk Angle:" + trunk_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "Trunk Score:" + score_trunk.ToString("00.0") + "\n";
+
+                                    //txt_kinect_info.Content += "Neck Angle:" + neck_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "Neck Score:" + score_neck.ToString("00.0") + "\n";
+                                    #endregion
                                 }
+                                else if (this.typeOfEvaluation == "left" &&  parent != JointType.Head && l_hip != null && l_shoulder != null && l_elbow != null && l_wrist != null && neck != null)
+                                {
+                                    double l_hip_shoulder = Helpers.Angle(l_shoulder, l_hip);
+                                    double l_shoulder_elbow = Helpers.Angle(l_shoulder, l_elbow, 90);
+                                    double l_elbow_wrist = Helpers.Angle(l_elbow, l_wrist, 90);
+                                    double upper_arm_angle = Helpers.Inverse(l_shoulder_elbow - 180);
+                                    double lower_arm_angle = Helpers.Inverse((l_elbow_wrist - 180)) + upper_arm_angle;
+                                    double up_spinebase = Helpers.Angle(spine_mid, up);
+                                    double neck_spine_base = Helpers.Angle(neck, spine_mid);
+                                    //double trunk_angle = (Angle(up, r_hip) + Angle(r_hip, neck)) - 270;
+                                    double trunk_angle = neck_spine_base - 90;
+                                    double neck_head = Helpers.Angle(head, neck);
+                                    double neck_angle = (neck_head - trunk_angle) - 90 - 20;
+
+                                    #region Scores
+                                     score_upper_armk = Helpers.GetRulaUpperArmScore(upper_arm_angle);
+                                     score_lower_armk = Helpers.GetRulaLowerArmScore(lower_arm_angle);
+                                     score_trunk = Helpers.GetRulaTrunkScore(trunk_angle);
+                                     score_neck = Helpers.GetRulaNeckScore(neck_angle);
+                                    #endregion
+                                    //txt_kinect_info.Content += "UPPER ARM:" + upper_arm_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "UPPER ARM SCORE:" + score_upper_armk.ToString("0") + "\n";
+
+                                    //txt_kinect_info.Content += "LOWER ARM:" + lower_arm_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "LOWER ARM SCORE:" + score_lower_armk.ToString("0") + "\n";
+
+                                    //txt_kinect_info.Content += "Trunk Angle:" + trunk_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "Trunk Score:" + score_trunk.ToString("00.0") + "\n";
+
+                                    //txt_kinect_info.Content += "Neck Angle:" + neck_angle.ToString("00.0") + "\n";
+                                    //txt_kinect_info.Content += "Neck Score:" + score_neck.ToString("00.0") + "\n";
+
+
+                                }
+                                 
+                                
+                                
                             }
                             this.DrawBody(joints, jointPoints, dc, drawPen);
                             //this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
@@ -486,19 +516,6 @@
                 }
 
             }
-        }
-        public void DrawPoint(ColorSpacePoint point)
-        {
-            // Create an ellipse.
-            Ellipse ellipse = new Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                Fill = Brushes.Red
-            };
-            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
-            canvas.Children.Add(ellipse);
         }
         private void ColorFrameReaderFrameArrived(object sender, ColorFrameArrivedEventArgs e)
         {
@@ -527,17 +544,23 @@
                 }
             }
         }
-        private static double Angle(CameraSpacePoint v1, CameraSpacePoint v2, double offsetInDegrees = 0.0)
+        /// <summary>
+        /// Handles the event which the sensor becomes unavailable (E.g. paused, closed, unplugged).
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="e">event arguments</param>
+        private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
         {
-            return (RadianToDegree(Math.Atan2(-v2.Y + v1.Y, -v2.X + v1.X)) + offsetInDegrees) % 360.0;
-        }
-        public static double RadianToDegree(double radian)
-        {
-            var degree = radian * (180.0 / Math.PI);
-            if (degree < 0) degree = 360 + degree;
-            return degree;
-        }
+            // on failure, set the status text
+            this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.SensorNotAvailableStatusText;
 
+
+            img_status.Source = this.kinectSensor.IsAvailable ? new BitmapImage(new Uri(@"/Images/Status_running.png", UriKind.Relative)) :
+                new BitmapImage(new Uri(@"/Images/Status_notfound.png", UriKind.Relative))
+                ;
+        }
+        #endregion
+        #region Kinect drawables
         /// <summary>
         /// Draws a body
         /// </summary>
@@ -563,7 +586,7 @@
                     drawBrush = this.trackedJointBrush;
                     //FormattedText text = new FormattedText(jointType.ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, t, 2, drawBrush);
                     //drawingContext.DrawText(text, jointPoints[jointType]);
-                   
+
                 }
                 else if (trackingState == TrackingState.Inferred)
                 {
@@ -575,7 +598,7 @@
                     drawingContext.DrawEllipse(drawBrush, null, jointPoints[jointType], JointThickness, JointThickness);
                     if (this.bones.Exists(x => x.Item1.Equals(jointType)) && this.drawNames)
                     {
-                        
+
                         this.drawtext(drawingContext, jointType.ToString(), jointPoints[jointType]);
                     }
                 }
@@ -606,9 +629,9 @@
             {
                 drawPen = drawingPen;
             }
- 
+
             drawingContext.DrawLine(drawPen, jointPoints[jointType0], jointPoints[jointType1]);
-           
+
         }
         /// <summary>
         /// Draws a hand symbol if the hand is tracked: red circle = closed, green circle = opened; blue circle = lasso
@@ -621,7 +644,7 @@
             switch (handState)
             {
                 case HandState.Closed:
-                 
+
                     drawingContext.DrawEllipse(this.handClosedBrush, null, handPosition, HandSize, HandSize);
                     break;
 
@@ -685,24 +708,14 @@
                     new Rect(this.displayWidth - ClipBoundsThickness, 0, ClipBoundsThickness, this.displayHeight));
             }
         }
-        /// <summary>
-        /// Handles the event which the sensor becomes unavailable (E.g. paused, closed, unplugged).
-        /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
-        private void Sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
-        {
-            // on failure, set the status text
-            this.StatusText = this.kinectSensor.IsAvailable ? ProjectK.ErgoMC.Assessment.Properties.Resources.RunningStatusText : ProjectK.ErgoMC.Assessment.Properties.Resources.SensorNotAvailableStatusText;
-           
-         
-            img_status.Source = this.kinectSensor.IsAvailable ? new BitmapImage(new Uri(@"/Images/Status_running.png", UriKind.Relative)):
-                new BitmapImage(new Uri(@"/Images/Status_notfound.png" , UriKind.Relative))
-                ;
-        }
-        /// <summary>
-        /// Reader for color frames
-        /// </summary>
+       
+        #endregion
+
+        int score_upper_armk;
+        int score_lower_armk;
+        int score_trunk;
+        int score_neck;
+
         private bool drawNames = false;       
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -734,129 +747,30 @@
         }
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var rdb = sender as System.Windows.Controls.Control;
-            if (rdb.Tag == null) return;
-            String _tag = rdb.Tag.ToString();
-            string _group = rdb.Uid.ToString();
-            switch (_group)
-            {
-
-                case "upper_arm":
-                    this.rulaObject.score_upper_arm.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "lower_arm":
-                    this.rulaObject.score_lower_arm.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "wrist_position":
-                    this.rulaObject.score_wrist_position.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "wrist_twist":
-                    this.rulaObject.score_wrist_twist.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "arm_wrist_muscle":
-                    this.rulaObject.score_arm_wrist_muscle.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "arm_wrist_load":
-                    this.rulaObject.score_arm_wrist_load.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "neck_position":
-                    this.rulaObject.score_neck.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "trunk_position":
-                    this.rulaObject.score_trunk.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "legs_position":
-                    this.rulaObject.score_legs.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "neck_trunk_legs_muscle":
-                    this.rulaObject.score_neck_trunk_legs_muscle.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-                case "neck_trunk_legs_load":
-                    this.rulaObject.score_neck_trunk_legs_load.AdditionalScore += (Helpers.Convert(_tag));
-                    break;
-            }
-
+            Helpers.HandleEvent(sender, e, this.rulaObject);
         }
         private void btn_evaluate(object sender, RoutedEventArgs e)
         {
-            lb_orientations.Items.Clear();
+           
             int ctr = 0;
-            
             foreach (IndexScore _score in this.rulaObject.getScoreList())
             {
-                lb_orientations.Items.Add(_score.getTotal().ToString());
+               
                 if (!_score.validate())
                 {
-
                     Helpers.ToastError(Window.GetWindow(this), "Input error", _score.error_message, MessageBoxButton.OK);
                     return;
-                }
-                ctr++;
+                } ctr++;
             }
-
             EmployeeView _view;
-            if (this._employee != null)
-            {
-                _view = new EmployeeView(this.rulaObject , this._employee);
-            }
-            else
-            {
-                _view = new EmployeeView(this.rulaObject);
-            }
+            if (this._employee != null) _view = new EmployeeView(this.rulaObject, this._employee, typeOfEvaluation);
+            else _view = new EmployeeView(this.rulaObject , typeOfEvaluation);
             _view.Show();
         }
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
 
-            var textbox = sender as System.Windows.Controls.TextBox;
-            if(!Helpers.IsTextAllowed(textbox.Text))
-            {
-                textbox.Text = "0";
-                textbox.MaxLength = 1;
-                MessageBox.Show(Window.GetWindow(this), "Please Enter a valid number.");
-            }
-           
-            if(textbox.Tag == null)return;
-            String _tag = textbox.Tag.ToString();
-
-            switch (_tag)
-            {
-                case "upper_arm":
-                    this.rulaObject.score_upper_arm.SetScore(Helpers.Convert(textbox.Text));
-                    break;
-                case "lower_arm":
-                    this.rulaObject.score_lower_arm.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "wrist_position":
-                this.rulaObject.score_wrist_position.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "wrist_twist":
-                this.rulaObject.score_wrist_twist.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "arm_wrist_muscle":
-                this.rulaObject.score_arm_wrist_muscle.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "arm_wrist_load":
-                this.rulaObject.score_arm_wrist_load.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "neck_position":
-                this.rulaObject.score_neck.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "trunk_position":
-                this.rulaObject.score_trunk.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "legs_position":
-                this.rulaObject.score_legs.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "neck_trunk_legs_muscle":
-                this.rulaObject.score_neck_trunk_legs_muscle.SetScore(Helpers.Convert(textbox.Text));
-                break;
-                case "neck_trunk_legs_load":
-                this.rulaObject.score_neck_trunk_legs_load.SetScore(Helpers.Convert(textbox.Text));
-                break;
-
-
-            }
+            
         }
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -864,40 +778,59 @@
             if (rdb.Tag == null) return;
             String _tag = rdb.Tag.ToString();
             
+            string _contentText = Helpers.GetContentText(sender);
             string _group = rdb.Uid.ToString();
             switch (_group)
             {
                 case "upper_arm":
+                    this.rulaObject.score_upper_arm.currentAdditionalChoices.Remove(this.rulaObject.score_upper_arm.currentAdditionalChoices.Find(x => x.Content == _contentText));
                     this.rulaObject.score_upper_arm.AdditionalScore -= (Helpers.Convert(_tag));
-                    break;
+                break;
                 case "lower_arm":
+                this.rulaObject.score_lower_arm.currentAdditionalChoices.Remove(this.rulaObject.score_lower_arm.currentAdditionalChoices.Find(x => x.Content == _contentText));
                     this.rulaObject.score_lower_arm.AdditionalScore -= (Helpers.Convert(_tag));
-                    break;
+                break;
                 case "wrist_position":
+                this.rulaObject.score_wrist_position.currentAdditionalChoices.Remove(this.rulaObject.score_wrist_position.currentAdditionalChoices.Find(x => x.Content == _contentText));
                     this.rulaObject.score_wrist_position.AdditionalScore -= (Helpers.Convert(_tag));
-                    break;
+                break;
                 case "wrist_twist":
+                this.rulaObject.score_wrist_twist.currentAdditionalChoices.Remove(this.rulaObject.score_wrist_twist.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_wrist_twist.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "arm_wrist_muscle":
+                    this.rulaObject.score_arm_wrist_muscle.currentAdditionalChoices.Remove(this.rulaObject.score_arm_wrist_muscle.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_arm_wrist_muscle.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "arm_wrist_load":
+                    this.rulaObject.score_arm_wrist_load.currentAdditionalChoices.Remove(this.rulaObject.score_arm_wrist_load.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_arm_wrist_load.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "neck_position":
+                    this.rulaObject.score_neck.currentAdditionalChoices.Remove(this.rulaObject.score_neck.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_neck.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "trunk_position":
+                    this.rulaObject.score_trunk.currentAdditionalChoices.Remove(this.rulaObject.score_trunk.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_trunk.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "legs_position":
+                    this.rulaObject.score_legs.currentAdditionalChoices.Remove(this.rulaObject.score_legs.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_legs.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "neck_trunk_legs_muscle":
+                    this.rulaObject.score_neck_trunk_legs_muscle.currentAdditionalChoices.Remove(this.rulaObject.score_neck_trunk_legs_muscle.currentAdditionalChoices.Find(x => x.Content == _contentText));
+                    
                     this.rulaObject.score_neck_trunk_legs_muscle.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
                 case "neck_trunk_legs_load":
+                    this.rulaObject.score_neck_trunk_legs_load.currentAdditionalChoices.Remove(this.rulaObject.score_neck_trunk_legs_load.currentAdditionalChoices.Find(x => x.Content == _contentText));
                     this.rulaObject.score_neck_trunk_legs_load.AdditionalScore -= (Helpers.Convert(_tag));
                     break;
             }
@@ -952,6 +885,43 @@
             }
         }
 #endregion
+
+        //for the auto
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.rulaObject.Score_upper_arm.Score = score_upper_armk;
+            foreach (RadioButton child in UpperArmSp.Children)
+            {
+                if (child.Tag.ToString() == score_upper_armk.ToString())
+                {
+                    child.IsChecked = true;
+                }
+            }
+            this.rulaObject.Score_lower_arm.Score = score_lower_armk;
+            foreach (RadioButton child in LowerArmSp.Children)
+            {
+                if (child.Tag.ToString() == score_lower_armk.ToString())
+                {
+                    child.IsChecked = true;
+                }
+            }
+            foreach (RadioButton child in NeckSp.Children)
+            {
+                if (child.Tag.ToString() == score_neck.ToString())
+                {
+                    child.IsChecked = true;
+                }
+            }
+            foreach (RadioButton child in TrunkSp.Children)
+            {
+                if (child.Tag.ToString() == score_trunk.ToString())
+                {
+                    child.IsChecked = true;
+                }
+            }
+            this.rulaObject.Score_neck.Score = score_neck;
+            this.rulaObject.Score_trunk.Score = score_trunk;
+        }
 
         
     }

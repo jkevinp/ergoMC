@@ -14,8 +14,9 @@ namespace ProjectK.ErgoMC.Assessment.classes
 {
 
     public class IndexScore: Model, INotifyPropertyChanged
-    //: INotifyPropertyChanged
     {
+        private string _table = "rulascore";
+
         /// <summary>
         /// Initialize a New Index Score
         /// </summary>
@@ -35,9 +36,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             this.error_message = "Please select a number between " + this.min + " to " + this.max;
             this.table = _table;
         }
-
-        private string _table = "rulascore";
-
         public void ChangeTable(string _table)
         {
             this.table = _table;
@@ -56,48 +54,78 @@ namespace ProjectK.ErgoMC.Assessment.classes
             this.max = _max;
           //  this.MaxAScore = _maxAscore;
            // this.MaxScore = this.max - this.MaxAScore;
-            this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + this.DisplayName;
             this.DisplayName = _displayname;
+            this.error_message = "Please select a number between " + this.min + " to " + this.max + " for "  + this.DisplayName;
             this.table = _table;
-
         }
+        public List<IndexScoreChoice> currentAdditionalChoices = new List<IndexScoreChoice>();
+        public event PropertyChangedEventHandler PropertyChanged; 
         public string error_message = "Please enter a valid value.";
         public int min = 0;
         public int max = 0;
         public int id = 0;
-
         public int MaxScore = 0;
         public int MaxAScore = 0;
-
         public string name = string.Empty;
         public int employee_id = 0;
-
         public int score = 0;
         public int additionalScore = 0;
+        public int total = 0;
         private string displayName = string.Empty;
+        private string score_description = string.Empty;
+        private string additionalScore_description = string.Empty;
 
         public string DisplayName
         {
             get { return this.displayName; }
             set { this.displayName = value; }
         }
-        private string score_description = string.Empty;
         public string ScoreDescription
         {
             get { return this.score_description; }
             set { this.score_description = value; }
         }
-
-
+        public string AdditionalScoreDescription
+        {
+            get { return this.additionalScore_description; }
+            set { this.additionalScore_description = value; }
+        }
         public int Score
         {
             get{ return this.score; }
-            set{ this.score= value; } 
+            set { 
+                this.score = value; 
+                OnPropertyChanged("Score");
+                this.Total = this.score + this.additionalScore;
+            } 
         }
         public int AdditionalScore
         {
             get { return this.additionalScore; }
-            set { this.additionalScore = value; }
+            set { 
+                this.additionalScore = value; 
+                OnPropertyChanged("AdditionalScore");
+                this.Total = this.score + this.additionalScore;
+            }
+        }
+      
+
+        public int Total
+        {
+            get { return this.total; }
+            set
+            {
+                this.total = value;
+                OnPropertyChanged("Total");
+            }
+        }
+
+        private void OnPropertyChanged(String property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         public int SetAscore(int x) { this.additionalScore = x; return this.additionalScore; }
@@ -105,19 +133,17 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int getTotal() { return (this.additionalScore + score); }
         public int getScore() { return this.score; }
         public int SetScore(int x) {score = x; return this.score;}
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public int SaveRula()
         {
-            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total,score_displayname) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "')");
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,rula_id,score_name,score_value,score_additional,score_total,score_displayname,score_description,score_additional_description) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "','" + this.ScoreDescription + "','" + this.AdditionalScoreDescription + "')");
             return result;
         }
         public int SaveReba()
         {
-            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,reba_id,score_name,score_value,score_additional,score_total,score_displayname) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "')");
+            var result = this.insert("INSERT INTO `" + this.table + "` (employee_id,reba_id,score_name,score_value,score_additional,score_total,score_displayname,score_description,score_additional_description) values('" + this.employee_id + "' ,' " + this.id + "' ,'" + this.name + "','" + this.getScore() + "','" + this.GetAscore() + "','" + this.getTotal() + "','" + this.DisplayName + "','" + this.ScoreDescription + "','" + this.AdditionalScoreDescription + "')");
             return result;
         }
-
         public List<IndexScore> GetReba(int _empID, int _id)
         {
             List<IndexScore> _scores = new List<IndexScore>();
@@ -130,11 +156,12 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 _score.Score = Helpers.Convert(row["score_value"].ToString());
                 _score.AdditionalScore = Helpers.Convert(row["score_additional"].ToString());
                 _score.DisplayName = row["score_displayname"].ToString();
+                _score.ScoreDescription = row["score_description"].ToString();
+                _score.AdditionalScoreDescription = row["score_additional_description"].ToString();
                 _scores.Add(_score);
             }
             return _scores;
         }
-
         public List<IndexScore> GetRula(int _empID, int _id)
         {
             List<IndexScore> _scores = new List<IndexScore>();
@@ -147,12 +174,12 @@ namespace ProjectK.ErgoMC.Assessment.classes
                 _score.Score = Helpers.Convert(row["score_value"].ToString());
                 _score.AdditionalScore = Helpers.Convert(row["score_additional"].ToString());
                 _score.DisplayName = row["score_displayname"].ToString();
+                _score.ScoreDescription = row["score_description"].ToString();
+                _score.AdditionalScoreDescription = row["score_additional_description"].ToString();
                 _scores.Add(_score);
             }
             return _scores;
         }
-      
-
         public bool validate()
         {
             int _total = this.getTotal();
@@ -162,6 +189,8 @@ namespace ProjectK.ErgoMC.Assessment.classes
             }
             return false;
         }
+
+       
 
     }
 }

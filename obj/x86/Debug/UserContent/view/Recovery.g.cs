@@ -83,7 +83,7 @@ namespace ProjectK.ErgoMC.Assessment.UserContent.view {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BodyBasics-WPF;component/usercontent/view/recovery.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ErgoMc;component/usercontent/view/recovery.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\UserContent\view\Recovery.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

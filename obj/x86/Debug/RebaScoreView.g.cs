@@ -67,7 +67,7 @@ namespace ProjectK.ErgoMC.Assessment {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BodyBasics-WPF;component/rebascoreview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ErgoMc;component/rebascoreview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\RebaScoreView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

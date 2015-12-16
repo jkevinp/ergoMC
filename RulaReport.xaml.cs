@@ -20,24 +20,37 @@ namespace ProjectK.ErgoMC.Assessment
     /// </summary>
     public partial class EmployeeView : Window
     {
+        private List<Employee> employees = new List<Employee>();
+        public List<Employee> Employees
+        {
+            get { return this.employees; }
+            set { this.employees = value; }
+        }
         Employee _employee = null;
-        public EmployeeView(RulaObject _rulaObject)
+        public EmployeeView(RulaObject _rulaObject, string _type)
         {
             this._employee = new Employee();
             this._employee.RulaObject = _rulaObject;
             _employee.Rula_score = new RulaScore();
             _employee.Rula_score.CreateFromRulaObject(_rulaObject);
+
+            _employee.Rula_score.Type = _type;
             this.DataContext = _employee;
             InitializeComponent();
+
+            //Employees = _employee.All();
+            //cb_employee.ItemsSource = Employees;
         }
-        public EmployeeView(RulaObject _rulaObject , Employee _toemployee)
+        public EmployeeView(RulaObject _rulaObject , Employee _toemployee , string _type)
         {
             this._employee = _toemployee;
             this._employee.RulaObject = _rulaObject;
             _employee.Rula_score = new RulaScore();
             _employee.Rula_score.CreateFromRulaObject(_rulaObject);
+            _employee.Rula_score.Type = _type;
             this.DataContext = _employee;
             InitializeComponent();
+
         }
         private void btn_evaluate_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +73,9 @@ namespace ProjectK.ErgoMC.Assessment
                 indexScore.employee_id = _employee.Id;
                 indexScore.id = rula_id;
                 indexScore.SaveRula();
+                indexScore.currentAdditionalChoices.ForEach(x => x.Save(rula_id, "Additional", this._employee.Rula_score.table));
             }
+
            MessageBox.Show(this, "The Record has been saved", "Save Complete", MessageBoxButton.OK, MessageBoxImage.Information);
            this.btn_evaluate.IsEnabled = false;
             Console.WriteLine(_employee.Id);

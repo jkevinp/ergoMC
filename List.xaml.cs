@@ -14,13 +14,18 @@ using System.Windows.Shapes;
 using ProjectK.ErgoMC.Assessment.classes;
 using ProjectK.ErgoMC.Assessment.Library;
 using System.ComponentModel;
+
 namespace ProjectK.ErgoMC.Assessment
 {
     /// <summary>
     /// Interaction logic for List.xaml
     /// </summary>
+    /// 
+
     public partial class List : Page
     {
+        double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+        double screenhight = System.Windows.SystemParameters.PrimaryScreenHeight;
         Employee emp = new Employee();
         private Employee selectedEmployeee = new Employee();
         public double HeaderWidth { get; set; }
@@ -45,6 +50,7 @@ namespace ProjectK.ErgoMC.Assessment
             List<Employee> empList = emp.All();
             if(empList.Count > 0)
             this.selectedEmployeee = empList.First();
+            EmployeeCount = empList.Count;
         }
 
         private void btn_search_Click(object sender, RoutedEventArgs e)
@@ -78,8 +84,12 @@ namespace ProjectK.ErgoMC.Assessment
             if (listview.SelectedItem == null) return;
            
             this.SelectedEmployee = (Employee)listview.SelectedItem;
-            this.SelectedEmployee.Rula_score.Get(this.SelectedEmployee);
-            this.SelectedEmployee.Reba_score.Get(this.SelectedEmployee);
+            this.SelectedEmployee.Rula_score.Get(this.SelectedEmployee, "right");
+            this.SelectedEmployee.Reba_score.Get(this.SelectedEmployee, "right");
+
+            this.SelectedEmployee.LeftRula_score.Get(this.SelectedEmployee, "left");
+            this.SelectedEmployee.LeftReba_score.Get(this.SelectedEmployee, "left");
+            
             scrollView.IsEnabled = true; 
            
             //PDFMaker.makePDF("" , emp);
@@ -119,28 +129,40 @@ namespace ProjectK.ErgoMC.Assessment
                     (Window.GetWindow(this), "Failed to saved changes.", "The changes has not been saved due to an error.", MessageBoxButton.OK);
                 }
             }
+            FillList();
         }
 
         private void Button_TakeAnalysis_Rula(object sender, RoutedEventArgs e)
         {
-            ErgoMcApp._this.AddFrame(new Rula(this.SelectedEmployee));
+            if(this.SelectedEmployee != null)
+            ErgoMcApp._this.AddFrame(new Rula(this.SelectedEmployee, "right"));
         }
-
         private void Button_TakeAnalysis_Reba(object sender, RoutedEventArgs e)
         {
-            ErgoMcApp._this.AddFrame(new Reba(this.SelectedEmployee));
-
+            if (this.SelectedEmployee != null) ErgoMcApp._this.AddFrame(new Reba(this.SelectedEmployee, "right"));
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            ScoreView r = new ScoreView(this.SelectedEmployee , ScoreView.ScoreViewType.Reba);
+            string Tag = "right";
+            Button t = sender as Button;
+            if (t.Tag != null)
+            {
+                Tag = "left";
+            }
+            ScoreView r = new ScoreView(this.SelectedEmployee , ScoreView.ScoreViewType.Reba, Tag);
             r.Show();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            ScoreView r = new ScoreView(this.SelectedEmployee, ScoreView.ScoreViewType.Rula);
+            string Tag = "right";
+            Button t = sender as Button;
+            if (t.Tag != null)
+            {
+                Tag = "left";
+            }
+            ScoreView r = new ScoreView(this.SelectedEmployee, ScoreView.ScoreViewType.Rula, Tag);
             r.Show();
         }
 
@@ -148,10 +170,83 @@ namespace ProjectK.ErgoMC.Assessment
         {
             if (ErgoMcApp.status == 1)
             {
-
                 FillList();
                 ErgoMcApp.status = 0;
             }
+        }
+        private int employeeCount = 0;
+        public int EmployeeCount
+        {
+            get
+            {
+                return this.employeeCount;
+            }
+            set
+            {
+                this.employeeCount = value;
+            }
+        }
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (this.SelectedEmployee != null && lv_list.SelectedItems.Count == 1)
+            {
+                PDFMaker.makePDF("", this.SelectedEmployee);
+            }
+            else if (lv_list.SelectedItems.Count >= 2)
+            {
+                List<Employee> emplist = new List<Employee>();
+                foreach (object i in lv_list.SelectedItems)
+                {
+                    emplist.Add((Employee)i);
+                }
+
+                PDFMaker.makePDF("", emplist);
+            }
+        }
+
+        private void Button_TakeAnalysis_Reba_Left(object sender, RoutedEventArgs e)
+        {
+
+            if (this.SelectedEmployee != null) ErgoMcApp._this.AddFrame(new Reba(this.SelectedEmployee, "left"));
+        }
+
+        private void Button_TakeAnalysis_Rula_Left(object sender, RoutedEventArgs e)
+        {
+            if (this.SelectedEmployee != null) ErgoMcApp._this.AddFrame(new Rula(this.SelectedEmployee, "left"));
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (Helpers.ToastWarning(Window.GetWindow(this),
+                "Confirm saving changes.",
+                "Are you sure you want to save the changes made?",
+                MessageBoxButton.YesNo,
+                MessageBoxResult.No
+                ))
+            {
+           
+                if (this.SelectedEmployee.Delete() >= 1)
+                {
+                    Helpers.ToastSuccess (Window.GetWindow(this), "Successfully saved changes.", "The changes has been applied.", MessageBoxButton.OK);
+                }
+                else
+                {
+                    Helpers.ToastError(Window.GetWindow(this), "Failed to saved changes.", "The changes has not been saved due to an error.", MessageBoxButton.OK);
+                 
+                }
+            }
+            FillList();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            FillList();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Summary m = new Summary();
+            m.Show();
         }
 
     }
