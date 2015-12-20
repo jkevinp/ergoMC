@@ -9,7 +9,6 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\ErgoMc.exe.man
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\ErgoMc.application
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\ErgoMc.exe
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\ErgoMc.pdb
-C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQLite.dll
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQLite.pdb
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\bin\x86\Debug\System.Data.SQLite.xml
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\EmployeeContent\view\Register.baml
@@ -56,3 +55,4 @@ C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMc.exe.man
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMc.application
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMc.exe
 C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\ErgoMc.pdb
+C:\Users\kodelance\Desktop\PROJECT K\BodyBasics-WPF\obj\x86\Debug\BodyBasics-WPF.csprojResolveAssemblyReference.cache

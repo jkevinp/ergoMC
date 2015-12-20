@@ -36,7 +36,7 @@
                 <MenuItem Header="List Evaluated Employee" Background="{DynamicResource KinectBlack}" BorderBrush="{DynamicResource KinectBlueBrush}" Foreground="White"  Click="MenuItem_Click_1"  />
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="Help" Background="{DynamicResource KinectBlack}" BorderBrush="{DynamicResource KinectBlueBrush}" Foreground="White" Click="MenuItem_Click_5" />
+                <MenuItem Header="About" Background="{DynamicResource KinectBlack}" BorderBrush="{DynamicResource KinectBlueBrush}" Foreground="White" Click="MenuItem_Click_5" />
             </MenuItem>
         </Menu>
         <StackPanel  Background="{DynamicResource KinectBlack}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Height="Auto" Name="stack_nav_bar">

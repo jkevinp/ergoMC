@@ -43,7 +43,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.9*"/>
             </Grid.RowDefinitions>
-            
+
             <Grid Grid.Column="0" Height="Auto" Grid.Row="0">
                 <DockPanel>
                     <Image x:Name="img_status" Source="Images\Status.png" Stretch="None" Margin="10,0,0,0" />
@@ -56,8 +56,8 @@
             <!--
             <ListBox x:Name="lb_orientations" FontSize="32" Grid.Column="3" Grid.Row="1" Height="auto" BorderBrush="Black" BorderThickness="10"/>
             -->
-            
-                <Grid Grid.Row="1" VerticalAlignment="Top">
+
+            <Grid Grid.Row="1" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.7*" />
                     <RowDefinition Height="0.3*" />
@@ -74,14 +74,16 @@
                 </StackPanel>
 
             </Grid>
-            
+
             <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Stretch" />
             <ScrollViewer 
                           Height="Auto" 
                           Width="auto"  
                           VerticalAlignment="Top" 
+                ClipToBounds="True" 
+                Grid.ColumnSpan="2"
                           Grid.Column="2" 
-                          Grid.Row="1" BorderThickness="1" ClipToBounds="True" Padding="0" Margin="0,0,20,0" Background="{DynamicResource KinectBluishBG}">
+                          Grid.Row="1" BorderThickness="1" Padding="0" Margin="0,0,20,0" Background="{DynamicResource KinectBluishBG}">
                 <StackPanel>
 
                     <Label  
@@ -119,17 +121,16 @@
                             x:Name="trunk_poosition_score" Grid.Column="2" SpellCheck.IsEnabled="True" Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" />
                     </Grid>
                     <StackPanel Name="TrunkSp">
-                        <RadioButton  Tag="1"  Uid="trunk_position"  GroupName="trunk_position" Content="Upright"                               Checked="RadioButton_Checked" FontSize="20"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
-                        <RadioButton  Tag="2"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: 0-20° or Extension: 0-20°"    Checked="RadioButton_Checked" FontSize="20"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
-                        <RadioButton  Tag="3"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: 20-60° or Extension: >20°"    Checked="RadioButton_Checked" FontSize="20"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
-                        <RadioButton  Tag="4"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: >60°"                         Checked="RadioButton_Checked" FontSize="20"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
+                        <RadioButton  Tag="1"  Uid="trunk_position"  GroupName="trunk_position" Content="Upright"                               Checked="RadioButton_Checked"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
+                        <RadioButton  Tag="2"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: 0-20° or Extension: 0-20°"    Checked="RadioButton_Checked"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
+                        <RadioButton  Tag="3"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: 20-60° or Extension: >20°"    Checked="RadioButton_Checked"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
+                        <RadioButton  Tag="4"  Uid="trunk_position"  GroupName="trunk_position" Content="Flexion: >60°"                         Checked="RadioButton_Checked"   VerticalContentAlignment="Center"   Margin="80,0,0,0" />
                     </StackPanel>
                     <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Content="Additional"   FontSize="16"  Foreground="Black"  Height="40"  FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                     <CheckBox Tag="1" 
                                 
                                  Uid="trunk_position" 
                                  Content="If back is twisted or tilted to side" 
-                                 FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
                                  Checked="RadioButton_Checked"
@@ -159,15 +160,14 @@
 
                     </Grid>
                     <StackPanel Name="NeckSp">
-                    <RadioButton Tag="1" Uid="neck_position" GroupName="neck_position" Content="Flexion: 0-20°" FontSize="20"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="2" Uid="neck_position" GroupName="neck_position" Content="Flexion: >20° or Extension: >20°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"/>
+                        <RadioButton Tag="1" Uid="neck_position" GroupName="neck_position" Content="Flexion: 0-20°"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                        <RadioButton Tag="2" Uid="neck_position" GroupName="neck_position" Content="Flexion: >20° or Extension: >20°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"/>
                     </StackPanel>
                     <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Content="Additional"   FontSize="16"  Foreground="Black"  Height="40"  FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                     <CheckBox Tag="1" 
                                  Unchecked="CheckBox_Unchecked"
                                  Uid="neck_position" 
                                  Content="If neck is twisted or tilted to side: +1" 
-                                 FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0"  
                                  Checked="RadioButton_Checked"
@@ -196,15 +196,14 @@
                             Grid.Column="2" SpellCheck.IsEnabled="True"  Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False" />
                     </Grid>
 
-                    <RadioButton Tag="1" Uid="legs_position" GroupName="legs_position" Content="Bilateral Wt Bearing;Walk; Sit" FontSize="20"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
-                    <RadioButton Tag="2" Uid="legs_position" GroupName="legs_position" Content="Unilateral Wt Bearing;Unstable" FontSize="20"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
+                    <RadioButton Tag="1" Uid="legs_position" GroupName="legs_position" Content="Bilateral Wt Bearing;Walk; Sit"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
+                    <RadioButton Tag="2" Uid="legs_position" GroupName="legs_position" Content="Unilateral Wt Bearing;Unstable"      VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
 
 
                     <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Content="Additional"   FontSize="16"  Foreground="Black"  Height="40"  FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
                     <CheckBox Tag="1" 
                                  Uid="legs_position" 
                                  Content="Bent 30°-60°" 
-                                 FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0" 
                                  Checked="RadioButton_Checked"  
@@ -213,7 +212,6 @@
                     <CheckBox  Tag="2"  
                                Uid="legs_position"  
                                  Content="Bent > 60° " 
-                                 FontSize="20" 
                                  VerticalContentAlignment="Center" 
                                  Margin="80,0,0,0" 
                                  Checked="RadioButton_Checked" 
@@ -240,10 +238,10 @@
 
                     </Grid>
 
-                    <RadioButton    Tag="0" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is less than 11 lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton    Tag="1" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is betweem 11 lbs to 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
-                    <RadioButton    Tag="2" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is greater than 22lbs" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
-                    <CheckBox  Unchecked="CheckBox_Unchecked"  Tag="1" Uid="neck_trunk_legs_load" Content="If shock or rapid build up of force" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
+                    <RadioButton    Tag="0" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is less than 11 lbs" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                    <RadioButton    Tag="1" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is between 11 lbs to 22lbs" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked"   />
+                    <RadioButton    Tag="2" Uid="neck_trunk_legs_load" GroupName="neck_trunk_legs_load" Content="If load is greater than 22lbs" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
+                    <CheckBox  Unchecked="CheckBox_Unchecked"  Tag="1" Uid="neck_trunk_legs_load" Content="If shock or rapid build up of force" VerticalContentAlignment="Center" Margin="80,0,0,0"  Checked="RadioButton_Checked"/>
 
                     <!-- REGION B-->
                     <Label  
@@ -281,10 +279,10 @@
 
                     <StackPanel>
                         <StackPanel Name="UpperArmSp">
-                        <RadioButton Tag="1" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 0-20° or Extension: 0-20°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                        <RadioButton Tag="2" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 20-45° or Extension: >20°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                        <RadioButton Tag="3" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 45-90°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                        <RadioButton Tag="4" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: >90°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                            <RadioButton Tag="1" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 0-20° or Extension: 0-20°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                            <RadioButton Tag="2" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 20-45° or Extension: >20°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                            <RadioButton Tag="3" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: 45-90°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                            <RadioButton Tag="4" Uid="upper_arm" GroupName="upper_arm" Content="Flexion: >90°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
                         </StackPanel>
                         <Label
                     		HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Additional" Background="{x:Null}" 
@@ -293,9 +291,9 @@
                     		UseLayoutRounding="False" 
                     		Height="40" 
                     		FontFamily="Arial" HorizontalAlignment="Left" FontStyle="Italic" Margin="80,0,0,0"  />
-                        <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked" Uid="upper_arm"   Content="Shoulder is Raised"    FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="RadioButton_Checked"  />
-                        <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked" Uid="upper_arm"  Content="Upper Arm is abducted" FontSize="20"  VerticalContentAlignment="Center"  Margin="80,0,0,0"  Checked="RadioButton_Checked" />
-                        <CheckBox Tag="-1"  Unchecked="CheckBox_Unchecked" Uid="upper_arm"   Content="Arm is supported or person is leaning"  FontSize="20" VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"/>
+                        <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked" Uid="upper_arm"   Content="Shoulder is Raised"  VerticalContentAlignment="Center"  Margin="80,0,0,0" Checked="RadioButton_Checked"  />
+                        <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked" Uid="upper_arm"  Content="Upper Arm is abducted"  VerticalContentAlignment="Center"  Margin="80,0,0,0"  Checked="RadioButton_Checked" />
+                        <CheckBox Tag="-1"  Unchecked="CheckBox_Unchecked" Uid="upper_arm"   Content="Arm is supported or person is leaning" VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"/>
 
                     </StackPanel>
 
@@ -321,8 +319,8 @@
 
                     </Grid>
                     <StackPanel Name="LowerArmSp">
-                    <RadioButton Tag="1" Uid="lower_arm" GroupName="lower_arm" Content=" Flexion: 60-100°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                    <RadioButton Tag="2" Uid="lower_arm" GroupName="lower_arm" Content="Flexion: &lt; 60° or Flexion: >100°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                        <RadioButton Tag="1" Uid="lower_arm" GroupName="lower_arm" Content=" Flexion: 60-100°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                        <RadioButton Tag="2" Uid="lower_arm" GroupName="lower_arm" Content="Flexion: &lt; 60° or Flexion: >100°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
                     </StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -355,8 +353,8 @@
 
                     </Grid>
                     <StackPanel>
-                        <RadioButton Tag="1" Uid="wrist_position" GroupName="wrist_position" Content="Flexion: 0-15° Extension: 0-15°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
-                        <RadioButton Tag="2" Uid="wrist_position" GroupName="wrist_position" Content="Flexion: >15° Extension: >15°" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                        <RadioButton Tag="1" Uid="wrist_position" GroupName="wrist_position" Content="Flexion: 0-15° Extension: 0-15°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
+                        <RadioButton Tag="2" Uid="wrist_position" GroupName="wrist_position" Content="Flexion: >15° Extension: >15°" VerticalContentAlignment="Center" Margin="80,0,0,0" Checked="RadioButton_Checked" />
 
                         <Label
                     		HorizontalContentAlignment="Center"  
@@ -373,7 +371,6 @@
                             Checked="RadioButton_Checked"
                             Tag="1"
                             Content="Wrist is bent from midline" 
-                            FontSize="20" 
                             VerticalContentAlignment="Center"  Margin="80,0,0,0"  />
                     </StackPanel>
 
@@ -407,10 +404,10 @@
                                   Text="{Binding Path=RebaObject.Score_coupling.Total, Mode=TwoWay}"
                                    Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"  />
                     </Grid>
-                    <RadioButton Tag="0" Uid="coupling" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  Checked="RadioButton_Checked" Content="Good: Well fitting and mid range power grip."/>
-                    <RadioButton Tag="1" Uid="coupling" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"   Content="Fair: Acceptable but not ideal hand hold our coupling acceptable with another body part" />
-                    <RadioButton Tag="2" Uid="coupling"  GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"  Content="Poor: Hand hold not acceptable but possible." />
-                    <RadioButton Tag="3" Uid="coupling" GroupName="coupling" FontSize="20"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" Content="Unacceptable: No handles, awkward, unsafe with any body parts." />
+                    <RadioButton Tag="0" Uid="coupling" GroupName="coupling"  VerticalContentAlignment="Center"   Margin="80,0,0,0"  Checked="RadioButton_Checked" Content="Good: Well fitting and mid range power grip." FontSize="11"/>
+                    <RadioButton Tag="1" Uid="coupling" GroupName="coupling"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"   Content="Fair: Acceptable but not ideal hand hold our coupling acceptable with another body part." FontSize="11" />
+                    <RadioButton Tag="2" Uid="coupling"  GroupName="coupling"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked"  Content="Poor: Hand hold not acceptable but possible." FontSize="11" />
+                    <RadioButton Tag="3" Uid="coupling" GroupName="coupling"  VerticalContentAlignment="Center"   Margin="80,0,0,0" Checked="RadioButton_Checked" Content="Unacceptable: No handles, awkward, unsafe with any body parts." FontSize="11" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.8*" />
@@ -430,9 +427,9 @@
                                   Text="{Binding Path=RebaObject.Score_activity.Total, Mode=TwoWay}"
                                    Language="en-US" FontSize="29" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsEnabled="False"  />
                     </Grid>
-                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="One or more body parts are held for longer than one minute.(Static)" FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="Repeated small range actions(more than 4x per minute)." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
-                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="Action causes rapid large range changes in postures or unstable base." FontSize="20" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="One or more body parts are held for longer than one minute.(Static)" VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="Repeated small range actions(more than 4x per minute)." VerticalContentAlignment="Center" Margin="80,0,0,0"  />
+                    <CheckBox Tag="1"   Unchecked="CheckBox_Unchecked"  Checked="RadioButton_Checked" Uid="activity" Content="Action causes rapid large range changes in postures or unstable base." VerticalContentAlignment="Center" Margin="80,0,0,0"  />
                     <Button Content="Evaluate" Background="{DynamicResource KinectBluish}" Foreground="White" FontSize="32" FontWeight="Bold" Padding="1,5" Click="btn_evaluate"/>
                 </StackPanel>
             </ScrollViewer>

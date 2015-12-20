@@ -39,9 +39,9 @@
                     <ColumnDefinition Width="79*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.ColumnSpan="5" Content="Rula" FontSize="16" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource KinectBluish}" Foreground="White" VerticalContentAlignment="Center"/>
+                <Label Grid.ColumnSpan="5" Content="REBA" FontSize="16" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource KinectBluish}" Foreground="White" VerticalContentAlignment="Center"/>
 
-                <Label Grid.Row="2" Grid.ColumnSpan="5" Content="Reba" FontSize="16" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource KinectBluish}" Foreground="White" VerticalContentAlignment="Center"/>
+                <Label Grid.Row="2" Grid.ColumnSpan="5" Content="RULA" FontSize="16" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource KinectBluish}" Foreground="White" VerticalContentAlignment="Center"/>
 
 
                 <StackPanel Grid.Column="0" Grid.Row="1">

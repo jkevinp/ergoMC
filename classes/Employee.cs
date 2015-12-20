@@ -219,8 +219,6 @@ namespace ProjectK.ErgoMC.Assessment.classes
             }
             return _result;
         }
-        
-
         public List<Employee> All(Dictionary<string, string> _param , string _condition)
         {
             List<Employee> _result = new List<Employee>();
@@ -303,7 +301,13 @@ namespace ProjectK.ErgoMC.Assessment.classes
         public int Delete()
         {
             Employee _data = this._employee;
-            var result = this.update("DELETE from `" + table + "` where `id`=" + this._employee.id);
+
+            var _deleteReba = this.update("DELETE from `reba` where `employee_id`='" + this._employee.id + "'");
+            var _deleteRula = this.update("DELETE from `rula` where `employee_id`='" + this._employee.id + "'");
+            var _deleteRebaScore = this.update("DELETE from `rebascore` where `employee_id`='" + this._employee.id + "'");
+            var _deleteRulaScore = this.update("DELETE from `rulascore` where `employee_id`='" + this._employee.id + "'");
+
+            var result = this.update("DELETE from `" + table + "` where `id`='" + this._employee.id + "'");
             return result;
         }
 
